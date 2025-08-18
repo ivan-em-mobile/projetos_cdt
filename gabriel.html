@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter - Sonserina</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0c3325;
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0c3325;
+        }
+
+        .mySlides {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #0c3325;
+            animation: fadeIn 1s;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-content {
+            max-width: 900px;
+            margin: 0 auto;
+            color: #fff;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            color: #f0f0f0;
+            font-size: 1.2em;
+        }
+        .nav a {
+            color: #f0f0f0;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .slide h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4em;
+            color: #FFD700;
+            text-align: center;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .slide h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2em;
+            color: #FFD700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .slide p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .slide-image {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .next { right: 0; border-radius: 3px 0 0 3px; }
+        .prev { left: 0; border-radius: 0 3px 3px 0; }
+        .prev:hover, .next:hover { background-color: rgba(0, 0, 0, 0.8); }
+
+        .dots-container {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .active, .dot:hover { background-color: #f1d302; }
+
+        .curiosidades-section {
+            padding: 60px 40px;
+            background-color: #1a237e;
+            color: #fff;
+        }
+        .curiosidades-section h2 {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            color: #FFD700;
+        }
+        .curiosidades-section ul {
+            max-width: 800px;
+            margin: 0 auto;
+            list-style-type: '⚡️ ';
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 2]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 4]</a>
+                    [cite_start]<a href="#about">About [cite: 5]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 6]</a>
+                </div>
+            </div>
+            <div class="slide-content" style="text-align: center; margin-top: 15%;">
+                [cite_start]<h1 style="font-size: 5em;">Harry Potter [cite: 3]</h1>
+                [cite_start]<p style="font-size: 2em; color: #FFD700; font-family: 'Cinzel', serif;">HUFFLEPLIFE [cite: 7]</p>
+                <div style="margin-top: 50px;">
+                    [cite_start]<a href="#" style="background: #FFD700; padding: 15px 30px; text-decoration: none; color: #0c3325; font-weight: bold; border-radius: 5px;">Start Slide [cite: 8]</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 20]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 11]</a>
+                    [cite_start]<a href="#about">About [cite: 12]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 13]</a>
+                </div>
+            </div>
+            <div class="slide-content" style="text-align: center; margin-top: 10%;">
+                [cite_start]<h1 style="font-size: 5em;">Harry Potter [cite: 10]</h1>
+                [cite_start]<p style="font-size: 2em; color: #FFD700; font-family: 'Cinzel', serif;">SLYTHERIN [cite: 15]</p>
+                <img src="" alt="Brasão da Sonserina" style="width: 200px; margin-top: 20px;">
+                [cite_start]<p style="font-size: 1.5em; margin-top: 30px;">Seja bem-vindo, bruxos, à casa de sonserina. [cite: 16, 17] [cite_start]Aqui nós iremos apresentar a vocês tudo sobre os ambiciosos por poder! [cite: 18]</p>
+                <div style="margin-top: 50px;">
+                    [cite_start]<a href="#" style="background: #FFD700; padding: 15px 30px; text-decoration: none; color: #0c3325; font-weight: bold; border-radius: 5px;">Start Slide [cite: 19]</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 20]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 38]</a>
+                    [cite_start]<a href="#about">About [cite: 39]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 40]</a>
+                </div>
+            </div>
+            <div class="slide-content">
+                [cite_start]<h2>Quem são eles? [cite: 22]</h2>
+                [cite_start]<p>A Casa Sonserina é uma das quatro casas da Escola de Magia e Bruxaria de Hogwarts, fundada por Salazar Slytherin[cite: 23]. [cite_start]Ele era um bruxo astuto e ambicioso que valorizava principalmente a pureza de sangue e a determinação[cite: 23].</p>
+                [cite_start]<p>Discordando dos outros fundadores sobre a aceitação de bruxos nascidos trouxas, ele se afastou, deixando para trás a Câmara Secreta[cite: 24]. [cite_start]Ele abrigou um basilisco na câmara para, no futuro, eliminar os estudantes que considerava indignos[cite: 24].</p>
+                [cite_start]<p>O símbolo da Sonserina é a serpente [cite: 25][cite_start], suas cores são verde e prata, e o fantasma da casa é o Barão Sangrento[cite: 25]. [cite_start]A sala comunal fica nas masmorras, localizada sob o Lago Negro[cite: 26].</p>
+                [cite_start]<p>Os sonserinos são conhecidos por ambição, astúcia, determinação, liderança e busca pelo poder[cite: 27]. [cite_start]Apesar da má fama, a casa já produziu grandes bruxos [cite: 34][cite_start], e ser da Sonserina não significa ser maligno[cite: 29].</p>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 43]</a>
+                    [cite_start]<a href="#about">About [cite: 44]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 45]</a>
+                </div>
+            </div>
+            <div class="slide-content">
+                [cite_start]<h2>Quem é Salazar Slytherin? [cite: 46]</h2>
+                [cite_start]<p>Salazar Slytherin foi um dos quatro fundadores de Hogwarts[cite: 47]. [cite_start]Ele era um bruxo extremamente poderoso e astuto, conhecido por sua habilidade em ofidioglossia (a língua das cobras) e em feitiços de magia das trevas[cite: 48].</p>
+                [cite_start]<p>Ele acreditava que apenas bruxos de sangue puro deveriam estudar em Hogwarts, o que gerou conflito e levou à sua saída da escola[cite: 49, 50]. [cite_start]Antes de partir, construiu a Câmara Secreta e deixou lá um basilisco[cite: 51, 52].</p>
+                [cite_start]<p>Seu legado se manteve através de sua descendência, culminando em Tom Riddle (Lord Voldemort), que herdou seu dom de falar com cobras[cite: 53].</p>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 56]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 60]</a>
+                    [cite_start]<a href="#about">About [cite: 61]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 62]</a>
+                </div>
+            </div>
+            <div class="slide-content" style="text-align: center;">
+                [cite_start]<h2>Conheça os Slytherin Boys [cite: 59]</h2>
+                [cite_start]<p style="margin-top: 50px; font-size: 1.5em; color: #FFD700;">Regulus Arcturus Black [cite: 63]</p>
+                [cite_start]<p style="margin-top: 20px; font-size: 1.5em; color: #FFD700;">Theodore Nott [cite: 64]</p>
+                [cite_start]<p style="margin-top: 20px; font-size: 1.5em; color: #FFD700;">Lorenzo Berkshire [cite: 65]</p>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 66]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 70]</a>
+                    [cite_start]<a href="#about">About [cite: 71]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 72]</a>
+                </div>
+            </div>
+            <div class="slide-content" style="text-align: center;">
+                [cite_start]<h2>Conheça os Slytherin Boys [cite: 69]</h2>
+                [cite_start]<p style="margin-top: 50px; font-size: 1.5em; color: #FFD700;">Draco Malfoy [cite: 73]</p>
+                [cite_start]<p style="margin-top: 20px; font-size: 1.5em; color: #FFD700;">Tom Riddle [cite: 74]</p>
+                [cite_start]<p style="margin-top: 20px; font-size: 1.5em; color: #FFD700;">Matthew Riddle [cite: 75]</p>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 76]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 80]</a>
+                    [cite_start]<a href="#about">About [cite: 81]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 82]</a>
+                </div>
+            </div>
+            <div class="slide-content">
+                [cite_start]<h2>R.A.B Regulus Black [cite: 83]</h2>
+                [cite_start]<p>Regulus Arcturus Black foi o irmão mais novo de Sirius Black e membro da tradicional família Black[cite: 84]. [cite_start]Ele entrou para a Sonserina e se tornou um Comensal da Morte[cite: 85, 86].</p>
+                [cite_start]<p>Ao perceber a crueldade de Voldemort, ele decidiu agir por conta própria para destruir uma Horcrux[cite: 87, 88]. [cite_start]Regulus sacrificou sua vida na caverna onde a Horcrux estava escondida[cite: 89, 90].</p>
+                [cite_start]<p>Sua morte, embora desconhecida pela maioria, teve grande impacto na luta contra Voldemort anos depois[cite: 91].</p>
+            </div>
+        </div>
+
+        <div class="mySlides">
+            <div class="header">
+                [cite_start]<span class="logo">Liceria Company [cite: 93]</span>
+                <div class="nav">
+                    [cite_start]<a href="#home">Home [cite: 97]</a>
+                    [cite_start]<a href="#about">About [cite: 98]</a>
+                    [cite_start]<a href="#contact">Contact [cite: 99]</a>
+                </div>
+            </div>
+            <div class="slide-content">
+                [cite_start]<h2>Draco Malfoy [cite: 100]</h2>
+                [cite_start]<p>Draco Malfoy foi aluno da Sonserina no mesmo ano que Harry Potter[cite: 101]. [cite_start]Filho de um influente Comensal da Morte, cresceu cercado por riqueza e ideais de superioridade do sangue puro[cite: 102].</p>
+                [cite_start]<p>Arrogante, ele se tornou o principal rival de Harry, mas suas atitudes muitas vezes vinham da pressão familiar[cite: 103, 104]. [cite_start]No sexto ano, foi obrigado por Voldemort a tentar matar Dumbledore, revelando seu lado inseguro[cite: 105].</p>
+                [cite_start]<p>Após a guerra, ele se afastou das ideologias dos pais e se mostrou um adulto mais maduro e menos preconceituoso[cite: 106].</p>
+            </div>
+        </div>
+
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <div class="dots-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+        <span class="dot" onclick="currentSlide(8)"></span>
+    </div>
+
+    <section class="curiosidades-section">
+        <h2>Curiosidades Sobre o Mundo de Harry Potter</h2>
+        <ul>
+            <li>J.K. Rowling e Harry Potter fazem aniversário no mesmo dia: 31 de julho.</li>
+            <li>O feitiço "Expecto Patronum" significa "Eu espero por um guardião" em latim.</li>
+            <li>O nome completo de Dumbledore é Alvo Percival Wulfrico Brian Dumbledore.</li>
+            <li>A Casa Grifinória, rival da Sonserina, valoriza a coragem e a bravura, enquanto a Sonserina valoriza a ambição e a esperteza.</li>
+        </ul>
+    </section>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }    
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+    </script>
+
+</body>
+</html>
