@@ -1,0 +1,151 @@
+@charset "utf-8"; /* Define a codificação de caracteres para o CSS */
+
+/* --- Reset básico e configurações iniciais --- */
+* {
+    box-sizing: border-box; /* Garante que padding (espaçamento interno) e border (borda) sejam incluídos na largura/altura total de um elemento, evitando surpresas no layout */
+    margin: 0; /* Remove margens padrão de todos os elementos */
+    padding: 0; /* Remove preenchimentos padrão de todos os elementos */
+}
+
+body {
+    font-family: 'Arial', sans-serif; /* Define a fonte principal para todo o texto */
+    display: flex; /* Usa Flexbox para organizar o conteúdo */
+    flex-direction: column; /* Organiza os itens em uma coluna (ótimo para mobile) */
+    justify-content: flex-start; /* Alinha o conteúdo ao topo em telas pequenas */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+    min-height: 100vh; /* Ocupa no mínimo 100% da altura da viewport (tela visível) */
+    background-color: #f0f8ff; /* Cor de fundo suave para a página */
+    overflow-y: auto; /* Permite rolagem vertical se o conteúdo for maior que a tela */
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+}
+
+/* --- Estilo do Contêiner Principal do Jogo --- */
+.game-container {
+    background-color: #e0f2f7; /* Um tom de azul mais claro para o fundo do contêiner */
+    padding: 15px; /* Espaçamento interno reduzido para melhor ajuste em telas pequenas */
+    border-radius: 15px; /* Bordas arredondadas para um visual mais suave */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra para dar um efeito de profundidade */
+    text-align: center; /* Centraliza o texto dentro do contêiner */
+    width: 98%; /* Ocupa quase toda a largura da tela em dispositivos menores */
+    max-width: 700px; /* Limite máximo para a largura do contêiner em telas grandes (desktop) */
+    margin-top: 20px; /* Margem superior para separar do topo da página */
+    margin-bottom: 20px; /* Margem inferior para separar do final da página */
+}
+
+/* --- Estilo do Título Principal (Jogo da Memória) --- */
+h1 {
+    color: #004d40; /* Cor verde escura para o título */
+    margin-bottom: 15px; /* Espaçamento abaixo do título */
+    /* Tamanho de fonte responsivo:
+       - 'clamp()' escolhe um valor entre um mínimo (1.5em), um ideal (7vw - 7% da largura da viewport), e um máximo (2.5em).
+       Isso faz o título se ajustar ao tamanho da tela. */
+    font-size: clamp(1.5em, 7vw, 2.5em);
+}
+
+/* --- Estilo do Placar de Movimentos --- */
+.score-board {
+    /* Tamanho de fonte responsivo similar ao H1 */
+    font-size: clamp(1em, 4vw, 1.5em);
+    color: #00796b; /* Outro tom de verde para o texto do placar */
+    margin-bottom: 20px; /* Espaçamento abaixo do placar */
+    font-weight: bold; /* Deixa o texto em negrito */
+}
+
+/* --- Estilo da Grade do Jogo da Memória --- */
+.memory-game {
+    display: grid; /* Usa CSS Grid para criar um layout de grade para as cartas */
+    grid-template-columns: repeat(6, 1fr); /* Cria 6 colunas de largura igual */
+    grid-template-rows: repeat(6, 1fr); /* Cria 6 linhas de altura igual (para um total de 36 células) */
+    /* Espaçamento entre as células da grade, também responsivo */
+    gap: clamp(5px, 2vw, 10px);
+    width: 100%; /* Ocupa 100% da largura do seu contêiner pai (.game-container) */
+    aspect-ratio: 1 / 1; /* ESSENCIAL: Mantém a proporção 1:1 (quadrada) da grade, garantindo que ela não distorça */
+    perspective: 1000px; /* Propriedade para o efeito 3D de virar as cartas (define a profundidade da perspectiva) */
+    margin: 0 auto; /* Centraliza a grade horizontalmente dentro do contêiner */
+}
+
+/* --- Estilo das Cartas Individuais --- */
+.memory-card {
+    width: 100%; /* Ocupa a largura total da célula do grid */
+    height: 100%; /* Ocupa a altura total da célula do grid */
+    position: relative; /* Define o posicionamento relativo para que as faces da carta possam ser posicionadas absolutamente dentro dela */
+    transform-style: preserve-3d; /* ESSENCIAL: Permite que o conteúdo 3D (as faces) não seja achatado quando a carta vira */
+    transition: transform 0.5s; /* ESSENCIAL: Animação suave para virar a carta, leva 0.5 segundos */
+    cursor: pointer; /* Muda o cursor para uma mãozinha quando passa sobre a carta, indicando que é clicável */
+    border-radius: 8px; /* Bordas arredondadas para as cartas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para as cartas */
+    transform-origin: center center; /* Define o ponto de origem da transformação (a carta vira a partir do centro) */
+}
+
+/* --- Efeito de Virar a Carta (adicionado pelo JavaScript) --- */
+.memory-card.flip {
+    transform: rotateY(180deg); /* Quando a classe 'flip' é adicionada, a carta gira 180 graus no eixo Y, revelando a face frontal */
+}
+
+/* --- Regra para Cartas Combinadas (iguais) --- */
+.memory-card.match {
+    cursor: default; /* Altera o cursor para o padrão, indicando que não é mais clicável */
+    pointer-events: none; /* Garante que a carta não seja clicável de forma alguma após ser combinada */
+    /* Você pode adicionar estilos opcionais aqui para cartas combinadas, por exemplo: */
+    /* opacity: 0.7; /* Deixa as cartas combinadas um pouco transparentes */
+    /* filter: grayscale(100%); /* Deixa as cartas combinadas em preto e branco */
+}
+
+/* --- Estilo das Faces da Carta (Frente e Verso) --- */
+.front-face, .back-face {
+    width: 100%; /* Ocupa 100% da largura da carta */
+    height: 100%; /* Ocupa 100% da altura da carta */
+    position: absolute; /* ESSENCIAL: Posiciona uma face sobre a outra */
+    top: 0; /* Garante posicionamento correto no topo */
+    left: 0; /* Garante posicionamento correto na esquerda */
+    border-radius: 8px; /* Bordas arredondadas para as faces */
+    backface-visibility: hidden; /* ESSENCIAL: Esconde a face de trás quando ela está virada para você, criando o efeito de "uma face por vez" */
+    object-fit: contain; /* Garante que a imagem se ajuste completamente dentro do espaço da carta sem ser cortada, adicionando barras se necessário */
+    background-color: #ffffff; /* Cor de fundo para o espaço vazio se 'object-fit: contain' deixar barras */
+}
+
+.front-face {
+    transform: rotateY(180deg); /* ESSENCIAL: A face da frente começa virada para trás, para que quando a carta "vira", ela apareça */
+}
+
+.back-face {
+    background-color: #00796b; /* Cor do verso da carta (se não usar imagem) */
+    /* Se você quiser usar uma imagem para o verso da carta, descomente as linhas abaixo e ajuste o caminho: */
+    /* background-image: url('../img/card_back.png'); */
+    /* background-size: cover; /* Faz a imagem cobrir todo o espaço */
+    /* background-position: center; /* Centraliza a imagem */
+}
+
+/* --- Estilo para o Botão de Reiniciar --- */
+#restart-button {
+    margin-top: 30px; /* Espaçamento acima do botão */
+    padding: 12px 25px; /* Espaçamento interno do botão */
+    font-size: clamp(1em, 3vw, 1.2em); /* Tamanho de fonte responsivo para o botão */
+    background-color: #ff5722; /* Cor de fundo laranja para o botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão do botão */
+    border-radius: 8px; /* Bordas arredondadas */
+    cursor: pointer; /* Altera o cursor para uma mãozinha */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave para efeitos de hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o botão */
+}
+
+/* --- Efeitos ao Passar o Mouse (Hover) no Botão de Reiniciar --- */
+#restart-button:hover {
+    background-color: #e64a19; /* Altera a cor de fundo quando o mouse passa por cima */
+    transform: translateY(-2px); /* Move o botão ligeiramente para cima para um efeito interativo */
+}
+
+/* --- Media Query para Telas Maiores (Desktop) - Abordagem Mobile-first --- */
+/* Esta seção se aplica apenas quando a largura da tela é de 768px ou mais (típico de tablets e desktops) */
+@media (min-width: 768px) {
+    body {
+        justify-content: center; /* Centraliza o conteúdo verticalmente em telas maiores */
+    }
+
+    .game-container {
+        padding: 30px; /* Aumenta o padding do contêiner em telas maiores */
+        margin-top: auto; /* Define margens automáticas para centralizar verticalmente */
+        margin-bottom: auto; /* Define margens automáticas para centralizar verticalmente */
+    }
+}
