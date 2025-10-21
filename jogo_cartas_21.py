@@ -38,7 +38,7 @@ class Baralho:
     def criar_baralho(self):
         """Cria um baralho completo com 52 cartas."""
         valores = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-        naipes = ['Copas', 'Espadas', 'Ouros', 'Paus']
+        naipes = ['♥', '♠', '♦', '♣']
         for naipe in naipes:
             for valor in valores:
                 self.cartas.append(Carta(valor, naipe))
