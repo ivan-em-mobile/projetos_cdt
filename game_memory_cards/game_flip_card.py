@@ -1,4 +1,13 @@
-# game_flip_card.py (Código Final Otimizado)
+'''
+Objetivo: jogo da memória feito com Pygame, com tratamento para 
+empacotar com PyInstaller (resolve caminhos de recursos).
+
+Arquivo principal: game_flip_card.py (já contém carregamento de imagens, 
+criação de cartas, desenho e loop do jogo).
+
+Estrutura de runtime: carrega imagens da pasta "imagens", cria pares, 
+desenha cartas e trata cliques/combinações com atraso e pontuação.
+'''
 
 import pygame
 import random

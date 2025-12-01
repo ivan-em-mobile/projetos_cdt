@@ -1,117 +1,142 @@
-# Importa a biblioteca 'os' para limpar o terminal.
-import os
+import tkinter as tk
+from tkinter import messagebox
 
-# --- Funções do Jogo ---
+# --- CONFIGURAÇÕES DE ESTILO RETRO ---
+COR_FUNDO = 'black'
+COR_TEXTO_PADRAO = '#00FF00'  # Verde brilhante (como um monitor de fósforo)
+COR_X = '#FF0000'           # Vermelho para 'X'
+COR_O = '#00FFFF'           # Ciano para 'O'
+FONTE_RETRO = ('Courier', 20, 'bold') # Fonte monoespaçada para simular terminal
 
-# Função para exibir o tabuleiro
-def mostrar_tabuleiro(tabuleiro):
-    """
-    Exibe o tabuleiro do jogo no terminal.
-    
-    Args:
-        tabuleiro (list): Uma lista de listas que representa o tabuleiro.
-    """
-    # Limpa o terminal para uma visualização mais limpa do tabuleiro a cada jogada.
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print("--- Jogo da Velha ---")
-    print() # Linha em branco
-    for linha in tabuleiro:
-        print(" | ".join(linha))
-        # Imprime uma linha divisória entre as linhas do tabuleiro.
-        print("---------")
-    print() # Linha em branco
+# --- Lógica do Jogo ---
 
-# Função para verificar se há um vencedor
-def verificar_vitoria(tab, jogador):
-    """
-    Verifica se o jogador atual venceu o jogo.
-    
-    Args:
-        tab (list): O tabuleiro atual.
-        jogador (str): O símbolo do jogador ('X' ou 'O').
-    
-    Returns:
-        bool: True se o jogador venceu, False caso contrário.
-    """
-    # Verifica todas as linhas
-    for i in range(3):
-        # A função all() verifica se todos os elementos na lista são True.
-        if all([celula == jogador for celula in tab[i]]):
-            return True
-            
-    # Verifica todas as colunas
-    for i in range(3):
-        if all([tab[j][i] == jogador for j in range(3)]):
-            return True
-            
-    # Verifica a diagonal principal (de cima para a esquerda para baixo para a direita)
-    if all([tab[i][i] == jogador for i in range(3)]):
-        return True
+class JogoDaVelhaRetro:
+    def __init__(self, master):
+        self.master = master
+        master.title("TIC-TAC-TOE [RETRO MODE]")
+        master.config(bg=COR_FUNDO) # Define o fundo da janela como preto
         
-    # Verifica a diagonal secundária (de cima para a direita para baixo para a esquerda)
-    if all([tab[i][2 - i] == jogador for i in range(3)]):
-        return True
+        self.tabuleiro_logico = [
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""]
+        ]
+        self.jogador_atual = "X"
+        self.rodada = 0
+        self.botoes = []
         
-    return False
+        # 1. Cria a interface do placar e status (Retro Style)
+        self.label_status = tk.Label(master, 
+                                     text=f"[STATUS] VEZ DO JOGADOR: {self.jogador_atual}", 
+                                     font=FONTE_RETRO, 
+                                     bg=COR_FUNDO, 
+                                     fg=COR_TEXTO_PADRAO)
+        self.label_status.grid(row=0, column=0, columnspan=3, pady=7)
 
-# Função principal que executa o jogo
-def jogar_jogo_da_velha():
-    """
-    Função principal que coordena o fluxo do jogo.
-    """
-    # Inicializa o tabuleiro com as posições de 1 a 9.
-    tabuleiro = [
-        ["1", "2", "3"],
-        ["4", "5", "6"],
-        ["7", "8", "9"]
-    ]
-    
-    jogador_atual = "X"  # O jogador X sempre começa.
-    rodada = 0           # Contador de rodadas para verificar empate.
-
-    # Loop principal do jogo. O jogo tem no máximo 9 jogadas.
-    while rodada < 9:
-        mostrar_tabuleiro(tabuleiro)
+        # 2. Cria os Botões do Tabuleiro
+        self.criar_botoes()
         
-        # Loop para garantir que a entrada do jogador é válida.
-        while True:
-            escolha = input(f"Vez do jogador {jogador_atual}. Escolha uma posição (1-9): ")
-            
-            # Tenta converter a entrada para um número.
-            if escolha.isdigit():
-                pos = int(escolha) - 1
+        # 3. Cria o botão de Novo Jogo (uma boa prática em GUIs)
+        self.botao_reiniciar = tk.Button(master, 
+                                         text="[REINICIAR JOGO]", 
+                                         font=FONTE_RETRO, 
+                                         bg=COR_TEXTO_PADRAO, 
+                                         fg=COR_FUNDO, 
+                                         command=self.reiniciar_jogo)
+        self.botao_reiniciar.grid(row=4, column=0, columnspan=3, pady=20)
+
+
+    def criar_botoes(self):
+        """Cria e posiciona os 9 botões do tabuleiro com estilo retro."""
+        for linha in range(3):
+            linha_botoes = []
+            for coluna in range(3):
+                botao = tk.Button(self.master, 
+                                   text="", 
+                                   font=('Courier', 35, 'bold'), # Fonte maior para os símbolos
+                                   width=4, 
+                                   height=2,
+                                   bg=COR_FUNDO,
+                                   fg=COR_TEXTO_PADRAO,
+                                   relief=tk.RAISED, # Borda levantada/3D para visual retro
+                                   bd=5, # Espessura da borda
+                                   command=lambda r=linha, c=coluna: self.fazer_jogada(r, c))
                 
-                # Verifica se o número está dentro do intervalo de 0 a 8.
-                if 0 <= pos <= 8:
-                    linha, coluna = pos // 3, pos % 3
-                    
-                    # Verifica se a posição escolhida já está ocupada.
-                    if tabuleiro[linha][coluna] not in ["X", "O"]:
-                        # Se a posição estiver livre, a jogada é válida.
-                        tabuleiro[linha][coluna] = jogador_atual
-                        break  # Sai do loop de entrada
-                    else:
-                        print("Posição já ocupada. Escolha outra.")
-                else:
-                    print("Entrada inválida. Digite um número de 1 a 9.")
-            else:
-                print("Entrada inválida. Digite um número.")
-        
-        # Após a jogada, verifica se o jogador atual venceu.
-        if verificar_vitoria(tabuleiro, jogador_atual):
-            mostrar_tabuleiro(tabuleiro)
-            print(f"Parabéns! O jogador {jogador_atual} venceu!")
-            return # Termina o jogo.
-        
-        rodada += 1
-        
-        # Alterna o jogador para a próxima rodada.
-        jogador_atual = "O" if jogador_atual == "X" else "X"
-        
-    # Se o loop terminar sem um vencedor, o jogo é um empate.
-    mostrar_tabuleiro(tabuleiro)
-    print("Fim do jogo! Empate!")
+                # Posiciona o botão (linhas 1, 2, 3 do grid)
+                botao.grid(row=linha + 1, column=coluna, sticky="nsew", padx=2, pady=2)
+                linha_botoes.append(botao)
+            self.botoes.append(linha_botoes)
 
-# Inicia o jogo quando o script é executado.
+    def verificar_vitoria(self, tab, jogador):
+        """Verifica se o jogador atual venceu o jogo (lógica original)."""
+        # (Lógica mantida do código anterior)
+        # Verifica Linhas, Colunas, Diagonais Principal e Secundária
+        for r in range(3):
+            if all(tab[r][c] == jogador for c in range(3)): return True # Linhas
+            if all(tab[c][r] == jogador for c in range(3)): return True # Colunas
+        if all(tab[i][i] == jogador for i in range(3)): return True # Diagonal Principal
+        if all(tab[i][2 - i] == jogador for i in range(3)): return True # Diagonal Secundária
+        return False
+
+    def fazer_jogada(self, linha, coluna):
+        """Processa a jogada do jogador."""
+        if self.tabuleiro_logico[linha][coluna] == "":
+            
+            # 1. Atualiza o tabuleiro lógico e visual
+            self.tabuleiro_logico[linha][coluna] = self.jogador_atual
+            
+            cor_simbolo = COR_X if self.jogador_atual == 'X' else COR_O
+            
+            self.botoes[linha][coluna].config(text=self.jogador_atual, 
+                                              state=tk.DISABLED, 
+                                              fg=cor_simbolo) # Cor do símbolo
+            self.rodada += 1
+
+            # 2. Verifica a Vitória
+            if self.verificar_vitoria(self.tabuleiro_logico, self.jogador_atual):
+                self.label_status.config(text=f"[VENCEDOR] JOGADOR {self.jogador_atual} GANHOU!", fg='yellow')
+                self.desabilitar_todos_botoes()
+                return
+
+            # 3. Verifica o Empate
+            if self.rodada == 9:
+                self.label_status.config(text="[FIM] JOGO EMPATADO!", fg='orange')
+                return
+
+            # 4. Alterna o Jogador
+            self.jogador_atual = "O" if self.jogador_atual == "X" else "X"
+            self.label_status.config(text=f"[STATUS] VEZ DO JOGADOR: {self.jogador_atual}", fg=COR_TEXTO_PADRAO)
+
+    def desabilitar_todos_botoes(self):
+        """Desabilita os botões após o fim do jogo."""
+        for linha in self.botoes:
+            for botao in linha:
+                botao.config(state=tk.DISABLED)
+                
+    def reiniciar_jogo(self):
+        """Reinicia o estado do jogo e a interface."""
+        # Reinicia as variáveis lógicas
+        self.tabuleiro_logico = [
+            ["", "", ""],
+            ["", "", ""],
+            ["", "", ""]
+        ]
+        self.jogador_atual = "X"
+        self.rodada = 0
+        
+        # Reinicia a interface dos botões
+        for linha in range(3):
+            for coluna in range(3):
+                self.botoes[linha][coluna].config(text="", 
+                                                  state=tk.NORMAL, # Reabilita o botão
+                                                  fg=COR_TEXTO_PADRAO) # Reseta a cor
+                                                  
+        # Reinicia o status
+        self.label_status.config(text=f"[STATUS] VEZ DO JOGADOR: {self.jogador_atual}", fg=COR_TEXTO_PADRAO)
+
+
+# --- Inicialização da Aplicação ---
 if __name__ == "__main__":
-    jogar_jogo_da_velha()
+    root = tk.Tk()
+    app = JogoDaVelhaRetro(root)
+    root.mainloop()
