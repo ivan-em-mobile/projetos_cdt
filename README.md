@@ -1,6 +1,20 @@
 # 🐍 Portfólio de Projetos Python | Jogos & Ferramentas
 
-Uma coleção de projetos desenvolvidos em Python, focados na aplicação de lógica de programação, orientação a objetos (POO) e desenvolvimento de interfaces gráficas com a biblioteca Pygame.
+Uma coleção de projetos desenvolvidos em Python, focados na aplicação de lógica de programação, orientação a objetos (POO) e desenvolvimento de interfaces gráficas com a biblioteca Pygame. Este repositório é dedicado ao estudo e à prática de desenvolvimento web utilizando APIs, Flask e Django. Nosso objetivo é compartilhar projetos e exemplos de código que demonstrem como construir aplicações web dinâmicas, integrar-se a serviços externos e criar soluções robustas com Python.
+
+## ⚙️ Como Executar os Projetos
+
+Para rodar qualquer um dos projetos que utilizam Pygame, você precisa primeiro instalar a biblioteca:
+
+```bash
+pip install pygame
+
+https://developer.marvel.com/
+https://api.nasa.gov/
+https://pokeapi.co/
+https://developer.spotify.com/
+https://cataas.com/
+https://openweathermap.org/api
 
 ---
 
@@ -71,20 +85,5 @@ Desenvolvimento de um Jogo da Memória com Pygame, utilizando um tabuleiro de ca
 
 ---
 
-## ⚙️ Como Executar os Projetos
-
-Para rodar qualquer um dos projetos que utilizam Pygame, você precisa primeiro instalar a biblioteca:
-
-```bash
-pip install pygame
-
-
 # Projetos_cdt
-Este repositório é dedicado ao estudo e à prática de desenvolvimento web utilizando APIs, Flask e Django. Nosso objetivo é compartilhar projetos e exemplos de código que demonstrem como construir aplicações web dinâmicas, integrar-se a serviços externos e criar soluções robustas com Python.
 
-https://developer.marvel.com/
-https://api.nasa.gov/
-https://pokeapi.co/
-https://developer.spotify.com/
-https://cataas.com/
-https://openweathermap.org/api
