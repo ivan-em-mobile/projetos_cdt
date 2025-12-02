@@ -29,7 +29,8 @@ https://openweathermap.org/api
 ## 1. 🃏 Jogo 21 (Blackjack) em Pygame
 
 ### Descrição
-Implementação do clássico jogo de cartas Blackjack (também conhecido como "21") contra um dealer virtual. O projeto utiliza POO para modelar as classes `Carta`, `Baralho` e `Mao`, e foca no gerenciamento da lógica de pontuação, incluindo a regra do **Ás** (1 ou 11).
+Implementação do clássico jogo de cartas Blackjack (também conhecido como "21") contra um dealer virtual. O projeto utiliza POO para modelar
+as classes `Carta`, `Baralho` e `Mao`, e foca no gerenciamento da lógica de pontuação, incluindo a regra do **Ás** (1 ou 11).
 
 ### Funcionalidades
 * **Regra do Ás:** Pontuação dinâmica que ajusta o valor do Ás para evitar estourar 21.
@@ -56,7 +57,8 @@ Implementação do clássico Jogo da Velha (Tic-Tac-Toe), com foco na **lógica 
 ## 3. 💬 Mensagem Cifrada - Zenit Polar
 
 ### Descrição
-Um projeto focado em **criptografia** simples, implementando o cifrador de substituição **ZENIT POLAR**. O objetivo é demonstrar a manipulação de strings e a aplicação de regras algorítmicas para codificação e decodificação.
+Um projeto focado em **criptografia** simples, implementando o cifrador de substituição **ZENIT POLAR**.
+O objetivo é demonstrar a manipulação de strings e a aplicação de regras algorítmicas para codificação e decodificação.
 
 ### Regra (Chave)
 A cifra opera substituindo as vogais da chave 'ZENIT' pelas vogais de 'POLAR' e vice-versa:
@@ -75,7 +77,8 @@ A cifra opera substituindo as vogais da chave 'ZENIT' pelas vogais de 'POLAR' e 
 ## 4. 🧠 Jogo da Memória (Card Flip Game)
 
 ### Descrição
-Desenvolvimento de um Jogo da Memória com Pygame, utilizando um tabuleiro de cartas que devem ser combinadas em pares. O projeto é um bom exercício em **gerenciamento de estados visuais** (cartas viradas/desviradas) e coordenação de eventos de clique.
+Desenvolvimento de um Jogo da Memória com Pygame, utilizando um tabuleiro de cartas que devem ser combinadas em pares.
+O projeto é um bom exercício em **gerenciamento de estados visuais** (cartas viradas/desviradas) e coordenação de eventos de clique.
 
 ### Funcionalidades
 * **Tabuleiro Aleatório:** Distribuição aleatória dos pares de cartas.
