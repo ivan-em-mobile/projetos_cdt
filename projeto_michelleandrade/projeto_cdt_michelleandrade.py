@@ -9,7 +9,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pitbull",
         "descricao": "Brincalhona, docil, companheira e dorminhoca",
-        "imagem": "imagens/Amora.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Amora.png.jpeg"
     },
 
     {
@@ -18,7 +18,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pitbull",
         "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso",
-        "imagem": "imagens/Ralph.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Ralph.png.jpeg"
     },
 
     {
@@ -27,7 +27,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pitbull",
         "descricao": "Calmo, medo de novas pessoas, carinhosa",
-        "imagem": "imagens/Colar.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Colar.png.jpeg"
     },
 
     {
@@ -36,7 +36,7 @@ pets = [
         "tipo": "Gato",
         "raça": "SRD",
         "descricao": "Calmo, medo de novas pessoas, carinhoso e tem histórico de problemas urinários",
-        "imagem": "imagens/Marido.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Marido.png.jpeg"
     },
 
     {
@@ -45,7 +45,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pitbull",
         "descricao": "Calma, idosa e precisa de carinho e cuidados",
-        "imagem": "imagens/Linda.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Linda.png.jpeg"
     },
 
     {
@@ -54,7 +54,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pitbull",
         "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso",
-        "imagem": "imagens/Bob.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Bob.png.jpeg"
     },
 
     {
@@ -63,7 +63,7 @@ pets = [
         "tipo": "Gato",
         "raça": "SRD",
         "descricao": "Agitado, não convive com outros animais, medo de novas pessoas e se adapta lentamente a novos ambientes",
-        "imagem": "imagens/Lilico.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Lilico.png.jpeg"
     },
 
     {
@@ -72,7 +72,7 @@ pets = [
         "tipo": "Cachorro",
         "raça": "Pharaoh hound",
         "descricao": "Calmo, educado e carinhoso",
-        "imagem": "imagens/Willie.png"
+        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Willie.png.jpeg"
     }
      
      ]
@@ -81,7 +81,7 @@ fila = []
 # janela
 janela = tk.Tk()
 janela.title("Patinhas do Bem 🐾")
-janela.geometry("390x844")
+janela.geometry("300x640")
 janela.configure(bg="#DFF5E1")
 
 # limpar tela
@@ -105,7 +105,7 @@ def ver_pet(pet):
     limpar()
 
     imagem_pet = Image.open(pet["imagem"])
-    imagem_pet = imagem_pet.resize((180, 180))
+    imagem_pet = imagem_pet.resize((200, 200))
 
     foto_pet = ImageTk.PhotoImage(imagem_pet)
 
@@ -148,8 +148,9 @@ def ver_pet(pet):
     tk.Button(
         janela,
         text="Quero adotar 🐾",
-        command=lambda: tela_cadastro(pet)
-    ).pack(pady=10)
+    botao_adotar = "criar_botao_personalizado" ("Quero adotar", lambda: "tela_cadastro"(pet))
+botao_adotar.pack(pady=10)
+    )
 
 # cadastro
 def tela_cadastro(pet):
@@ -176,4 +177,4 @@ def tela_final():
 
 # iniciar
 tela_inicial()
-janela.mainloop() 
+janela.mainloop()
