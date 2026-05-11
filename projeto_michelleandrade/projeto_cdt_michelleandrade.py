@@ -148,9 +148,8 @@ def ver_pet(pet):
     tk.Button(
         janela,
         text="Quero adotar 🐾",
-    botao_adotar = "criar_botao_personalizado" ("Quero adotar", lambda: "tela_cadastro"(pet))
-botao_adotar.pack(pady=10)
-    )
+        command=lambda: tela_cadastro(pet)
+    ).pack(pady=10)
 
 # cadastro
 def tela_cadastro(pet):
