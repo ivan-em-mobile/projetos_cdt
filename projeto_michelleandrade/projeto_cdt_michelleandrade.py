@@ -2,16 +2,20 @@ import tkinter as tk
 
 # dados
 pets = [
-    {"nome": "Amora", "idade": 5, "tipo": "Cachorro", "raça": Pitbull, descricao": "Brincalhona, docil, companheira e dorminhoca"},
-    {"nome": "Ralf", "idade": 5, "tipo": "Cachorro", "raça": Pitbull, descricao": "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"}
+    {"nome": "Amora", "idade": 5, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Brincalhona, docil, companheira e dorminhoca"},
+    {"nome": "Ralph", "idade": 5, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"},
+    {"nome": "Colar", "idade": 5, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"},
+    {"nome": "Amora", "idade": 5, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"},
+    {"nome": "Linda", "idade": 10, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"},
+    {"nome": "Bob", "idade": 9, "tipo": "Cachorro", "raça": "Pitbull", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"},
+    {"nome": "Lilico", "idade": 5, "tipo": "Gato", "raça": "SRD", "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso"}
 ]
-
 fila = []
 
 # janela
 janela = tk.Tk()
 janela.title("Patinhas do Bem 🐾")
-janela.geometry("400x500")
+janela.geometry("300x640")
 
 # limpar tela
 def limpar():
@@ -64,4 +68,4 @@ def tela_final():
 
 # iniciar
 tela_inicial()
-janela.mainloop()
+janela.mainloop() 
