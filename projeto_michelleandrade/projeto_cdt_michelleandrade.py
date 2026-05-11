@@ -17,7 +17,7 @@ pets = [
         "idade": 5,
         "tipo": "Cachorro",
         "raça": "Pitbull",
-        "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso",
+        "descricao": "Calmo, carinhoso e reativo com alimentos",
         "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Ralph.jpeg"
     },
 
@@ -26,7 +26,7 @@ pets = [
         "idade": 5,
         "tipo": "Cachorro",
         "raça": "Pitbull",
-        "descricao": "Calmo, medo de novas pessoas e carinhosa",
+        "descricao": "Calmo, carinhoso e um pouco tímido",
         "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Colar.jpeg"
     },
 
@@ -35,7 +35,7 @@ pets = [
         "idade": 5,
         "tipo": "Gato",
         "raça": "SRD",
-        "descricao": "Calmo, carinhoso e tem histórico de problemas urinários",
+        "descricao": "Calmo, carinhoso e possui histórico de problemas urinários",
         "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Marido.jpeg"
     },
 
@@ -53,8 +53,8 @@ pets = [
         "idade": 9,
         "tipo": "Cachorro",
         "raça": "Pitbull",
-        "descricao": "Calmo, medo de novas pessoas, reativo com alimentos e outros animais e carinhoso",
-        "imagem": "c:\\Users\\vetan\\OneDrive\\Área de Trabalho\\imagens.pgn\\Bob.png.jpeg"
+        "descricao": "Calmo, carinhoso e reativo com outros animais",
+        "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Bob.jpeg"
     },
 
     {
@@ -62,7 +62,7 @@ pets = [
         "idade": 5,
         "tipo": "Gato",
         "raça": "SRD",
-        "descricao": "Agitado, não convive com outros animais e se adapta lentamente",
+        "descricao": "Agitado, tímido e demora para se adaptar",
         "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Lilico.jpeg"
     },
 
@@ -71,17 +71,17 @@ pets = [
         "idade": 6,
         "tipo": "Cachorro",
         "raça": "Pharaoh Hound",
-        "descricao": "Calmo, educado e carinhoso",
+        "descricao": "Educado, calmo e muito carinhoso",
         "imagem": "C:/Users/vetan/OneDrive/Área de Trabalho/imagens/Willie.jpeg"
     }
 ]
 
 fila = []
 
-# janela principal
+# janela
 janela = tk.Tk()
 janela.title("Patinhas do Bem 🐾")
-janela.geometry("390x844")
+janela.geometry("390x700")
 janela.configure(bg="#DFF5E1")
 
 # limpar tela
@@ -93,74 +93,30 @@ def limpar():
 def tela_inicial():
     limpar()
 
-    titulo = tk.Label(
+    tk.Label(
         janela,
         text="Patinhas do Bem 🐾",
         font=("Arial", 22, "bold"),
         bg="#DFF5E1"
-    )
-
-    titulo.pack(pady=20)
+    ).pack(pady=20)
 
     for pet in pets:
 
-        # abrir imagem
-        imagem = Image.open(pet["imagem"])
-
-        # tamanho da imagem
-        imagem = imagem.resize((150, 150))
-
-        # converter para tkinter
-        foto = ImageTk.PhotoImage(imagem)
-
-        # card
-        card = tk.Frame(
+        tk.Button(
             janela,
-            bg="white",
-            bd=2,
-            relief="ridge"
-        )
-
-        card.pack(pady=10)
-
-        # imagem
-        label_img = tk.Label(
-            card,
-            image=foto,
-            bg="white"
-        )
-
-        label_img.image = foto
-        label_img.pack(pady=5)
-
-        # nome
-        nome_pet = tk.Label(
-            card,
             text=pet["nome"],
             font=("Arial", 14, "bold"),
-            bg="white"
-        )
-
-        nome_pet.pack()
-
-        # botão perfil
-        botao = tk.Button(
-            card,
-            text="Ver perfil 🐾",
             bg="#A8E6CF",
-            fg="black",
-            font=("Arial", 10, "bold"),
+            width=20,
             command=lambda p=pet: ver_pet(p)
-        )
-
-        botao.pack(pady=5)
+        ).pack(pady=10)
 
 # tela do pet
 def ver_pet(pet):
     limpar()
 
     imagem_pet = Image.open(pet["imagem"])
-    imagem_pet = imagem_pet.resize((200, 200))
+    imagem_pet = imagem_pet.resize((180, 180))
 
     foto_pet = ImageTk.PhotoImage(imagem_pet)
 
@@ -183,15 +139,15 @@ def ver_pet(pet):
     tk.Label(
         janela,
         text=f"Idade: {pet['idade']} anos",
-        bg="#DFF5E1",
-        font=("Arial", 12)
+        font=("Arial", 12),
+        bg="#DFF5E1"
     ).pack()
 
     tk.Label(
         janela,
         text=f"Raça: {pet['raça']}",
-        bg="#DFF5E1",
-        font=("Arial", 12)
+        font=("Arial", 12),
+        bg="#DFF5E1"
     ).pack()
 
     tk.Label(
@@ -199,8 +155,7 @@ def ver_pet(pet):
         text=pet["descricao"],
         wraplength=300,
         justify="center",
-        bg="#DFF5E1",
-        font=("Arial", 11)
+        bg="#DFF5E1"
     ).pack(pady=15)
 
     tk.Button(
@@ -219,7 +174,7 @@ def ver_pet(pet):
         command=tela_inicial
     ).pack()
 
-# tela cadastro
+# cadastro
 def tela_cadastro(pet):
     limpar()
 
@@ -274,85 +229,17 @@ def tela_final():
     tk.Label(
         janela,
         text="Entraremos em contato em breve.",
-        bg="#DFF5E1",
-        font=("Arial", 12)
+        bg="#DFF5E1"
     ).pack(pady=10)
 
     tk.Button(
         janela,
         text="Voltar ao início",
         bg="#A8E6CF",
-        font=("Arial", 11, "bold"),
         command=tela_inicial
     ).pack(pady=20)
 
-# iniciar app
+# iniciar
 tela_inicial()
-def tela_inicial():
-    limpar()
-
-    titulo = tk.Label(
-        janela,
-        text="Patinhas do Bem 🐾",
-        font=("Arial", 22, "bold"),
-        bg="#DFF5E1"
-    )
-
-    titulo.pack(pady=15)
-
-    for pet in pets:
-
-        # card do pet
-        card = tk.Frame(
-            janela,
-            bg="white",
-            width=300,
-            height=220,
-            bd=2,
-            relief="ridge"
-        )
-
-        card.pack(pady=10)
-        card.pack_propagate(False)
-
-        # abrir imagem
-        imagem = Image.open(pet["imagem"])
-
-        # tamanho padrão
-        imagem = imagem.resize((100, 100))
-
-        foto = ImageTk.PhotoImage(imagem)
-
-        # imagem
-        label_img = tk.Label(
-            card,
-            image=foto,
-            bg="white"
-        )
-
-        label_img.image = foto
-        label_img.pack(pady=8)
-
-        # nome
-        nome_pet = tk.Label(
-            card,
-            text=pet["nome"],
-            font=("Arial", 14, "bold"),
-            bg="F8FFF8"
-        )
-
-        nome_pet.pack()
-
-        # botão
-        botao = tk.Button(
-            card,
-            text="Ver Perfil 🐾",
-            bg="#A8E6CF",
-            fg="black",
-            font=("Arial", 10, "bold"),
-            command=lambda p=pet: ver_pet(p)
-        )
-
-        botao.pack(pady=8)
 
 janela.mainloop()
