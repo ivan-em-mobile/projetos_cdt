@@ -35,7 +35,7 @@ if escolha_serviço == '2':
  print ("\nProgressiva - 100R$")
 
 
- if escolha_serviço == '3':
+elif escolha_serviço == '3':
   
   
   print ("Endereço:Jardim Macedônia - Rua Póva de Varzim - Nº67 ")
@@ -43,7 +43,7 @@ if escolha_serviço == '2':
   print ("\nContato: +55 11 91539-7314")
 
   
-  if escolha_serviço == '4':
+elif escolha_serviço == '4':
  
    print ("Avalie nossos serviços de 1 a 5:")
 
