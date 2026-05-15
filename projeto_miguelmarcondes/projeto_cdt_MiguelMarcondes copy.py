@@ -4,6 +4,10 @@ Sistema de Barbearia
 
 '''
 
+nome_salvo = ""
+data_salva = ""
+horario_salvo = ""
+
 while True:
 
     print("\n Barbearia Andrades - Seja Bem Vindo!")
@@ -11,9 +15,10 @@ while True:
     print("\nPara escolher o serviço digite o número correspondente...")
 
     print("\n1 - Agendar horário")
-    print("\n2 - Serviços disponíveis")
-    print("\n3 - Localização e contato")
-    print("\n4 - Avalie nosso serviço")
+    print("\n2 - Cancelar agendamento")
+    print("\n3 - Serviços disponíveis")
+    print("\n4 - Localização e contato")
+    print("\n5 - Avalie nosso serviço")
     print("\n0 - Sair")
 
     escolha_servico = input("\nEscolha o serviço desejado: ")
@@ -22,23 +27,43 @@ while True:
 
         print("\n=== Agendamento de Horário ===")
 
-        nome = input("\nDigite seu nome: ")
+        nome_salvo = input("\nDigite seu nome: ")
 
-        dia = input("Digite o dia do agendamento: ")
+        data_salva = input("\nDigite a data do agendamento: ")
 
-        horario = input("Digite o horário desejado: ")
+        horario_salvo = input("\nDigite o horário desejado: ")
 
         print("\nAgendamento realizado com sucesso!")
 
-        print(f"\nCliente: {nome}")
+        print(f"\nCliente: {nome_salvo}")
 
-        print(f"Dia: {dia}")
+        print(f"\nDia: {data_salva}")
 
-        print(f"Horário: {horario}")
+        print(f"\nHorário: {horario_salvo}")
 
-        print("\nObrigado pela preferência!")
+        print(f"\nAgendamento realizado com sucesso {nome_salvo}, Obrigado pela preferência!")
 
     elif escolha_servico == '2':
+
+        print("\nPara cancelar seu agendamento preencha os campos a seguir:")
+
+        nome = input("\nDigite seu nome: ")
+
+        if nome != nome_salvo:
+
+            print("\nNome diferente, tente novamente!")
+
+        else:
+
+            print(f"\nCliente: {nome_salvo}")
+
+            print(f"\nData: {data_salva}")
+
+            print(f"\nHorário: {horario_salvo}")
+
+            print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
+
+    elif escolha_servico == '3':
 
         print("\nCorte masculino - 30R$")
 
@@ -50,13 +75,13 @@ while True:
 
         print("\nProgressiva - 100R$")
 
-    elif escolha_servico == '3':
+    elif escolha_servico == '4':
 
         print("\nEndereço: Jardim Macedônia - Rua Póva de Varzim - Nº67")
 
         print("\nContato: +55 11 91539-7314")
 
-    elif escolha_servico == '4':
+    elif escolha_servico == '5':
 
         print("\nAvalie nossos serviços de 1 a 5:")
 
@@ -108,6 +133,9 @@ while True:
 
 
 
+
+
+           
 
 
            
