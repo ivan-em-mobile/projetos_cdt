@@ -29,19 +29,19 @@ while True:
 
         nome_salvo = input("\nDigite seu nome: ")
 
-        data_salva = input("\nDigite a data do agendamento: ")
+        data_salva = input("\nDigite a data do agendamento | EX:09/10/2026 : ")
 
-        horario_salvo = input("\nDigite o horário desejado: ")
-
-        print("\nAgendamento realizado com sucesso!")
+        horario_salvo = input("\nDigite o horário desejado | EX:17:30 : ")
 
         print(f"\nCliente: {nome_salvo}")
 
-        print(f"\nDia: {data_salva}")
+        print(f"\nData: {data_salva}")
 
         print(f"\nHorário: {horario_salvo}")
 
         print(f"\nAgendamento realizado com sucesso {nome_salvo}, Obrigado pela preferência!")
+
+        print("\n>.<")
 
     elif escolha_servico == '2':
 
@@ -52,6 +52,12 @@ while True:
         if nome != nome_salvo:
 
             print("\nNome diferente, tente novamente!")
+
+            nome = input("\nDIGITE SEU NOME NOVAMENTE!:")
+
+            if nome != nome_salvo:
+
+                print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
 
         else:
 
@@ -99,23 +105,23 @@ while True:
 
         if avaliar_servico == '1':
 
-            print("\nSentimos muito, vamos procurar melhorar :(")
+            print("\nSentimos MUITO, vamos procurar melhorar :(")
 
         elif avaliar_servico == '2':
 
-            print("\nSentimos muito, vamos procurar melhorar :(")
+            print("\nVamos procurar melhorar :(")
 
         elif avaliar_servico == '3':
 
-            print("\nVamos nos esforçar mais, obrigado!")
+            print("\nVamos nos esforçar mais, Obrigado!")
 
         elif avaliar_servico == '4':
 
-            print("\nObrigado, volte sempre!")
+            print("\nObrigado, Volte sempre!")
 
         elif avaliar_servico == '5':
 
-            print("\nMuito obrigado, volte sempre!")
+            print("\nMuito obrigado, Volte sempre!")
 
         else:
 
@@ -130,13 +136,3 @@ while True:
     else:
 
         print("\nOpção inválida,Tente novamente!")
-
-
-
-
-
-           
-
-
-           
-
