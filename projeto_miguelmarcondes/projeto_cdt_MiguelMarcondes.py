@@ -1,9 +1,3 @@
-'''
-
-Sistema de Barbearia
-
-'''
-
 nome_salvo = ""
 data_salva = ""
 horario_salvo = ""
@@ -45,29 +39,36 @@ while True:
 
     elif escolha_servico == '2':
 
-        print("\nPara cancelar seu agendamento preencha os campos a seguir:")
+        if nome_salvo == "":
 
-        nome = input("\nDigite seu nome: ")
+            print("\nVocê ainda não possui um agendamento ativo.")
 
-        if nome != nome_salvo:
+            print("Por favor, selecione a opção 1 no menu para agendar o seu horário!")
+        
+        else:
+            print("\nPara cancelar seu agendamento preencha os campos a seguir:")
 
-            print("\nNome diferente, tente novamente!")
-
-            nome = input("\nDIGITE SEU NOME NOVAMENTE!:")
+            nome = input("\nDigite seu nome: ")
 
             if nome != nome_salvo:
 
-                print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
+                print("\nNome diferente, tente novamente!")
 
-        else:
+                nome = input("\nDIGITE SEU NOME NOVAMENTE!:")
 
-            print(f"\nCliente: {nome_salvo}")
+                if nome != nome_salvo:
 
-            print(f"\nData: {data_salva}")
+                    print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
 
-            print(f"\nHorário: {horario_salvo}")
+            else:
 
-            print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
+                print(f"\nCliente: {nome_salvo}")
+
+                print(f"\nData: {data_salva}")
+
+                print(f"\nHorário: {horario_salvo}")
+
+                print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
 
     elif escolha_servico == '3':
 
@@ -136,3 +137,4 @@ while True:
     else:
 
         print("\nOpção inválida,Tente novamente!")
+        
