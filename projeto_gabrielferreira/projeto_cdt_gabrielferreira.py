@@ -31,15 +31,11 @@ while True:
         print("\n=== Agendamento de Horário ===")
 
         nome_salvo = input("\nDigite seu nome: ")
-
         data_salva = input("\nDigite a data do agendamento | EX:09/10/2026 : ")
-
         horario_salvo = input("\nDigite o horário desejado | EX:17:30 : ")
 
         print(f"\nCliente: {nome_salvo}")
-
         print(f"\nData: {data_salva}")
-
         print(f"\nHorário: {horario_salvo}")
 
         print(f"\nAgendamento realizado com sucesso {nome_salvo}, Obrigado pela preferência!")
@@ -55,7 +51,6 @@ while True:
         if nome_salvo == "":
 
             print("\nVocê ainda não possui um agendamento ativo.")
-
             print("\nPor favor, selecione a opção 1 no menu para agendar o seu horário!")
 
         else:
@@ -72,14 +67,12 @@ while True:
 
                 if nome != nome_salvo:
 
-                    print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
+                    print("\nNOME DIFERENTE, TENTE NOVAMENTE!")
 
             if nome == nome_salvo:
 
                 print(f"\nCliente: {nome_salvo}")
-
                 print(f"\nData: {data_salva}")
-
                 print(f"\nHorário: {horario_salvo}")
 
                 print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
@@ -94,15 +87,13 @@ while True:
 
         limpar_tela()
 
-        print("\nCorte masculino - 30R$")
-
-        print("\nCorte de barba - 25R$")
-
-        print("\nSobrancelha - 20R$")
-
-        print("\nLuzes - 80R$")
-
-        print("\nProgressiva - 100R$")
+        print("\nDegradê - 35R$")
+        print("\nCorte social - 30R$")
+        print("\nBarba completa - 25R$")
+        print("\nPigmentação - 40R$")
+        print("\nHidratação capilar - 50R$")
+        print("\nPlatinado - 120R$")
+        print("\nCombo corte + barba - 50R$")
 
         input("\nPressione [Enter] para voltar ao menu...")
 
@@ -111,7 +102,6 @@ while True:
         limpar_tela()
 
         print("\nEndereço: Jardim Macedônia - Rua Póva de Varzim - Nº67")
-
         print("\nContato: +55 11 91539-7314")
 
         input("\nPressione [Enter] para voltar ao menu...")
@@ -123,13 +113,9 @@ while True:
         print("\nAvalie nossos serviços de 1 a 5:")
 
         print("\n1 - Péssimo")
-
         print("\n2 - Ruim")
-
         print("\n3 - Médio")
-
         print("\n4 - Bom")
-
         print("\n5 - Muito bom")
 
         avaliar_servico = input("\nSua avaliação: ")
@@ -170,6 +156,6 @@ while True:
 
     else:
 
-        print("\nOpção inválida,Tente novamente!")
+        print("\nOpção inválida, tente novamente!")
 
         input("\nPressione [Enter] para continuar...")
