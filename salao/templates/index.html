@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Salão Espaço Beleza - Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding-top: 50px; }
+        .container { background: white; padding: 30px; display: inline-block; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        input { display: block; margin: 10px auto; padding: 10px; width: 200px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; border: none; border-radius: 4px; }
+        .btn-login { background-color: #28a745; color: white; }
+        .btn-cadastrar { background-color: #007bff; color: white; }
+        .alert { color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+        .erro { background-color: #dc3545; }
+        .sucesso { background-color: #28a745; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Bem-vindo ao Salão Espaço Beleza</h2>
+        
+        <!-- Exibição de mensagens de feedback do Flask (Flash Messages) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="text" name="usuario" placeholder="Digite seu usuário" required>
+            <input type="password" name="senha" placeholder="Digite sua senha" required>
+            
+            <!-- O valor do atributo 'value' define a ação no Python -->
+            <button type="submit" name="acao" value="login" class="btn-login">Entrar</button>
+            <button type="submit" name="acao" value="cadastrar" class="btn-cadastrar">Cadastrar Novo Usuário</button>
+        </form>
+    </div>
+
+</body>
+</html>
