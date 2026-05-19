@@ -1,8 +1,15 @@
+import os
+
 nome_salvo = ""
 data_salva = ""
 horario_salvo = ""
 
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 while True:
+
+    limpar_tela()
 
     print("\n Barbearia Andrades - Seja Bem Vindo!")
 
@@ -18,6 +25,8 @@ while True:
     escolha_servico = input("\nEscolha o serviço desejado: ")
 
     if escolha_servico == '1':
+
+        limpar_tela()
 
         print("\n=== Agendamento de Horário ===")
 
@@ -37,15 +46,20 @@ while True:
 
         print("\n>.<")
 
+        input("\nPressione [Enter] para voltar ao menu...")
+
     elif escolha_servico == '2':
+
+        limpar_tela()
 
         if nome_salvo == "":
 
             print("\nVocê ainda não possui um agendamento ativo.")
 
-            print("Por favor, selecione a opção 1 no menu para agendar o seu horário!")
-        
+            print("\nPor favor, selecione a opção 1 no menu para agendar o seu horário!")
+
         else:
+
             print("\nPara cancelar seu agendamento preencha os campos a seguir:")
 
             nome = input("\nDigite seu nome: ")
@@ -60,7 +74,7 @@ while True:
 
                     print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
 
-            else:
+            if nome == nome_salvo:
 
                 print(f"\nCliente: {nome_salvo}")
 
@@ -70,7 +84,15 @@ while True:
 
                 print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
 
+                nome_salvo = ""
+                data_salva = ""
+                horario_salvo = ""
+
+        input("\nPressione [Enter] para voltar ao menu...")
+
     elif escolha_servico == '3':
+
+        limpar_tela()
 
         print("\nCorte masculino - 30R$")
 
@@ -82,13 +104,21 @@ while True:
 
         print("\nProgressiva - 100R$")
 
+        input("\nPressione [Enter] para voltar ao menu...")
+
     elif escolha_servico == '4':
+
+        limpar_tela()
 
         print("\nEndereço: Jardim Macedônia - Rua Póva de Varzim - Nº67")
 
         print("\nContato: +55 11 91539-7314")
 
+        input("\nPressione [Enter] para voltar ao menu...")
+
     elif escolha_servico == '5':
+
+        limpar_tela()
 
         print("\nAvalie nossos serviços de 1 a 5:")
 
@@ -128,7 +158,11 @@ while True:
 
             print("\nAvaliação inválida!")
 
+        input("\nPressione [Enter] para voltar ao menu...")
+
     elif escolha_servico == '0':
+
+        limpar_tela()
 
         print("\nSistema encerrado.")
 
@@ -137,4 +171,5 @@ while True:
     else:
 
         print("\nOpção inválida,Tente novamente!")
-        
+
+        input("\nPressione [Enter] para continuar...")
