@@ -1,19 +1,57 @@
-import getpass 
-import json 
+import getpass
+import json
+import sqlite3
 from datetime import datetime
 
-senha_padrao = "123456"
-clientes = []
+def inicializar_banco():
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            plano TEXT NOT NULL,
+            valor TEXT NOT NULL,
+            horario TEXT NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS configuracoes (
+            chave TEXT PRIMARY KEY,
+            valor TEXT NOT NULL
+        )
+    """)
+
+    cursor.execute("INSERT OR IGNORE INTO configuracoes (chave, valor) VALUES ('senha', '123456')")
+    
+    conexao.commit()
+    conexao.close()
+
+def obter_senha():
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+    cursor.execute("SELECT valor FROM configuracoes WHERE chave = 'senha'")
+    senha = cursor.fetchone()[0]
+    conexao.close()
+    return senha
+
+def atualizar_senha(nova_senha):
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE configuracoes SET valor = ? WHERE chave = 'senha'", (nova_senha,))
+    conexao.commit()
+    conexao.close()
 
 def configurar_login():
-    global senha_padrao
     print("\n--- Configurações de Login ---")
     nova_senha = getpass.getpass('Digite a nova senha (os caracteres não aparecerão): ')
     confirmacao_senha = getpass.getpass('Confirme a nova senha: ')
 
     if nova_senha == confirmacao_senha:
+        atualizar_senha(nova_senha)
         print('\n[SUCESSO] Senha alterada com sucesso!')
-        senha_padrao = nova_senha 
         return True
     else:
         print('\n[ERRO] As senhas não coincidem! A senha não foi alterada.')
@@ -21,6 +59,7 @@ def configurar_login():
 
 def realizar_login_com_tentativas():
     tentativas_restantes = 5
+    senha_padrao = obter_senha()
     
     print('\n--- Sistema de Login ---')
     nome_usuario = input('Digite seu login: ')
@@ -68,50 +107,74 @@ def cadastrar_cliente():
 
     horario = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    cliente = {
-        "nome": nome,
-        "plano": plano,
-        "valor": valor,
-        "horario": horario
-    }
+    # Salva diretamente no Banco de Dados
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+    cursor.execute("""
+        INSERT INTO clientes (nome, plano, valor, horario) 
+        VALUES (?, ?, ?, ?)
+    """, (nome, plano, valor, horario))
+    conexao.commit()
+    conexao.close()
 
-    clientes.append(cliente)
     print("\nCliente cadastrado com sucesso!")
 
 def listar_clientes():
     print("\n========= CLIENTES CADASTRADOS =========")
-    if len(clientes) == 0:
+    
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+    cursor.execute("SELECT nome, plano, valor, horario FROM clientes")
+    clientes = cursor.fetchall()
+    conexao.close()
+
+    if not clientes:
         print("Nenhum cliente cadastrado.")
         return
 
     for i, cliente in enumerate(clientes, start=1):
         print(f"\nCliente {i}")
-        print(f"Nome: {cliente['nome']}")
-        print(f"Plano: {cliente['plano']}")
-        print(f"Valor Mensal: {cliente['valor']}")
-        print(f"Horário do Cadastro: {cliente['horario']}")
+        print(f"Nome: {cliente[0]}")
+        print(f"Plano: {cliente[1]}")
+        print(f"Valor Mensal: {cliente[2]}")
+        print(f"Horário do Cadastro: {cliente[3]}")
         print("-----------------------------------")
 
 def mostrar_total():
-    print(f"\nTotal de clientes cadastrados: {len(clientes)}")
+    conexao = sqlite3.connect("sistema.db")
+    cursor = conexao.cursor()
+    cursor.execute("SELECT COUNT(*) FROM clientes")
+    total = cursor.fetchone()[0]
+    conexao.close()
+    
+    print(f"\nTotal de clientes cadastrados: {total}")
 
 def exportar_para_json():
-    if len(clientes) == 0:
+    conexao = sqlite3.connect("sistema.db")
+    conexao.row_factory = sqlite3.Row
+    cursor = conexao.cursor()
+    cursor.execute("SELECT nome, plano, valor, horario FROM clientes")
+    linhas = cursor.fetchall()
+    conexao.close()
+
+    if not linhas:
         print("\n[AVISO] Não há clientes cadastrados para exportar.")
         return
 
+    clientes_lista = [dict(linha) for linha in linhas]
     nome_arquivo = "clientes.json"
     
     try:
         with open(nome_arquivo, "w", encoding="utf-8") as arquivo:
-            json.dump(clientes, arquivo, indent=4, ensure_ascii=False)
+            json.dump(clientes_lista, arquivo, indent=4, ensure_ascii=False)
         
-        print(f"\n[SUCESSO] Tudo pronto! Arquivo '{nome_arquivo}' gerado com sucesso na mesma pasta do script.")
+        print(f"\n[SUCESSO] Tudo pronto! Arquivo '{nome_arquivo}' gerado com sucesso.")
     except Exception as e:
         print(f"\n[ERRO] Falha ao gerar o arquivo JSON: {e}")
 
+inicializar_banco()
+
 if realizar_login_com_tentativas():
-    
     while True:
         print("\n=========== MENU ===========")
         print("1 - Cadastrar cliente")
