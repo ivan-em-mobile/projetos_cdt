@@ -88,11 +88,17 @@ while True:
         limpar_tela()
 
         print("\nDegradê - 35R$")
+
         print("\nCorte social - 30R$")
+
         print("\nBarba completa - 25R$")
+
         print("\nPigmentação - 40R$")
+
         print("\nHidratação capilar - 50R$")
+
         print("\nPlatinado - 120R$")
+        
         print("\nCombo corte + barba - 50R$")
 
         input("\nPressione [Enter] para voltar ao menu...")
