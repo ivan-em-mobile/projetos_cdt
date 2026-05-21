@@ -107,7 +107,6 @@ def cadastrar_cliente():
 
     horario = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    # Salva diretamente no Banco de Dados
     conexao = sqlite3.connect("sistema.db")
     cursor = conexao.cursor()
     cursor.execute("""
