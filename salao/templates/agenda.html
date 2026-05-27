@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px; }
+        .card { background: white; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        select, button { width: 100%; padding: 10px; margin-top: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;}
+        button { background-color: #6f42c1; color: white; font-weight: bold; cursor: pointer; border: none;}
+        .topo { display: flex; justify-content: space-between; align-items: center; max-width: 440px; margin: 0 auto 10px auto;}
+        a { color: #dc3545; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="topo">
+        <p>Olá, <strong>{{ usuario }}</strong>!</p>
+        <a href="{{ url_for('logout') }}">Sair</a>
+    </div>
+
+    <div class="card">
+        <h3>Escolha seu Agendamento</h3>
+        <form method="POST">
+            
+            <label>Selecione o Profissional:</label>
+            <select name="cabeleireiro" required>
+                {% for prof in cabeleireiros %}
+                    <option value="{{ prof }}">{{ prof }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Selecione o Serviço:</label>
+            <select name="servico" required>
+                <!-- Aqui pegamos a chave (nome) e o valor (preço) do dicionário -->
+                {% for nome_servico, preco in servicos.items() %}
+                    <option value="{{ nome_servico }}">{{ nome_servico }} - R$ {{ "%.2f"|format(preco) }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Selecione o Dia (Quarta a Sábado):</label>
+            <select name="dia" required>
+                {% for d in dias %}
+                    <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Confirmar Agendamento</button>
+        </form>
+    </div>
+
+</body>
+</html>
