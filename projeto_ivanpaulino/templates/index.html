@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salão de Beleza - Painel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gestão do Salão de Beleza</h1>
+        <p>Operador Atual: <strong>Recepcionista-Andrei</strong></p>
+        <button onclick="exportarBanco()" class="btn-export">📥 Exportar Banco em JSON</button>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>➕ Cadastrar Cliente</h2>
+            <form id="formCliente">
+                <input type="text" id="nomeCliente" placeholder="Nome do Cliente" required>
+                <input type="text" id="telCliente" placeholder="Telefone" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>📅 Agendar Atendimento</h2>
+            <form id="formAgendamento">
+                <label>Cliente:</label>
+                <select id="selectCliente" required><option value="">Selecione...</option></select>
+
+                <label>Funcionário:</label>
+                <select id="selectFuncionario" required></select>
+
+                <label>Serviço:</label>
+                <select id="selectServico" required></select>
+
+                <label>Dia da Semana:</label>
+                <select id="diaSemana" required>
+                    <option value="Segunda">Segunda</option>
+                    <option value="Terça">Terça</option>
+                    <option value="Quarta">Quarta</option>
+                    <option value="Quinta">Quinta</option>
+                    <option value="Sexta">Sexta</option>
+                    <option value="Sábado">Sábado</option>
+                    <option value="Domingo">Domingo</option>
+                </select>
+
+                <label>Hora:</label>
+                <input type="time" id="hora" required>
+
+                <button type="submit">Confirmar Agendamento</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>💰 Editar Preços (Serviços e Produtos)</h2>
+            <div id="listaPrecos">
+                </div>
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

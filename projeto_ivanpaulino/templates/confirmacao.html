@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamento Confirmado!</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding-top: 50px; }
+        .sucesso-card { background: white; padding: 30px; display: inline-block; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); border-top: 5px solid #28a745; }
+        .detalhes { text-align: left; background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 20px 0; }
+        a { display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="sucesso-card">
+        <h2>🎉 Agendamento Confirmado!</h2>
+        <p>Seu horário foi reservado com sucesso no sistema do salão.</p>
+        
+        <div class="detalhes">
+            <p><strong>Profissional:</strong> {{ agendamento.cabeleireiro }}</p>
+            <p><strong>Serviço:</strong> {{ agendamento.servico }}</p>
+            <p><strong>Valor:</strong> R$ {{ "%.2f"|format(agendamento.preco) }}</p>
+            <p><strong>Dia:</strong> {{ agendamento.dia }}</p>
+        </div>
+
+        <a href="{{ url_for('agenda') }}">Fazer outro agendamento</a>
+    </div>
+
+</body>
+</html>
