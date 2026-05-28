@@ -1,138 +1,217 @@
-'''
+import os
+import json
+from datetime import datetime
 
-Sistema de Barbearia
+ARQUIVO_BANCO = "agendamentos.json"
 
-'''
+SERVICOS = {
+    "1": ("Degradê", 35),
+    "2": ("Corte social", 30),
+    "3": ("Barba completa", 25),
+    "4": ("Pigmentação", 40),
+    "5": ("Hidratação capilar", 50),
+    "6": ("Platinado", 120),
+    "7": ("Combo corte + barba", 50)
+}
 
-nome_salvo = ""
-data_salva = ""
-horario_salvo = ""
+HORARIOS_DISPONIVEIS = {
+    "09:00": True,
+    "10:00": True,
+    "11:00": True,
+    "13:00": True,
+    "14:00": True,
+    "15:00": True,
+    "16:00": True,
+    "17:30": True
+}
+
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def mostrar_cabecalho(titulo):
+    limpar_tela()
+    print("=" * 45)
+    print(f"      Barbearia Andrades - {titulo}")
+    print("=" * 45)
+
+def carregar_agendamentos():
+
+    if not os.path.exists(ARQUIVO_BANCO):
+        with open(ARQUIVO_BANCO, "w") as arquivo:
+            json.dump([], arquivo)
+
+    with open(ARQUIVO_BANCO, "r") as arquivo:
+        return json.load(arquivo)
+
+def salvar_agendamentos(lista_agendamentos):
+
+    with open(ARQUIVO_BANCO, "w") as arquivo:
+        json.dump(lista_agendamentos, arquivo, indent=4)
 
 while True:
 
-    print("\n Barbearia Andrades - Seja Bem Vindo!")
+    limpar_tela()
 
-    print("\nPara escolher o serviço digite o número correspondente...")
+    print("\nBarbearia Andrades - Seja Bem Vindo!")
 
     print("\n1 - Agendar horário")
-    print("\n2 - Cancelar agendamento")
-    print("\n3 - Serviços disponíveis")
-    print("\n4 - Localização e contato")
-    print("\n5 - Avalie nosso serviço")
-    print("\n0 - Sair")
+    print("2 - Cancelar agendamento")
+    print("3 - Ver agendamentos")
+    print("4 - Serviços e preços")
+    print("5 - Localização e contato")
+    print("0 - Sair")
 
-    escolha_servico = input("\nEscolha o serviço desejado: ")
+    escolha = input("\nEscolha: ").strip()
 
-    if escolha_servico == '1':
+    if escolha == "1":
 
-        print("\n=== Agendamento de Horário ===")
+        mostrar_cabecalho("Agendamento")
 
-        nome_salvo = input("\nDigite seu nome: ")
+        nome = input("\nDigite seu nome: ").strip()
 
-        data_salva = input("\nDigite a data do agendamento | EX:09/10/2026 : ")
+        print("\nServiços:\n")
 
-        horario_salvo = input("\nDigite o horário desejado | EX:17:30 : ")
+        for cod, (nome_serv, preco) in SERVICOS.items():
+            print(f"{cod} - {nome_serv} (R$ {preco})")
 
-        print(f"\nCliente: {nome_salvo}")
+        cod_servico = input("\nEscolha o serviço: ").strip()
 
-        print(f"\nData: {data_salva}")
+        if cod_servico not in SERVICOS:
+            print("\nServiço inválido.")
+            input("\nPressione Enter...")
+            continue
 
-        print(f"\nHorário: {horario_salvo}")
+        while True:
 
-        print(f"\nAgendamento realizado com sucesso {nome_salvo}, Obrigado pela preferência!")
+            data_input = input("\nDigite a data (DD/MM/AAAA): ").strip()
 
-        print("\n>.<")
+            try:
+                data_validada = datetime.strptime(data_input, "%d/%m/%Y")
 
-    elif escolha_servico == '2':
+                if data_validada.date() < datetime.now().date():
+                    print("Data inválida.")
+                    continue
 
-        print("\nPara cancelar seu agendamento preencha os campos a seguir:")
+                break
 
-        nome = input("\nDigite seu nome: ")
+            except ValueError:
+                print("Formato inválido.")
 
-        if nome != nome_salvo:
+        print("\nHorários:\n")
 
-            print("\nNome diferente, tente novamente!")
+        for hr, disponivel in HORARIOS_DISPONIVEIS.items():
 
-            nome = input("\nDIGITE SEU NOME NOVAMENTE!:")
+            if disponivel:
+                print(f"{hr} -> Disponível")
+            else:
+                print(f"{hr} -> Ocupado")
 
-            if nome != nome_salvo:
+        horario = input("\nDigite o horário: ").strip()
 
-                print("\nNOME DIFERENTE,TENTE NOVAMENTE!")
+        if horario not in HORARIOS_DISPONIVEIS:
+            print("\nHorário inválido.")
+            input("\nPressione Enter...")
+            continue
+
+        if not HORARIOS_DISPONIVEIS[horario]:
+            print("\nHorário ocupado.")
+            input("\nPressione Enter...")
+            continue
+
+        HORARIOS_DISPONIVEIS[horario] = False
+
+        agendamento = {
+            "nome": nome,
+            "servico": SERVICOS[cod_servico][0],
+            "data": data_input,
+            "horario": horario
+        }
+
+        lista = carregar_agendamentos()
+        lista.append(agendamento)
+        salvar_agendamentos(lista)
+
+        print("\nAgendamento realizado com sucesso!")
+
+        input("\nPressione Enter para voltar...")
+
+    elif escolha == "2":
+
+        mostrar_cabecalho("Cancelar Agendamento")
+
+        nome = input("\nDigite seu nome: ").strip()
+
+        lista = carregar_agendamentos()
+
+        novo_banco = []
+        removido = False
+
+        for agendamento in lista:
+
+            if agendamento["nome"].lower() == nome.lower():
+
+                HORARIOS_DISPONIVEIS[agendamento["horario"]] = True
+                removido = True
+
+            else:
+                novo_banco.append(agendamento)
+
+        salvar_agendamentos(novo_banco)
+
+        if removido:
+            print("\nAgendamento cancelado.")
+        else:
+            print("\nNenhum agendamento encontrado.")
+
+        input("\nPressione Enter para voltar...")
+
+    elif escolha == "3":
+
+        mostrar_cabecalho("Agendamentos")
+
+        lista = carregar_agendamentos()
+
+        if len(lista) == 0:
+            print("\nNenhum agendamento encontrado.")
 
         else:
 
-            print(f"\nCliente: {nome_salvo}")
+            for agendamento in lista:
 
-            print(f"\nData: {data_salva}")
+                print("\nNome:", agendamento["nome"])
+                print("Serviço:", agendamento["servico"])
+                print("Data:", agendamento["data"])
+                print("Horário:", agendamento["horario"])
+                print("-" * 30)
 
-            print(f"\nHorário: {horario_salvo}")
+        input("\nPressione Enter para voltar...")
 
-            print(f"\nAgendamento cancelado com sucesso {nome_salvo}!")
+    elif escolha == "4":
 
-    elif escolha_servico == '3':
+        mostrar_cabecalho("Serviços e Preços")
 
-        print("\nCorte masculino - 30R$")
+        print()
 
-        print("\nCorte de barba - 25R$")
+        for cod, (nome_serv, preco) in SERVICOS.items():
+            print(f"{nome_serv} - R$ {preco}")
 
-        print("\nSobrancelha - 20R$")
+        input("\nPressione Enter para voltar...")
 
-        print("\nLuzes - 80R$")
+    elif escolha == "5":
 
-        print("\nProgressiva - 100R$")
-
-    elif escolha_servico == '4':
+        mostrar_cabecalho("Contato")
 
         print("\nEndereço: Jardim Macedônia - Rua Póva de Varzim - Nº67")
+        print("Contato: +55 11 91539-7314")
 
-        print("\nContato: +55 11 91539-7314")
+        input("\nPressione Enter para voltar...")
 
-    elif escolha_servico == '5':
-
-        print("\nAvalie nossos serviços de 1 a 5:")
-
-        print("\n1 - Péssimo")
-
-        print("\n2 - Ruim")
-
-        print("\n3 - Médio")
-
-        print("\n4 - Bom")
-
-        print("\n5 - Muito bom")
-
-        avaliar_servico = input("\nSua avaliação: ")
-
-        if avaliar_servico == '1':
-
-            print("\nSentimos MUITO, vamos procurar melhorar :(")
-
-        elif avaliar_servico == '2':
-
-            print("\nVamos procurar melhorar :(")
-
-        elif avaliar_servico == '3':
-
-            print("\nVamos nos esforçar mais, Obrigado!")
-
-        elif avaliar_servico == '4':
-
-            print("\nObrigado, Volte sempre!")
-
-        elif avaliar_servico == '5':
-
-            print("\nMuito obrigado, Volte sempre!")
-
-        else:
-
-            print("\nAvaliação inválida!")
-
-    elif escolha_servico == '0':
+    elif escolha == "0":
 
         print("\nSistema encerrado.")
-
         break
 
     else:
 
-        print("\nOpção inválida,Tente novamente!")
+        print("\nOpção inválida.")
+        input("\nPressione Enter...")
