@@ -1,0 +1,205 @@
+/* ==========================================
+   CONFIGURAÇÃO DE TEMAS (VARIÁVEIS)
+   ========================================== */
+
+/* Modo Escuro (Padrão - Ártico Noturno) */
+:root[data-theme="dark"] {
+    --bg-principal: #0f172a;       /* Azul escuro profundo */
+    --bg-card: #1e293b;            /* Azul ártico dos retângulos */
+    --texto-principal: #ffffff;    /* Texto branco */
+    --texto-secundario: #94a3b8;   /* Texto cinza claro */
+    --cor-essencial: #38bdf8;      /* Azul claro para o essencial (50%) */
+    --cor-estilo-vida: #ffb800;    /* Amarelo/Laranja para estilo de vida (30%) */
+    --cor-reserva: #10b981;        /* Verde para reserva (20%) */
+    --borda-card: #0891b2;         /* Azul Ártico para as bordas */
+    --bg-investimento: #1e1b4b;    /* Quadrado redondo azul escuro/roxo para a seção final */
+    --texto-botao: #ffffff;
+
+    /* ====== SEUS NOVOS GRADIENTES DO HEADER ====== */
+    --gradient-header: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); /* Azul escuro para azul vivo */
+    --texto-header: #ffffff; /* Texto branco no fundo escuro */
+}
+
+
+/* Modo Claro */
+:root[data-theme="light"] {
+    --bg-principal: #fff1e7;       /* Fundo quase branco */
+    --bg-card: #ffffff;            /* Cards totalmente brancos */
+    --texto-principal: #f59236;    /* Texto escuro */
+    --texto-secundario: #ff9634;   /* Texto cinza escuro */
+    --cor-essencial: #b430f1;      /* Azul mais forte para leitura */
+    --cor-estilo-vida: #d97706;    /* Laranja escuro */
+    --cor-reserva: #059669;        /* Verde escuro */
+    --borda-card: #cbd5e1;         /* Borda cinza sutil */
+    --bg-investimento: #fef8e0;    /* Quadrado redondo azul bem claro para a seção final */
+    --texto-botao: #070603;
+
+    /* ====== SEUS NOVOS GRADIENTES DO HEADER ====== */
+    --gradient-header: linear-gradient(135deg, #fca636 0%, #ffe57e 100%); /* Laranja muito suave para amarelo sutil */
+    --texto-header: #fffbf6; /* Um tom bronze/laranja escuro para destacar bem a leitura */
+}
+
+/* ==========================================
+   ESTILOS GLOBAIS
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    font-family: 'Urbanist', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Botão de alternar tema */
+.theme-toggle-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.btn-theme {
+    background: var(--bg-card);
+    border: 2px solid var(--borda-card);
+    color: var(--cor-estilo-vida);
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-theme:hover {
+    transform: scale(1.1);
+}
+
+/* ==========================================
+   TELA DE LOADING / ROLETA (ADAPTÁVEL)
+   ========================================== */
+#loading-screen {
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.penguin-spinner {
+    width: 120px;
+    height: 120px;
+    border: 10px solid var(--bg-card);
+    border-top: 10px solid var(--cor-essencial); /* Segue a cor principal do tema ativo */
+    border-radius: 50%;
+    margin-bottom: 20px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   CARDS DE GASTOS E RESULTADOS (RETÂNGULOS REDONDOS)
+   ========================================== */
+.budget-list {
+    margin-top: 30px;
+}
+
+.budget-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-card);
+    border-left: 6px solid var(--borda-card);
+    padding: 20px;
+    border-radius: 16px; /* Cantos bem arredondados como solicitado */
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.budget-item:hover {
+    transform: scale(1.02);
+}
+
+.budget-item i {
+    font-size: 1.5rem;
+    margin-right: 12px;
+}
+
+/* Cores específicas dos itens baseadas na regra */
+.item-essencial { border-left-color: var(--cor-essencial); }
+.item-essencial i { color: var(--cor-essencial); }
+
+.item-vida { border-left-color: var(--cor-estilo-vida); }
+.item-vida i { color: var(--cor-estilo-vida); }
+
+.item-reserva { border-left-color: var(--cor-reserva); }
+.item-reserva i { color: var(--cor-reserva); }
+
+/* ==========================================
+   NOVA SEÇÃO DE INVESTIMENTOS (MODIFICADA)
+   ========================================== */
+.investment-section {
+    background-color: var(--bg-investimento); /* Quadrado redondo azul ou laranja dinâmico */
+    border: 2px solid var(--cor-essencial);
+    border-radius: 20px; /* Cantos bem redondos */
+    padding: 25px;
+    margin-top: 30px;
+    text-align: center;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.investment-section h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--texto-principal);
+}
+
+.investment-section p {
+    font-size: 1rem;
+    color: var(--texto-secundario);
+    margin-bottom: 20px;
+}
+
+/* Container dos novos botões */
+.investment-options {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Estilo dos botões corrigidos: Imóveis, Automóveis, Compras Futuras */
+.btn-option {
+    background-color: var(--bg-card);
+    border: 2px solid var(--cor-essencial);
+    color: var(--texto-principal);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-option:hover {
+    background-color: var(--cor-essencial);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
