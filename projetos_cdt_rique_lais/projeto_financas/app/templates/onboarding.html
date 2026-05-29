@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="position: relative; margin-top: 30px; padding-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto;">
+    
+    <img src="{{ url_for('static', filename='img/nevs_anotando_png.png') }}" 
+         alt="Pinguim Anotando" 
+         style="position: absolute; left: -360px; bottom: 0px; width: 390px; height: 380px; object-fit: contain; pointer-events: none; z-index: 10;">
+
+    <div style="background-color: var(--bg-card); border: 2px solid var(--borda-card); border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: background-color 0.3s ease, border-color 0.3s ease;">
+        
+        <h2 class="text-center" style="color: var(--texto-principal); font-weight: 700; margin-bottom: 5px;">
+            Configuração de Perfil <span style="color: var(--cor-estilo-vida);">🐧</span>
+        </h2>
+        <p class="text-center" style="color: var(--texto-secundario); font-size: 0.95rem; margin-bottom: 25px;">
+            Responda honestamente para o pinguim calcular seu plano.
+        </p>
+
+        <form method="POST" action="{{ url_for('onboarding.onboarding') if 'onboarding' in url_for.__code__.co_varnames else '' }}">
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: var(--texto-principal); font-weight: 600; margin-bottom: 8px;">
+                    <i class="fas fa-user" style="margin-right: 6px; color: var(--cor-essencial);"></i> Qual é o seu nome?
+                </label>
+                <input type="text" name="nome" placeholder="Ex: Henrique" required 
+                       style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--borda-card); background-color: var(--bg-principal); color: var(--texto-principal); font-family: 'Urbanist', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.2s;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: var(--texto-principal); font-weight: 600; margin-bottom: 8px;">
+                    <i class="fas fa-wallet" style="margin-right: 6px; color: var(--cor-essencial);"></i> Qual sua renda mensal total?
+                </label>
+                <input type="number" step="0.01" name="renda_mensal" placeholder="R$ 0.00" required 
+                       style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--borda-card); background-color: var(--bg-principal); color: var(--texto-principal); font-family: 'Urbanist', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.2s;">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; color: var(--texto-principal); font-weight: 600; margin-bottom: 8px;">
+                    <i class="fas fa-bullseye" style="margin-right: 6px; color: var(--cor-essencial);"></i> Qual é a sua maior meta atual?
+                </label>
+                <select name="meta" required 
+                        style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--borda-card); background-color: var(--bg-principal); color: var(--texto-principal); font-family: 'Urbanist', sans-serif; font-size: 1rem; outline: none; cursor: pointer;">
+                    <option value="" disabled selected>Criar Reserva de Emergência</option>
+                    <option value="Reserva">Criar Reserva de Emergência</option>
+                    <option value="Imóvel">Comprar ou Alugar Imóvel</option>
+                    <option value="Veículo">Adquirir um Veículo</option>
+                    <option value="Viagem">Fazer uma Viagem</option>
+                    <option value="Independência">Independência Financeira</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 30px;">
+                <label style="display: block; color: var(--texto-principal); font-weight: 600; margin-bottom: 8px;">
+                    <i class="fas fa-university" style="margin-right: 6px; color: var(--cor-essencial);"></i> Qual seu banco principal?
+                </label>
+                <input type="text" name="banco" placeholder="Ex: Nubank, Inter..." required 
+                       style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--borda-card); background-color: var(--bg-principal); color: var(--texto-principal); font-family: 'Urbanist', sans-serif; font-size: 1rem; outline: none; transition: border-color 0.2s;">
+            </div>
+
+            <button type="submit" 
+                    style="width: 100%; padding: 14px; background-color: var(--cor-estilo-vida); color: #070603; border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease;"
+                    onmouseover="this.style.filter='brightness(1.1)';" 
+                    onmouseout="this.style.filter='brightness(1)';"
+                    onmousedown="this.style.transform='scale(0.98)';"
+                    onmouseup="this.style.transform='scale(1)';">
+                Finalizar e Calcular <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

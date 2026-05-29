@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinguim Financeiro</title>
+    
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/penguin_logo_png.png') }}?v=1">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header style="display: flex; align-items: center; justify-content: space-between; background: var(--gradient-header); border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding: 16px 40px; margin-bottom: 30px; font-family: 'Urbanist', sans-serif; transition: background 0.3s ease, color 0.3s ease;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="{{ url_for('static', filename='img/nevs_andando_png.png') }}" alt="Pinguim" style="width: 200px; height: 200px; object-fit: contain;">
+            <div style="display: flex; flex-direction: column; line-height: 1.1; font-weight: 800; font-size: 2.1rem; color: var(--texto-header); transition: color 0.3s ease;">
+                <span>Pinguim</span>
+                <span>Financeiro</span>
+            </div>
+        </div>
+        
+        {% if '/dashboard' in request.path %}
+        <div>
+            <a href="/" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; font-size: 0.9rem; color: #ffffff; background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; font-weight: 500; transition: background 0.2s;" onmouseover="this.style.backgroundColor='rgba(255,255,255,0.1)';" onmouseout="this.style.backgroundColor='rgba(255,255,255,0.05)';">
+                <i class="fas fa-arrow-left"></i> Menu Principal
+            </a>
+        </div>
+        {% endif %}
+    </header>
+
+    <div id="theme-toggle-container" class="theme-toggle-container" style="display: flex; justify-content: flex-end; padding-right: 40px; margin-bottom: 20px;">
+        <button id="theme-toggle-btn" onclick="toggleTheme()" class="btn-theme" style="cursor: pointer; background: transparent; border: none; font-size: 1.5rem; color: var(--texto-principal);">
+            <i id="theme-icon" class="fas fa-sun"></i>
+        </button>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script>
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (htmlTag.getAttribute('data-theme') === 'dark') {
+                htmlTag.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                htmlTag.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+    </script>
+</body>
+</html>
