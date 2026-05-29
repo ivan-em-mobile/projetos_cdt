@@ -138,3 +138,5 @@ O servidor estará disponível por padrão no endereço: `[http://127.0.0.1:5000
 ## ☁️ Deploy e Nuvem
 
 O código foi preparado para identificar automaticamente o ambiente de hospedagem. Se a variável de ambiente `RENDER` estiver ativa, o banco de dados SQLite será realocado de maneira temporária e otimizada para o caminho `/tmp/igreja_catolica.db`, garantindo compatibilidade com plataformas de infraestrutura como o **Render** e suporte a pipelines configurados via **Vercel** (`vercel.json`).
+
+Link do projeto rodando no Render: https://projetos-cdt.onrender.com
