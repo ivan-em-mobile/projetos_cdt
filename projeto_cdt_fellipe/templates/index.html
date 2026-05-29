@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos - Igreja Católica</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style type="text/theme">
+        @theme {
+            --color-principal: #1e293b; 
+            --color-medio: #334155;       
+            --color-claro: #475569;       
+            --color-destaque: #a3e635;     
+            --color-alerta: #f87171;      
+            --color-suave: #cbd5e1;        
+            --color-escuro: #0f172a;      
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+
+    <header class="bg-principal text-white p-6 shadow-lg text-center border-b border-slate-800">
+        <h1 class="text-3xl font-bold tracking-wide">Roteiro de Estudos Católicos</h1>
+        <p class="text-sm mt-2 font-light text-slate-300">Baseado no Catecismo Romano e no Concílio de Trento</p>
+    </header>
+
+    <main class="container mx-auto p-4 grow max-w-5xl">        
+        
+        <div id="painel-identificacao" class="bg-slate-800 p-6 rounded-lg shadow-xl mb-6 max-w-md mx-auto mt-10 border border-slate-700">
+            <h2 class="text-xl font-semibold mb-4 text-center text-slate-100">Acesse sua Conta</h2>
+            <div class="flex flex-col gap-4">
+                <div>
+                    <label for="input-usuario" class="text-sm font-medium text-slate-300 block mb-1">Usuário:</label>
+                    <input type="text" id="input-usuario" placeholder="Seu usuário aqui..." class="bg-slate-900 border border-slate-700 p-2 rounded w-full focus:outline-claro text-sm text-slate-100 placeholder-slate-500">
+                </div>
+                
+                <div>
+                    <label for="input-senha" class="text-sm font-medium text-slate-300 block mb-1">Senha:</label>
+                    <input type="password" id="input-senha" placeholder="Sua senha aqui..." class="bg-slate-900 border border-slate-700 p-2 rounded w-full focus:outline-claro text-sm text-slate-100 placeholder-slate-500">
+                </div>
+                
+                <div class="flex gap-2 mt-2">
+                    <button id="btn-login" class="flex-1 bg-medio hover:bg-claro text-white px-4 py-2 rounded font-medium transition cursor-pointer text-sm shadow-md">Entrar</button>
+                    <button id="btn-cadastro" class="flex-1 bg-slate-700 hover:bg-slate-600 text-slate-200 px-4 py-2 rounded font-medium transition cursor-pointer text-sm">Cadastrar</button>
+                </div>
+
+                <p id="mensagem-feedback" class="text-xs text-center font-medium mt-1 hidden"></p>
+            </div>
+        </div>
+
+        <div id="painel-principal" class="hidden grid-cols-1 md:grid-cols-4 gap-6 mt-4">
+            
+            <div class="bg-slate-800 p-4 rounded-lg shadow-md md:col-span-1 h-fit border border-slate-700">
+                <h3 class="font-bold text-lg mb-3 border-b border-slate-700 pb-2 text-slate-200">O que quer aprender?</h3>
+                <ul class="space-y-1">
+                    <li><button onclick="carregarSubMenu(1)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">1. O Credo</button></li>
+                    <li><button onclick="carregarSubMenu(2)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">2. Os Sacramentos</button></li>
+                    <li><button onclick="carregarSubMenu(3)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">3. O Decálogo</button></li>
+                    <li><button onclick="carregarSubMenu(4)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">4. A Oração</button></li>
+                    <li><button onclick="carregarSubMenu(5)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">5. Os Dogmas</button></li>
+                    <li><button onclick="carregarSubMenu(6)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition text-slate-300 hover:text-white">6. Tradição, Escritura...</button></li>
+                    <li><button onclick="carregarSubMenu(7)" class="w-full text-left p-2 text-sm hover:bg-slate-700 rounded transition font-medium text-destaque">7. O que é a Igreja?</button></li>
+                    <li class="pt-4 border-t border-slate-700"><button onclick="mostrarConsideracoes()" class="w-full text-left p-2 text-xs bg-slate-900/50 hover:bg-slate-700 rounded text-slate-400">8. Informações do Sistema</button></li>
+                </ul>
+            </div>
+
+            <div class="bg-slate-800 p-6 rounded-lg shadow-md md:col-span-3 border border-slate-700">
+                <h2 id="saudacao-usuario" class="text-xl font-bold text-slate-200 mb-4"></h2>
+                
+                <div id="sub-menu-container" class="flex flex-wrap gap-2 mb-4"></div>
+                
+                <hr class="my-4 border-slate-700">
+
+                <div id="caixa-texto" class="prose prose-invert max-w-none">
+                    <h3 id="texto-titulo" class="text-xl font-bold mb-3 text-slate-100">Selecione um tópico para começar!</h3>
+                    <p id="texto-conteudo" class="text-slate-300 leading-relaxed text-justify whitespace-pre-line"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-escuro text-slate-400 text-center p-4 text-xs mt-10 border-t border-slate-800">
+        <p>Fontes: Catecismo de Trento (1566) | Ineffabilis Deus | Mystici Corporis Christi</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
