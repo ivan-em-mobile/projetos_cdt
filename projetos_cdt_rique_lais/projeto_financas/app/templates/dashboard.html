@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 30px; padding-bottom: 60px; color: var(--texto-principal); transition: color 0.3s ease; font-family: 'Urbanist', sans-serif;">
+    
+    <h2 class="text-center" style="color: var(--texto-principal);">Olá, <span style="color: var(--cor-estilo-vida);">{{ usuario.nome }}</span>! 🐧</h2>
+    <h3 class="text-center" style="font-weight: normal; margin-bottom: 30px; color: var(--texto-secundario);">Seu Plano Financeiro Gelado ❄️</h3>
+
+    <div class="budget-list">
+        <div class="budget-item item-essencial">
+            <span><i class="fas fa-bolt"></i> Contas Fixas (50%)</span>
+            <strong>R$ {{ "%.2f"|format(renda_mensal * 0.5) }}</strong>
+        </div>
+
+        <div class="budget-item item-vida">
+            <span><i class="fas fa-house-user"></i> Moradia / Aluguel (30%)</span>
+            <strong>R$ {{ "%.2f"|format(renda_mensal * 0.3) }}</strong>
+        </div>
+
+        <div class="budget-item item-reserva">
+            <span><i class="fas fa-gamepad"></i> Lazer e Estilo de Vida (10%)</span>
+            <strong>R$ {{ "%.2f"|format(renda_mensal * 0.1) }}</strong>
+        </div>
+
+        <div class="budget-item" style="border-left: 6px solid var(--cor-essencial); border-right: 2px solid var(--cor-essencial); border-top: 2px solid var(--cor-essencial); border-bottom: 2px solid var(--cor-essencial); background: rgba(16, 185, 129, 0.05);">
+            <span><i class="fas fa-piggy-bank" style="color: var(--cor-essencial)"></i> Sobrou de fato para Investir (10%):</span>
+            <strong style="color: var(--cor-reserva);">R$ {{ "%.2f"|format(renda_mensal * 0.1) }}</strong>
+        </div>
+    </div>
+
+    <div style="max-width: 300px; margin: 40px auto;">
+        <canvas id="chartRosquinha"></canvas>
+    </div>
+
+    <div class="investment-section" style="text-align: center; margin-top: 40px;">
+        <h3>Deseja investir o que sobrou? 💸</h3>
+        <p>Escolha onde o pinguim deve guardar seu dinheiro:</p>
+
+        <div class="investment-options" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+            <button class="btn-option" onclick="mostrarAbasInterativas('consorcio')" style="padding: 10px 20px; border: 2px solid var(--cor-estilo-vida); border-radius: 8px; background: transparent; color: var(--texto-principal); cursor: pointer; font-weight: bold;">
+                Consórcio
+            </button>
+            <button class="btn-option" onclick="mostrarAbasInterativas('financiamento')" style="padding: 10px 20px; border: 2px solid var(--cor-essencial); border-radius: 8px; background: transparent; color: var(--texto-principal); cursor: pointer; font-weight: bold;">
+                Financiamento
+            </button>
+        </div>
+
+        <div id="texto-explicativo-container" style="display: none; max-width: 700px; margin: 0 auto; padding: 15px; border-radius: 12px; background-color: var(--bg-card); text-align: left; border-left: 4px solid var(--cor-essencial);">
+            <h4 id="titulo-explicativo" style="font-weight: bold; margin-bottom: 5px; color: var(--texto-principal);"></h4>
+            <p id="corpo-explicativo" style="font-size: 0.95rem; line-height: 1.4; color: var(--texto-secundario); margin: 0;"></p>
+        </div>
+
+        <div id="sub-opcoes" style="display: none; margin-top: 25px; border-top: 1px solid var(--borda-card); padding-top: 20px;">
+            <p id="titulo-sub-opcao" style="font-weight: bold; margin-bottom: 15px; color: var(--texto-principal);"></p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button style="cursor: pointer; background: transparent; padding: 10px 15px; border: 1px solid var(--borda-card); border-radius: 8px; color: var(--texto-principal);" onclick="calcularInvestimento('Imóveis')">🏢 Imóveis</button>
+                <button style="cursor: pointer; background: transparent; padding: 10px 15px; border: 1px solid var(--borda-card); border-radius: 8px; color: var(--texto-principal);" onclick="calcularInvestimento('Automóveis')">🚗 Automóveis</button>
+                <button style="cursor: pointer; background: transparent; padding: 10px 15px; border: 1px solid var(--borda-card); border-radius: 8px; color: var(--texto-principal);" onclick="calcularInvestimento('Compras')">🛍️ Compras Futuras</button>
+            </div>
+        </div>
+
+        <div id="resultado-calculo-container" style="display: none; margin: 25px auto; max-width: 600px; padding: 20px; border-radius: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--borda-card); text-align: left;">
+            <h4 style="font-weight: bold; color: var(--cor-essencial); margin-bottom: 10px;">
+                ❄️ Simulação Visual com sua Sobra de <span id="calc-valor-disponivel"></span>
+            </h4>
+            <div id="calc-detalhes-texto" style="font-size: 1rem; line-height: 1.5; color: var(--texto-principal);"></div>
+        </div>
+    </div>
+</div>
+
+<footer style="background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.85)), url('{{ url_for('static', filename='img/footer_bg.png') }}') no-repeat center center; background-size: cover; padding: 80px 20px; text-align: center; color: #ffffff; margin-top: 60px; border-top: 4px solid var(--borda-card); border-radius: 24px 24px 0 0;">
+    <div style="max-width: 650px; margin: 0 auto; background: rgba(15, 23, 42, 0.7); padding: 30px; border-radius: 16px; backdrop-filter: blur(4px); box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+        <div style="font-size: 3.5rem; color: var(--cor-essencial); line-height: 1; margin-bottom: -10px; font-family: 'Georgia', serif;">“</div>
+        <p style="font-size: 1.25rem; font-style: italic; font-weight: 500; line-height: 1.6; margin-bottom: 20px; color: #ffffff;">
+            "O objetivo não é apenas economizar, mas entender onde seu dinheiro ganha valor." 
+        </p>
+        <span style="font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; color: var(--cor-estilo-vida);">
+            — Visão Pinguim Financeiro
+        </span>
+    </div>
+</footer>
+
+<script>
+        const obterCorTema = () => window.getComputedStyle(document.documentElement).getPropertyValue('--texto-principal').trim();
+        const rendaMensalReal = parseFloat("{{ usuario.renda_mensal }}") || 0;
+        const valorSobraInvestimento = rendaMensalReal * 0.10; 
+
+        const ctx = document.getElementById('chartRosquinha').getContext('2d');
+        const meuGrafico = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Contas Fixas', 'Aluguel', 'Lazer', 'Investimento'],
+                datasets: [{
+                    data: [
+                        rendaMensalReal * 0.5,
+                        rendaMensalReal * 0.3,
+                        rendaMensalReal * 0.1,
+                        valorSobraInvestimento
+                    ],
+                    backgroundColor: ['#ff5722', '#FFB800', '#10b981', '#8b5cf6'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { display: true, labels: { color: obterCorTema() } }
+                }
+            }
+        });
+
+        let modalidadeSelecionada = '';
+
+        function mostrarAbasInterativas(tipo) {
+            modalidadeSelecionada = tipo;
+            const containerTexto = document.getElementById('texto-explicativo-container');
+            const tituloExplicativo = document.getElementById('titulo-explicativo');
+            const corpoExplicativo = document.getElementById('corpo-explicativo');
+            const abaSub = document.getElementById('sub-opcoes');
+            const tituloSub = document.getElementById('titulo-sub-opcao');
+            
+            document.getElementById('resultado-calculo-container').style.display = 'none';
+            containerTexto.style.display = 'block';
+            abaSub.style.display = 'block';
+            
+            if (tipo === 'consorcio') {
+                containerTexto.style.borderLeftColor = "#8b5cf6";
+                tituloExplicativo.innerText = "Estratégia Prática: O Consórcio";
+                corpoExplicativo.innerHTML = `Com sua sobra atual de <strong>R$ ${valorSobraInvestimento.toFixed(2)}</strong>, o consórcio funciona como uma poupança programada sem juros bancários. Como as parcelas se adaptam perfeitamente a valores menores (como R$ 100 a R$ 400), você consegue planejar a compra de bens no médio/longo prazo sem comprometer sua saúde financeira. É a melhor rota para acumular patrimônio de forma realista quando não se tem pressa ou uma grande entrada guardada.`;
+                tituloSub.innerText = "Qual bem você deseja planejar via Consórcio?";
+            } else {
+                containerTexto.style.borderLeftColor = "#ff5722";
+                tituloExplicativo.innerText = "A Realidade do Mercado: O Financiamento";
+                corpoExplicativo.innerHTML = `Financiamentos exigem parcelas altas e aprovação de crédito severa, tornando-se inviáveis com sobras baixas (como R$ 400), pois os bancos barram contratos que passem de 30% da renda. Esta opção só faz sentido prático se você já tiver uma entrada robusta em mãos ou se sua sobra for expressiva para arcar com os juros de mercado. Escolha o financiamento apenas se a necessidade do bem for imediata e você estiver disposto a pagar o dobro pelo preço final.`;
+                tituloSub.innerText = "Selecione a categoria para simular o impacto do Financiamento:";
+            }
+        }
+
+        function calcularInvestimento(categoria) {
+            const containerResultado = document.getElementById('resultado-calculo-container');
+            const textoDetalhes = document.getElementById('calc-detalhes-texto');
+            
+            document.getElementById('calc-valor-disponivel').innerText = `R$ ${valorSobraInvestimento.toFixed(2)}`;
+            containerResultado.style.display = 'block';
+            
+            let meses = categoria === 'Imóveis' ? 120 : (categoria === 'Automóveis' ? 60 : 24);
+            let valorEstimadoBem = (valorSobraInvestimento * meses) / 1.12;
+            
+            if (modalidadeSelecionada === 'consorcio') {
+                textoDetalhes.innerHTML = `
+                    <p><strong>Plano de Construção de Patrimônio:</strong></p>
+                    <p>Destinando seus <strong>R$ ${valorSobraInvestimento.toFixed(2)}</strong> mensais para o consórcio de <strong>${categoria}</strong> durante <strong>${meses} meses</strong>, você acumulará um poder de compra estimado em <strong>R$ ${valorEstimadoBem.toFixed(2)}</strong> através de uma carta de crédito, totalmente livre de juros abusivos.</p>
+                    <p style="font-size: 0.9rem; color: var(--texto-secundario);">*Ideal para quem pode esperar a contemplação ou sorteio para pegar o bem de forma inteligente.</p>
+                `;
+            } else {
+                if (valorSobraInvestimento < 500 && (categoria === 'Imóveis' || categoria === 'Automóveis')) {
+                    textoDetalhes.innerHTML = `
+                        <p style="color: #ff5722; font-weight: bold;">❌ Simulação Recusada por Análise de Risco:</p>
+                        <p>Nenhuma instituição aprovaria um financiamento de <strong>${categoria}</strong> com uma parcela de <strong>R$ ${valorSobraInvestimento.toFixed(2)}</strong>, pois o valor mínimo de entrada e mercado exige rendas maiores. Recomendamos usar a aba de Consórcio para construir essa base financeira primeiro.</p>
+                    `;
+                } else {
+                    textoDetalhes.innerHTML = `
+                        <p><strong>Simulação de Crédito Imediato:</strong></p>
+                        <p>Para assumir um financiamento de <strong>${categoria}</strong> com parcelas de <strong>R$ ${valorSobraInvestimento.toFixed(2)}</strong> em <strong>${meses} meses</strong>, o banco liberaria um bem de aproximadamente <strong>R$ ${(valorEstimadoBem * 0.55).toFixed(2)}</strong>.</p>
+                        <p style="font-size: 0.9rem; color: #ff5722;">*Note a diferença: Quase metade do seu dinheiro sumiu em juros e taxas bancárias para que você pudesse ter o bem imediatamente.</p>
+                    `;
+                }
+            }
+        }
+
+        const observadorTema = new MutationObserver(() => {
+            meuGrafico.options.plugins.legend.labels.color = obterCorTema();
+            meuGrafico.update();
+        });
+        observadorTema.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
+
+{% endblock %}

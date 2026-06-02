@@ -1,0 +1,5 @@
+Flask==3.0.2
+Flask-SQLAlchemy==3.1.1
+Flask-Bcrypt==1.0.1
+Flask-Login==0.6.3
+gunicorn==21.2.0
