@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Reuniões</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6c757d;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            font-size: 16px;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active {
+            color: #667eea;
+            background: white;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            transform: translateY(-1px);
+        }
+
+        .reuniao-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .reuniao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .reuniao-nome {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .reuniao-id {
+            font-size: 11px;
+            color: #6c757d;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .reuniao-detalhes {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .badge-meet {
+            background: #d4f5d4;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .badge-presencial {
+            background: #ffe0b2;
+            color: #e65100;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .acoes {
+            margin-top: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #adb5bd;
+        }
+
+        /* Modal de edição */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .tab {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Agenda de Reuniões</h1>
+            <p>Organize seus compromissos de forma simples e profissional</p>
+        </div>
+
+        <div class="main-card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('agendar')">➕ Agendar Reunião</button>
+                <button class="tab" onclick="switchTab('ver')">📋 Ver Agenda</button>
+            </div>
+
+            <!-- Aba Agendar -->
+            <div id="agendarTab" class="tab-content active">
+                <h2 style="margin-bottom: 25px;">Nova Reunião</h2>
+                <form id="agendaForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>👤 Nome do Cliente</label>
+                            <input type="text" id="nome" placeholder="Digite o nome completo" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>📞 Telefone</label>
+                            <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>📅 Data</label>
+                            <input type="date" id="data" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>⏰ Horário</label>
+                            <input type="time" id="horario" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>📍 Local da Reunião</label>
+                            <select id="local">
+                                <option value="meet">💻 Google Meet (Online)</option>
+                                <option value="Presencial">🏢 Presencial (Escritório)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">✅ Agendar Compromisso</button>
+                </form>
+            </div>
+
+            <!-- Aba Ver Agenda -->
+            <div id="verTab" class="tab-content">
+                <h2 style="margin-bottom: 25px;">Reuniões Agendadas</h2>
+                <div id="lista"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3>✏️ Editar Reunião</h3>
+            <input type="hidden" id="editId">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" id="editNome" class="form-control" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e9ecef; border-radius:8px;">
+            </div>
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="text" id="editTelefone" class="form-control" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e9ecef; border-radius:8px;">
+            </div>
+            <div class="form-group">
+                <label>Data</label>
+                <input type="date" id="editData" class="form-control" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e9ecef; border-radius:8px;">
+            </div>
+            <div class="form-group">
+                <label>Horário</label>
+                <input type="time" id="editHorario" class="form-control" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e9ecef; border-radius:8px;">
+            </div>
+            <div class="form-group">
+                <label>Local</label>
+                <select id="editLocal" style="width:100%; padding:10px; margin-bottom:15px; border:2px solid #e9ecef; border-radius:8px;">
+                    <option value="meet">Meet</option>
+                    <option value="Presencial">Presencial</option>
+                </select>
+            </div>
+            <button onclick="salvarEdicao()" class="btn-primary" style="margin-bottom:10px;">💾 Salvar Alterações</button>
+            <button onclick="fecharModal()" style="width:100%; padding:10px; background:#6c757d; color:white; border:none; border-radius:8px; cursor:pointer;">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('agendarTab').classList.remove('active');
+            document.getElementById('verTab').classList.remove('active');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            if(tab === 'agendar') {
+                document.getElementById('agendarTab').classList.add('active');
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else {
+                document.getElementById('verTab').classList.add('active');
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                carregarLista();
+            }
+        }
+
+        // Agendar reunião
+        document.getElementById('agendaForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const dados = {
+                nome: document.getElementById('nome').value,
+                telefone: document.getElementById('telefone').value,
+                data: document.getElementById('data').value,
+                horario: document.getElementById('horario').value,
+                local: document.getElementById('local').value
+            };
+            
+            const resposta = await fetch('/agendar', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dados)
+            });
+            
+            const resultado = await resposta.json();
+            alert(resultado.mensagem);
+            
+            if(resultado.sucesso) {
+                document.getElementById('agendaForm').reset();
+                if(document.getElementById('verTab').classList.contains('active')) {
+                    carregarLista();
+                }
+            }
+        };
+
+        // Carregar lista de reuniões
+        async function carregarLista() {
+            const resposta = await fetch('/listar');
+            const reunioes = await resposta.json();
+            const listaDiv = document.getElementById('lista');
+            
+            if(reunioes.length === 0) {
+                listaDiv.innerHTML = '<div class="empty-state">📭 Nenhuma reunião agendada ainda<br><br>Volte para a aba "Agendar" para criar um novo compromisso</div>';
+            } else {
+                listaDiv.innerHTML = reunioes.map(r => `
+                    <div class="reuniao-item">
+                        <div class="reuniao-header">
+                            <span class="reuniao-nome">${r.nome}</span>
+                            <span class="reuniao-id">ID: ${r.id}</span>
+                        </div>
+                        <div class="reuniao-detalhes">
+                            <span>📅 ${formatarData(r.data)}</span>
+                            <span>⏰ ${r.horario}</span>
+                            <span>📱 ${r.telefone}</span>
+                            <span class="${r.local === 'meet' ? 'badge-meet' : 'badge-presencial'}">
+                                ${r.local === 'meet' ? '💻 Meet' : '🏢 Presencial'}
+                            </span>
+                        </div>
+                        <div class="acoes">
+                            <button class="btn-edit" onclick="abrirModalEditar(${r.id})">✏️ Editar</button>
+                            <button class="btn-delete" onclick="confirmarCancelar(${r.id})">🗑️ Cancelar</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function formatarData(data) {
+            if(!data) return 'Data não definida';
+            const partes = data.split('-');
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        // Abrir modal para editar
+        async function abrirModalEditar(id) {
+            const resposta = await fetch(`/buscar/${id}`);
+            const resultado = await resposta.json();
+            
+            if(resultado.sucesso) {
+                const r = resultado.reuniao;
+                document.getElementById('editId').value = r.id;
+                document.getElementById('editNome').value = r.nome;
+                document.getElementById('editTelefone').value = r.telefone;
+                document.getElementById('editData').value = r.data;
+                document.getElementById('editHorario').value = r.horario;
+                document.getElementById('editLocal').value = r.local;
+                document.getElementById('modal').style.display = 'flex';
+            } else {
+                alert(resultado.mensagem);
+            }
+        }
+
+        // Salvar edição
+        async function salvarEdicao() {
+            const id = document.getElementById('editId').value;
+            const dados = {
+                nome: document.getElementById('editNome').value,
+                telefone: document.getElementById('editTelefone').value,
+                data: document.getElementById('editData').value,
+                horario: document.getElementById('editHorario').value,
+                local: document.getElementById('editLocal').value
+            };
+            
+            const resposta = await fetch(`/mudar/${id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(dados)
+            });
+            
+            const resultado = await resposta.json();
+            alert(resultado.mensagem);
+            fecharModal();
+            carregarLista();
+        }
+
+        // Cancelar reunião
+        async function confirmarCancelar(id) {
+            if(confirm('Tem certeza que deseja cancelar esta reunião?')) {
+                const resposta = await fetch(`/cancelar/${id}`, { method: 'DELETE' });
+                const resultado = await resposta.json();
+                alert(resultado.mensagem);
+                carregarLista();
+            }
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
