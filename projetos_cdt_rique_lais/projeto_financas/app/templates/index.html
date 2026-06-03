@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Mente fria, bolso cheio.</h1>
+            <p>O Pinguim Financeiro ajuda você a organizar sua vida de forma simples, direta e gelada.</p>
+            <a href="{{ url_for('onboarding.onboarding') }}" class="btn-start">VAMOS COMEÇAR? ➔</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://cdn-icons-png.flaticon.com/512/2566/2566000.png" alt="Pinguim Logo" style="width: 250px;">
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="card">
+            <i class="fas fa-bullseye"></i>
+            <h3>Metas de Investimento</h3>
+            <p>Defina onde você quer chegar e em quanto tempo.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-house-chimney"></i>
+            <h3>Financiamentos Smart</h3>
+            <p>Simule e organize seus grandes sonhos de forma segura.</p>
+        </div>
+
+        <div class="card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Organização Mensal</h3>
+            <p>Controle seus gastos com a regra 50/30/20.</p>
+        </div>
+    </section>
+</main>
+{% endblock %}

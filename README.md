@@ -1,140 +1,56 @@
-# 🐍 Portfólio de Projetos Python | Jogos & Ferramentas
+# 🍔 Sistema de Hamburgueria (Desktop)
 
-Uma coleção de projetos desenvolvidos em Python, focados na aplicação de lógica de programação, orientação a objetos (POO) e desenvolvimento de interfaces gráficas com a biblioteca Pygame. Este repositório é dedicado ao estudo e à prática de desenvolvimento web utilizando APIs, Flask e Django. Nosso objetivo é compartilhar projetos e exemplos de código que demonstrem como construir aplicações web dinâmicas, integrar-se a serviços externos e criar soluções robustas com Python.
-
-## ⚙️ Como Executar os Projetos
-
-Para rodar qualquer um dos projetos que utilizam Pygame, você precisa primeiro instalar a biblioteca:
-
-```bash
-pip install pygame
-
-https://developer.marvel.com/
-https://api.nasa.gov/
-https://pokeapi.co/
-https://developer.spotify.com/
-https://cataas.com/
-https://openweathermap.org/api
+Este é um aplicativo desktop completo para gerenciamento de pedidos de uma hamburgueria, desenvolvido em **Python** utilizando a biblioteca gráfica **Tkinter**. O sistema conta com banco de dados local para persistência de dados e integração com API externa para busca automatizada de endereço.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Linguagem Principal:** Python 3.x
-* **Interface Gráfica:** Pygame
-* **Conceitos:** Programação Orientada a Objetos (POO), Algoritmos de Criptografia, Lógica de Eventos e Gerenciamento de Estado.
+* **Python 3** (Linguagem base)
+* **Tkinter** (Interface gráfica integrada)
+* **SQLite3** (Banco de dados local e leve)
+* **Requests** (Para consumo da API externa do ViaCEP)
 
 ---
 
-## 1. 🃏 Jogo 21 (Blackjack) em Pygame
+## 🚀 Funcionalidades do Sistema
 
-### Descrição
-Implementação do clássico jogo de cartas Blackjack (também conhecido como "21") contra um dealer virtual. O projeto utiliza POO para modelar
-as classes `Carta`, `Baralho` e `Mao`, e foca no gerenciamento da lógica de pontuação, incluindo a regra do **Ás** (1 ou 11).
-
-### Funcionalidades
-* **Regra do Ás:** Pontuação dinâmica que ajusta o valor do Ás para evitar estourar 21.
-* **Ciclo de Jogo:** Botões interativos "Pedir Carta" e "Manter".
-* **Dealer AI:** O dealer segue a regra padrão de parar ao atingir ou ultrapassar 17.
-* **UX Aprimorada:** Fundo escurece ao final da rodada e a mensagem final é destacada para reinício rápido.
-* **Visual:** Suporte a **Naipes Unicode** (`♥`, `♠`, `♦`, `♣`) através de fontes do sistema.
+* **Sistema de Cadastro e Login:** Permite que novos clientes se cadastrem e façam login com validação direto no banco de dados (garantindo que não haja e-mails duplicados).
+* **Cardápio Dinâmico:** Janelas separadas para seleção de Combos (Hambúrgueres) e Bebidas com seus respectivos preços.
+* **Carrinho de Compras:** Adiciona itens ao carrinho em tempo real com alertas visuais.
+* **Cupom de Desconto:** Validação do cupom promocional `DESCONTO10`, que aplica automaticamente 10% de desconto no valor total do carrinho.
+* **Integração com ViaCEP:** Ao digitar o CEP na finalização do pedido, o sistema preenche automaticamente os campos de *Rua*, *Bairro* e *Cidade*, restando ao usuário apenas digitar o número.
+* **Histórico de Pedidos:** Salva todos os pedidos finalizados com o resumo de itens, endereço, forma de pagamento e valor total na tabela do banco de dados.
+* **Sistema de Avaliação:** Permite que o cliente dê uma nota de 0 a 5 para o estabelecimento.
 
 ---
 
-## 2. ❌🅾️ Jogo da Velha (Tic-Tac-Toe)
+## 📂 Estrutura Completa de Caminhos e Arquivos
 
-### Descrição
-Implementação do clássico Jogo da Velha (Tic-Tac-Toe), com foco na **lógica de estado de jogo** e detecção de padrões de vitória.
+Abaixo está o mapeamento exato de como os arquivos estão organizados no diretório do projeto após a compilação com o PyInstaller:
 
-### Funcionalidades
-* **Lógica Completa:** Detecção precisa de vitória em linhas, colunas e diagonais.
-* **Gerenciamento de Turnos:** Alternância automática entre 'X' e 'O'.
-* **Detecção de Empate:** Identifica o fim do jogo quando todas as casas estão preenchidas sem um vencedor.
-* **Modo de Jogo:** [Mencione se é apenas PVP (Player vs. Player) ou se possui modo contra IA].
-
----
-
-## 3. 💬 Mensagem Cifrada - Zenit Polar
-
-### Descrição
-Um projeto focado em **criptografia** simples, implementando o cifrador de substituição **ZENIT POLAR**.
-O objetivo é demonstrar a manipulação de strings e a aplicação de regras algorítmicas para codificação e decodificação.
-
-### Regra (Chave)
-A cifra opera substituindo as vogais da chave 'ZENIT' pelas vogais de 'POLAR' e vice-versa:
-* `Z` ↔ `P`
-* `E` ↔ `O`
-* `N` ↔ `L`
-* `I` ↔ `A`
-* `T` ↔ `R`
-
-### Funcionalidades
-* **Cifrar e Decifrar:** Lógica robusta para converter a mensagem nos dois sentidos.
-* **Manutenção de Formato:** Preserva espaços e caracteres não-vogais.
-
----
-
-## 4. 🧠 Jogo da Memória (Card Flip Game)
-
-### Descrição
-Desenvolvimento de um Jogo da Memória com Pygame, utilizando um tabuleiro de cartas que devem ser combinadas em pares.
-O projeto é um bom exercício em **gerenciamento de estados visuais** (cartas viradas/desviradas) e coordenação de eventos de clique.
-
-### Funcionalidades
-* **Tabuleiro Aleatório:** Distribuição aleatória dos pares de cartas.
-* **Gerenciamento de Estados:** Rastreamento do estado de cada carta (oculta, revelada, pareada).
-* **Contador:** Registro do número de tentativas feitas pelo jogador.
-* **Interface:** [Mencione se o jogo utiliza imagens externas ou apenas formas e texto para as cartas].
-
----
-
-# Projetos_cdt (criar cinco linhas a baixo)
-
-## Hipolito
-->
-->
-->
-->
-->
-## Ewerthon
-->
-->
-->
-->
-->
-## Miguel
-->
-->
-->
-->
-->
-## Igor Cardoso
-->
-->
-->
-->
-->
-## Vitoria
-->
-->
-->
-->
-->
-## Gaby
-->
-->
-->
-->
-->
-## Lorenna
-->
-->
-->
-->
-->
-## Lauany
-->
-->
-->
-->
-->
+```text
+📁 Área de Trabalho (Desktop)
+└── 📁 projetos_cdt-main
+    └── 📁 projetos_cdt/                      # Pasta principal do projeto
+        │
+        ├── 📁 build/                         # Arquivos temporários de compilação
+        │   └── 📁 hamburgueria/              # Subpasta criada pelo PyInstaller
+        │       ├── 📁 localpycs/             # Arquivos Python compilados em bytecode (.pyc)
+        │       ├── 📁 base_library.zip       # Biblioteca padrão do Python compactada
+        │       ├── 📄 Analysis-00.toc        # Tabela de conteúdos da análise de dependências
+        │       ├── 📄 EXE-00.toc             # Metadados de criação do executável
+        │       ├── 📄 PKG-00.toc             # Metadados do pacote de arquivos
+        │       ├── 📄 PYZ-00.pyz & .toc      # Arquivos compactados com scripts Python do sistema
+        │       ├── 📄 hamburgueria.pkg       # Pacote bruto do aplicativo gerado
+        │       ├── 📄 warn-hamburgueria      # Registro de avisos/alertas da compilação
+        │       └── 📄 xref-hamburgueria      # Tabela de referências cruzadas do código
+        │
+        ├── 📁 dist/                          # PASTA DO PROGRAMA PRONTO PARA USO
+        │   ├── ⚙️ hamburgueria                # O Executável final do seu sistema (Aplicação)
+        │   └── 🗃️ hamburgueria               # Banco de dados utilizado pelo Executável
+        │
+        ├── 🗃️ hamburgueria                   # Banco de dados utilizado pelo código fonte .py
+        ├── 🐍 hamburgueria.py                 # Seu código fonte original em Python
+        ├── 📄 hamburgueria.spec               # Arquivo de configuração de compilação do PyInstaller
+        └── 📄 README.md                       # Documentação do projeto
