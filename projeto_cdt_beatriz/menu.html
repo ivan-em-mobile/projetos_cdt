@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Hamburgueria Rosana</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🍔 Hamburgueria Rosana</div>
+        </div>
+    </header>
+
+    <!-- MENU SECTION -->
+    <section class="menu">
+        <div class="container">
+            <h2>Nosso Cardápio</h2>
+            <div class="menu-grid" id="menu-items">
+                <!-- Itens carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CARRINHO FLUTUANTE -->
+    <div class="cart-floating" onclick="toggleCart()">
+        🛒 <span id="cart-count" class="cart-badge">0</span>
+    </div>
+
+    <!-- MODAL CARRINHO -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Seu Pedido</h2>
+                <button class="modal-close" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cart-items-list" class="cart-items-list">
+                <p class="empty-message">Seu carrinho está vazio</p>
+            </div>
+            <div class="cart-summary">
+                <div class="total-line">
+                    <strong>Total:</strong>
+                    <strong class="total-price">R$ <span id="total-amount">0.00</span></strong>
+                </div>
+            </div>
+            <button id="checkout-btn" class="btn-checkout" onclick="checkout()" style="display: none;">
+                Confirmar Pedido
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 Hamburgueria Rosana. Todos os direitos reservados.</p>
+        <p>Feito com ❤️ para os amantes de hambúrgueres</p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>
