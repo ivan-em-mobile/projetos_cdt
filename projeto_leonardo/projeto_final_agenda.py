@@ -5,7 +5,6 @@ from datetime import datetime
 import customtkinter as ctk
 from tkinter import messagebox
 
-# --- SISTEMA DE TRADUÇÃO ---
 TEXTOS = {
     "Português": {
         "titulo": "Sistema de Clientes",
@@ -29,9 +28,24 @@ TEXTOS = {
         "seletor_cor": "Cor Principal do Tema",
         "aviso_nome": "Digite o nome do cliente.",
         "sucesso_cadastro": "Cliente cadastrado com sucesso!",
+        "sucesso_excluir": "Cliente removido do banco de dados.",
+        "sucesso_exportar": "Dados exportados para: {}",
         "erro_login": "Senha incorreta",
         "bloqueado": "Número de tentativas excedido. Sistema encerrado.",
-        "placeholder_senha": "Digite sua senha"
+        "placeholder_senha": "Digite sua senha",
+        "alterar_senha_titulo": "Alterar Senha do Administrador",
+        "senha_atual": "Senha Atual",
+        "nova_senha": "Nova Senha",
+        "btn_alterar_senha": "Atualizar Senha",
+        "erro_senha_atual": "A senha atual digitada está incorreta.",
+        "erro_senha_vazia": "Os campos de senha não podem estar vazios.",
+        "sucesso_senha": "Senha alterada com sucesso!",
+        "plano_Gratuito": "Gratuito",
+        "plano_Básico": "Básico",
+        "plano_Premium": "Premium",
+        "cor_Azul": "Azul",
+        "cor_Verde": "Verde",
+        "cor_Roxo": "Roxo"
     },
     "English": {
         "titulo": "Client System",
@@ -55,9 +69,24 @@ TEXTOS = {
         "seletor_cor": "Main Theme Color",
         "aviso_nome": "Please enter the client's name.",
         "sucesso_cadastro": "Client registered successfully!",
+        "sucesso_excluir": "Client removed from database.",
+        "sucesso_exportar": "Data exported to: {}",
         "erro_login": "Incorrect password",
         "bloqueado": "No attempts left. System closed.",
-        "placeholder_senha": "Enter your password"
+        "placeholder_senha": "Enter your password",
+        "alterar_senha_titulo": "Change Administrator Password",
+        "senha_atual": "Current Password",
+        "nova_senha": "New Password",
+        "btn_alterar_senha": "Update Password",
+        "erro_senha_atual": "The current password entered is incorrect.",
+        "erro_senha_vazia": "Password fields cannot be empty.",
+        "sucesso_senha": "Password changed successfully!",
+        "plano_Gratuito": "Free",
+        "plano_Básico": "Basic",
+        "plano_Premium": "Premium",
+        "cor_Azul": "Blue",
+        "cor_Verde": "Green",
+        "cor_Roxo": "Purple"
     }
 }
 
@@ -68,12 +97,17 @@ PLANOS = {
 }
 
 MAPA_CORES = {
-    "Azul / Blue": "#1A73E8",
-    "Verde / Green": "#2EA44F",
-    "Roxo / Purple": "#8A3FFC"
+    "Azul": "#1A73E8",
+    "Verde": "#2EA44F",
+    "Roxo": "#8A3FFC"
 }
 
-# --- BANCO DE DADOS ---
+MAPA_CORES_HOVER = {
+    "Azul": "#1557B0",
+    "Verde": "#227A3A",
+    "Roxo": "#6929C4"
+}
+
 def conectar():
     return sqlite3.connect("sistema.db")
 
@@ -94,6 +128,9 @@ def inicializar_banco():
         """)
         cursor.execute("CREATE TABLE IF NOT EXISTS configuracoes (chave TEXT PRIMARY KEY, valor TEXT NOT NULL)")
         cursor.execute("INSERT OR IGNORE INTO configuracoes (chave, valor) VALUES ('senha', ?)", (criptografar_senha("123456"),))
+        
+        cursor.execute("INSERT OR IGNORE INTO configuracoes (chave, valor) VALUES ('idioma', 'Português')")
+        cursor.execute("INSERT OR IGNORE INTO configuracoes (chave, valor) VALUES ('cor_tema', 'Azul')")
         conexao.commit()
 
 def obter_senha():
@@ -103,22 +140,32 @@ def obter_senha():
         res = cursor.fetchone()
         return res[0] if res else None
 
+def obter_configuracao(chave, valor_padrao):
+    with conectar() as conexao:
+        cursor = conexao.cursor()
+        cursor.execute("SELECT valor FROM configuracoes WHERE chave = ?", (chave,))
+        res = cursor.fetchone()
+        valor = res[0] if res else valor_padrao
+        traducoes_antigas = {"Blue": "Azul", "Green": "Verde", "Purple": "Roxo"}
+        return traducoes_antigas.get(valor, valor)
 
-# --- INTERFACE PRINCIPAL ---
 class SistemaApp:
     def __init__(self, root):
         self.root = root
-        self.idioma_atual = "Português"
-        self.cor_atual = "Azul / Blue"
+        
+        inicializar_banco()
+
+        self.idioma_atual = obter_configuracao('idioma', 'Português')
+        self.cor_atual = obter_configuracao('cor_tema', 'Azul')
         
         self.root.title(TEXTOS[self.idioma_atual]["titulo"])
         self.root.geometry("750x550")
         self.root.resizable(False, False)
         
         ctk.set_appearance_mode("Light")
+        ctk.set_default_color_theme("blue")
         
         self.tentativas = 5
-        inicializar_banco()
         self.tela_login()
 
     def t(self, chave):
@@ -151,7 +198,7 @@ class SistemaApp:
         btn_entrar = ctk.CTkButton(
             frame, text=self.t("entrar"), width=300, 
             fg_color=MAPA_CORES[self.cor_atual], 
-            hover_color=MAPA_CORES[self.cor_atual], 
+            hover_color=MAPA_CORES_HOVER[self.cor_atual], 
             font=("Arial Bold", 14), command=self.validar_login
         )
         btn_entrar.pack(pady=(10, 20))
@@ -180,6 +227,7 @@ class SistemaApp:
         self.limpar_tela()
         self.root.title(self.t("titulo"))
 
+        # Criação de Abas
         self.abas = ctk.CTkTabview(
             self.root, width=720, height=520, corner_radius=12, 
             segmented_button_selected_color=MAPA_CORES[self.cor_atual]
@@ -208,16 +256,18 @@ class SistemaApp:
         cores_planos = {"Gratuito": "#2EA44F", "Básico": "#1A73E8", "Premium": "#8A3FFC"}
 
         for plano, valor in PLANOS.items():
+            texto_plano_traduzido = self.t(f"plano_{plano}")
             rb = ctk.CTkRadioButton(
-                card, text=f"{plano} — {valor}", variable=self.var_plano, value=plano,
+                card, text=f"{texto_plano_traduzido} — {valor}", variable=self.var_plano, value=plano,
                 font=("Arial", 13), hover_color=cores_planos[plano], fg_color=cores_planos[plano]
             )
             rb.pack(anchor="w", pady=6)
 
         btn_salvar = ctk.CTkButton(
             card, text=self.t("salvar_cliente"), 
-            fg_color=MAPA_CORES[self.cor_atual], font=("Arial Bold", 14),
-            height=40, command=self.salvar_cliente
+            fg_color=MAPA_CORES[self.cor_atual],
+            hover_color=MAPA_CORES_HOVER[self.cor_atual],
+            font=("Arial Bold", 14), height=40, command=self.salvar_cliente
         )
         btn_salvar.pack(fill="x", pady=(40, 0))
 
@@ -248,7 +298,12 @@ class SistemaApp:
         self.lbl_total = ctk.CTkLabel(frame_topo, text="", font=("Arial Bold", 14))
         self.lbl_total.pack(side="left", padx=5)
 
-        btn_exportar = ctk.CTkButton(frame_topo, text=self.t("exportar"), fg_color=MAPA_CORES[self.cor_atual], width=120, command=self.exportar_json)
+        btn_exportar = ctk.CTkButton(
+            frame_topo, text=self.t("exportar"), 
+            fg_color=MAPA_CORES[self.cor_atual], 
+            hover_color=MAPA_CORES_HOVER[self.cor_atual],
+            width=120, command=self.exportar_json
+        )
         btn_exportar.pack(side="right", padx=5)
 
         btn_excluir = ctk.CTkButton(frame_topo, text=self.t("excluir"), fg_color="#D93025", hover_color="#B31412", width=140, command=self.excluir_cliente)
@@ -287,8 +342,12 @@ class SistemaApp:
             info_frame = ctk.CTkFrame(card_cliente, fg_color="transparent")
             info_frame.pack(side="left", fill="both", expand=True, padx=15, pady=8)
 
-            ctk.CTkLabel(info_frame, text=nome, font=("Arial Bold", 14), text_color="#202124").pack(anchor="w")
-            ctk.CTkLabel(info_frame, text=f"{plano} • {valor} • {data}", font=("Arial", 11), text_color="#5F6368").pack(anchor="w")
+            lbl_nome = ctk.CTkLabel(info_frame, text=nome, font=("Arial Bold", 14), text_color="#202124")
+            lbl_nome.pack(anchor="w")
+            
+            plano_traduzido = self.t(f"plano_{plano}")
+            lbl_info = ctk.CTkLabel(info_frame, text=f"{plano_traduzido} • {valor} • {data}", font=("Arial", 11), text_color="#5F6368")
+            lbl_info.pack(anchor="w")
 
             def marcar_selecionado(event, cid=id_cli, item_frame=card_cliente):
                 for c in self.cards_dict.values():
@@ -297,8 +356,10 @@ class SistemaApp:
                 self.selecionado_id = cid
 
             card_cliente.bind("<Button-1>", marcar_selecionado)
-            for widget in info_frame.winfo_children():
-                widget.bind("<Button-1>", marcar_selecionado)
+            faixa.bind("<Button-1>", marcar_selecionado)
+            info_frame.bind("<Button-1>", marcar_selecionado)
+            lbl_nome.bind("<Button-1>", marcar_selecionado)
+            lbl_info.bind("<Button-1>", marcar_selecionado)
 
             self.cards_dict[id_cli] = card_cliente
 
@@ -329,38 +390,96 @@ class SistemaApp:
             json.dump(lista, arquivo, indent=4, ensure_ascii=False)
 
         messagebox.showinfo("Sucesso", self.t("sucesso_exportar").format(nome_arquivo))
-# aqui esta o erro
-
-
-
-
-
 
     def montar_config(self):
-        frame = ctk.CTkFrame(self.aba_config, corner_radius=12, padding=20)
+        frame = ctk.CTkFrame(self.aba_config, corner_radius=12)
         frame.pack(fill="both", expand=True, pady=20, padx=20)
 
-        ctk.CTkLabel(frame, text=self.t("config_titulo"), font=("Arial Bold", 16), text_color=MAPA_CORES[self.cor_atual]).pack(anchor="w", pady=(0, 20))
+        # Container Esquerdo
+        frame_esquerdo = ctk.CTkFrame(frame, fg_color="transparent")
+        frame_esquerdo.pack(side="left", fill="both", expand=True, padx=20, pady=20)
 
-        # Seletor de Idioma
-        ctk.CTkLabel(frame, text=self.t("seletor_idioma"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
-        self.combo_idioma = ctk.CTkComboBox(frame, values=["Português", "English"], width=250, command=self.alterar_idioma)
+        ctk.CTkLabel(frame_esquerdo, text=self.t("config_titulo"), font=("Arial Bold", 16), text_color=MAPA_CORES[self.cor_atual]).pack(anchor="w", pady=(0, 20))
+
+        # 1. Seletor de Idioma
+        ctk.CTkLabel(frame_esquerdo, text=self.t("seletor_idioma"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
+        self.combo_idioma = ctk.CTkComboBox(frame_esquerdo, values=["Português", "English"], width=250, command=self.alterar_idioma)
         self.combo_idioma.set(self.idioma_atual)
         self.combo_idioma.pack(anchor="w", pady=(0, 20))
 
-        # Seletor de Cores
-        ctk.CTkLabel(frame, text=self.t("seletor_cor"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
-        self.combo_cor = ctk.CTkComboBox(frame, values=list(MAPA_CORES.keys()), width=250, command=self.alterar_cor_tema)
-        self.combo_cor.set(self.cor_atual)
+        # 2. Seletor de Cores do Tema
+        ctk.CTkLabel(frame_esquerdo, text=self.t("seletor_cor"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
+        opcoes_cores_visiveis = [self.t(f"cor_{cor}") for cor in MAPA_CORES.keys()]
+        
+        self.combo_cor = ctk.CTkComboBox(frame_esquerdo, values=opcoes_cores_visiveis, width=250, command=self.alterar_cor_tema)
+        self.combo_cor.set(self.t(f"cor_{self.cor_atual}"))
         self.combo_cor.pack(anchor="w", pady=(0, 20))
+
+        # Container Direito
+        frame_direito = ctk.CTkFrame(frame, fg_color="transparent")
+        frame_direito.pack(side="right", fill="both", expand=True, padx=20, pady=20)
+
+        ctk.CTkLabel(frame_direito, text=self.t("alterar_senha_titulo"), font=("Arial Bold", 16), text_color=MAPA_CORES[self.cor_atual]).pack(anchor="w", pady=(0, 20))
+
+        ctk.CTkLabel(frame_direito, text=self.t("senha_atual"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
+        self.ent_senha_atual = ctk.CTkEntry(frame_direito, width=250, show="*")
+        self.ent_senha_atual.pack(anchor="w", pady=(0, 15))
+
+        ctk.CTkLabel(frame_direito, text=self.t("nova_senha"), font=("Arial Bold", 13)).pack(anchor="w", pady=(10, 5))
+        self.ent_nova_senha = ctk.CTkEntry(frame_direito, width=250, show="*")
+        self.ent_nova_senha.pack(anchor="w", pady=(0, 20))
+
+        btn_alterar = ctk.CTkButton(
+            frame_direito, text=self.t("btn_alterar_senha"), width=250,
+            fg_color=MAPA_CORES[self.cor_atual], 
+            hover_color=MAPA_CORES_HOVER[self.cor_atual],
+            font=("Arial Bold", 13), command=self.atualizar_senha
+        )
+        btn_alterar.pack(anchor="w")
+
+    def atualizar_senha(self):
+        senha_atual = self.ent_senha_atual.get()
+        nova_senha = self.ent_nova_senha.get()
+
+        if not senha_atual or not nova_senha:
+            messagebox.showwarning("Aviso", self.t("erro_senha_vazia"))
+            return
+
+        if criptografar_senha(senha_atual) != obter_senha():
+            messagebox.showerror("Erro", self.t("erro_senha_atual"))
+            return
+
+        with conectar() as conexao:
+            cursor = conexao.cursor()
+            cursor.execute("UPDATE configuracoes SET valor = ? WHERE chave = 'senha'", (criptografar_senha(nova_senha),))
+            conexao.commit()
+
+        messagebox.showinfo("Sucesso", self.t("sucesso_senha"))
+        self.ent_senha_atual.delete(0, 'end')
+        self.ent_nova_senha.delete(0, 'end')
 
     def alterar_idioma(self, novo_idioma):
         self.idioma_atual = novo_idioma
+        
+        with conectar() as conexao:
+            cursor = conexao.cursor()
+            cursor.execute("UPDATE configuracoes SET valor = ? WHERE chave = 'idioma'", (novo_idioma,))
+            conexao.commit()
+            
         self.painel_principal()
         self.abas.set(self.t("aba_config"))
 
-    def alterar_cor_tema(self, nova_cor):
-        self.cor_atual = nova_cor
+    def alterar_cor_tema(self, nome_cor_escolhido):
+        for cor_chave in MAPA_CORES.keys():
+            if self.t(f"cor_{cor_chave}") == nome_cor_escolhido:
+                self.cor_atual = cor_chave
+                break
+                
+        with conectar() as conexao:
+            cursor = conexao.cursor()
+            cursor.execute("UPDATE configuracoes SET valor = ? WHERE chave = 'cor_tema'", (self.cor_atual,))
+            conexao.commit()
+            
         self.painel_principal()
         self.abas.set(self.t("aba_config"))
 
