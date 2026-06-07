@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Hamburgueria Rosana</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+    <link rel="icon" type="image/png" href="https://fonts.gstatic.com/s/e/notoemoji/latest/1f354/512.webp">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{{ url_for('index') }}" class="logo-link">
+                <div class="logo">
+                    🍔 Hamburgueria Rosana
+                    <span
+                        style="font-size: 13px; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 4px; margin-left: 10px; font-weight: normal;">Painel
+                        Admin</span>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <section class="container admin-section">
+        <div class="admin-header-actions">
+            <h2 class="admin-title">Painel de Controlo de Pedidos</h2>
+            <button onclick="exportarPedidosJSON()" class="btn-export-json">
+                📥 Exportar Pedidos (JSON)
+            </button>
+        </div>
+
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID do Pedido</th>
+                        <th>Data / Hora</th>
+                        <th>Itens Solicitados</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-orders-list">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: #999; padding: 40px;">Carregando pedidos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Hamburgueria Rosana. Todos os direitos reservados.</p>
+        <p>Painel de Controle Interno</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='/script.js') }}"></script>
+</body>
+
+</html>
