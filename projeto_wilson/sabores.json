@@ -1,0 +1,79 @@
+
+{
+  "meta": {
+    "app": "2026-05-21",
+    "data": "2026-05-21",
+    "version": 1
+  },
+
+  "sabores": [
+    {
+      "id": 1,
+      "nome": "Chocolate",
+      "preco": 10,
+      "emoji": "🍫"
+    },
+
+    {
+      "id": 2,
+      "nome": "Morango",
+      "preco": 12,
+      "emoji": "🍓"
+    },
+
+    {
+      "id": 3,
+      "nome": "Baunilha",
+      "preco": 9,
+      "emoji": "🍦"
+    },
+
+    {
+      "id": 4,
+      "nome": "Limão",
+      "preco": 11,
+      "emoji": "🍋"
+    },
+
+    {
+      "id": 5,
+      "nome": "Oreo",
+      "preco": 14,
+      "emoji": "🍪"
+    },
+
+    {
+      "id": 6,
+      "nome": "Leite Ninho",
+      "preco": 19,
+      "emoji": "🥛"
+    },
+
+    {
+      "id": 7,
+      "nome": "Banana",
+      "preco": 18,
+      "emoji": "🍌"
+    },
+
+    {
+      "id": 8,
+      "nome": "Fruta Vermelha",
+      "preco": 18,
+      "emoji": "🍎"
+    },
+
+    {
+      "id": 9,
+      "nome": "Granola",
+      "preco": 10,
+      "emoji": "🌾"
+    },
+
+    {
+      "id": 10,
+      "nome": "Amendoim",
+      "preco": 18,
+      "emoji": "🥜"
+    }
+ ]}

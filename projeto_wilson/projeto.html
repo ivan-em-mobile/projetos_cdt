@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍦 Sorveteria</title>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* BODY */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #fff0f0, #ffe4e4, #fff7f7, #ffeaea);
+            background-size: 400% 400%;
+            animation: fundoAnimado 10s ease infinite;
+            padding: 20px;
+            transition: 0.4s;
+        }
+
+        /* FUNDO */
+        @keyframes fundoAnimado {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* TITULO */
+        h1 {
+            text-align: center;
+            color: #ff0000;
+            margin-bottom: 10px;
+            font-size: 45px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        /* BOTÃO TEMA */
+        .tema {
+            display: block;
+            margin: 0 auto 25px auto;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .tema:hover {
+            transform: scale(1.05);
+        }
+
+        /* BUSCA */
+        .busca {
+            width: 100%;
+            padding: 14px;
+            border-radius: 15px;
+            border: 2px solid #ff0000;
+            margin-bottom: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        /* GRID */
+        .sorvetes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.4s;
+        }
+
+        /* HOVER CARD */
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* EMOJI */
+        .emoji {
+            font-size: 55px;
+            transition: 0.4s;
+        }
+
+        /* EMOJI MEXE SOMENTE NO HOVER */
+        .card:hover .emoji {
+            transform: rotate(15deg) scale(1.2) translateY(-8px);
+        }
+
+        /* TEXTO */
+        .card h2 {
+            color: #ff0000;
+            margin: 10px 0;
+        }
+
+        .preco {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* BOTÕES */
+        button {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* CARRINHO */
+        .pedido {
+            margin-top: 35px;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #listaPedidos {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        #listaPedidos li {
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        #total {
+            margin-top: 15px;
+            color: #ff0000;
+        }
+
+        /* FINALIZAR */
+        .finalizar {
+            margin-top: 20px;
+            width: 100%;
+            background: #28a745;
+        }
+
+        /* USUARIO */
+        .usuarioBox {
+            margin-top: 35px;
+            background: linear-gradient(135deg, #ffffff, #ffe5e5);
+            padding: 35px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* BRILHO */
+        .usuarioBox::before {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            top: -80px;
+            left: -80px;
+        }
+
+        /* HOVER */
+        .usuarioBox:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* TITULO USUARIO */
+        .usuarioBox h2 {
+            color: #056dff;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        /* INPUT */
+        .usuarioBox input {
+            width: 80%;
+            padding: 15px;
+            border-radius: 18px;
+            border: 2px solid #ff4d4d;
+            outline: none;
+            font-size: 17px;
+            transition: 0.3s;
+        }
+
+        /* INPUT FOCUS */
+        .usuarioBox input:focus {
+            border-color: #056dff;
+            box-shadow: 0 0 15px rgba(5, 109, 255, 0.4);
+        }
+
+        /* BOTÃO USUARIO */
+        .usuarioBox button {
+            margin-top: 18px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #056dff, #004ecc);
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* HOVER BOTÃO */
+        .usuarioBox button:hover {
+            transform: scale(1.08);
+        }
+
+        /* MENSAGEM */
+        #mensagemUsuario {
+            margin-top: 22px;
+            font-size: 24px;
+            color: #ff0000;
+            font-weight: bold;
+            animation: aparecer 1s ease;
+        }
+
+        /* ANIMAÇÃO */
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0px);
+            }
+        }
+
+        /* AJUDA */
+        .ajudaBox {
+            margin-top: 30px;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .ajudaBox h2 {
+            color: #056dff;
+            margin-bottom: 15px;
+        }
+
+        .ajudaBox p {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        /* DARK MODE */
+        .dark {
+            background: #111;
+            color: white;
+        }
+
+        .dark .card {
+            background: #333;
+            color: white;
+        }
+
+        .dark .pedido {
+            background: #333;
+            color: white;
+        }
+
+        .dark .usuarioBox {
+            background: #333;
+            color: white;
+        }
+
+        .dark .ajudaBox {
+            background: #333;
+            color: white;
+        }
+
+        .dark .busca {
+            background: #222;
+            color: white;
+        }
+        
+        .dark .subtitulo {
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🍦 Sorveteria</h1>
+
+    <p class="subtitulo">Os melhores sabores da cidade!</p>
+
+    <button class="tema" onclick="trocarTema()">🌙 Modo Noite</button>
+
+    <input type="text" id="buscar" class="busca" placeholder="Buscar sabor..." onkeyup="buscarSorvete()">
+
+    <div class="sorvetes">
+        <div class="card">
+            <div class="emoji">🍫</div>
+            <h2>Chocolate</h2>
+            <p class="preco">R$ 10,00</p>
+            <button onclick="adicionarPedido('Chocolate', 10)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍓</div>
+            <h2>Morango</h2>
+            <p class="preco">R$ 12,00</p>
+            <button onclick="adicionarPedido('Morango', 12)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍦</div>
+            <h2>Baunilha</h2>
+            <p class="preco">R$ 9,00</p>
+            <button onclick="adicionarPedido('Baunilha', 9)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍋</div>
+            <h2>Limão</h2>
+            <p class="preco">R$ 11,00</p>
+            <button onclick="adicionarPedido('Limão', 11)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍪</div>
+            <h2>Oreo</h2>
+            <p class="preco">R$ 14,00</p>
+            <button onclick="adicionarPedido('Oreo', 14)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥛</div>
+            <h2>Leite Ninho</h2>
+            <p class="preco">R$ 19,00</p>
+            <button onclick="adicionarPedido('Leite Ninho', 19)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍌</div>
+            <h2>Banana</h2>
+            <p class="preco">R$ 18,00</p>
+            <button onclick="adicionarPedido('Banana', 18)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍎</div>
+            <h2>Fruta Vermelha</h2>
+            <p class="preco">R$ 18,00</p>
+            <button onclick="adicionarPedido('Fruta Vermelha', 18)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🌾</div>
+            <h2>Granola</h2>
+            <p class="preco">R$ 10,00</p>
+            <button onclick="adicionarPedido('Granola', 10)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥜</div>
+            <h2>Amendoim</h2>
+            <p class="preco">R$ 18,00</p>
+            <button onclick="adicionarPedido('Amendoim', 18)">Adicionar</button>
+        </div>
+    </div>
+
+    <div class="pedido">
+        <h2>🛒 Carrinho</h2>
+        <ul id="listaPedidos"></ul>
+        <h3 id="total">Total: R$ 0,00</h3>
+        <button class="finalizar" onclick="finalizarPedido()">✅ Finalizar Pedido</button>
+    </div>
+
+    <div class="usuarioBox">
+        <h2>👤 Usuário</h2>
+        <input type="text" id="nomeUsuario" placeholder="Digite seu nome">
+        <br><br>
+        <button onclick="entrar()">Entrar</button>
+        <h3 id="mensagemUsuario"></h3>
+    </div>
+
+    <div class="ajudaBox">
+        <h2>❓ Ajuda</h2>
+        <p>1 - Digite seu nome no usuário e clique em Entrar</p>
+        <p>2 - Escolha um sabor</p>
+        <p>3 - Clique em adicionar</p>
+        <p>4 - Veja o carrinho</p>
+        <p>5 - Clique em finalizar pedido</p>
+    </div>
+
+    <script>
+        /* VARIÁVEIS GLOBAIS */
+        let total = 0;
+        let nomeCliente = "";
+
+        /* USUARIO */
+        function entrar() {
+            let usuarioInput = document.getElementById("nomeUsuario").value.trim();
+
+            if (usuarioInput === "") {
+                alert("Digite seu nome!");
+                nomeCliente = "";
+                document.getElementById("mensagemUsuario").innerHTML = "";
+            } else {
+                nomeCliente = usuarioInput;
+                document.getElementById("mensagemUsuario").innerHTML = "Bem-vindo(a), " + nomeCliente + " 🍦";
+            }
+        }
+
+        /* ADICIONAR PEDIDO */
+        function adicionarPedido(sabor, preco) {
+            let lista = document.getElementById("listaPedidos");
+            let item = document.createElement("li");
+
+            item.innerHTML = sabor + " - R$ " + preco + ",00";
+            lista.appendChild(item);
+
+            total += preco;
+            atualizarTotal();
+        }
+
+        /* ATUALIZAR TOTAL */
+        function atualizarTotal() {
+            document.getElementById("total").innerHTML = "Total: R$ " + total + ",00";
+        }
+
+        /* FINALIZAR */
+        function finalizarPedido() {
+            if (nomeCliente === "") {
+                alert("Por favor, identifique-se na sessão 'Usuário' antes de finalizar o pedido!");
+                return;
+            }
+
+            if (total === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+
+            alert("🍦 " + nomeCliente + ", seu pedido foi realizado com sucesso!\nTotal: R$ " + total + ",00");
+
+            // Resetar tudo após finalizar
+            document.getElementById("listaPedidos").innerHTML = "";
+            total = 0;
+            nomeCliente = "";
+            document.getElementById("nomeUsuario").value = "";
+            document.getElementById("mensagemUsuario").innerHTML = "";
+            atualizarTotal();
+        }
+
+        /* BUSCAR */
+        function buscarSorvete() {
+            let input = document.getElementById("buscar").value
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+
+            let cards = document.getElementsByClassName("card");
+
+            for (let i = 0; i < cards.length; i++) {
+                let titulo = cards[i].getElementsByTagName("h2")[0].innerHTML
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "");
+
+                if (titulo.indexOf(input) > -1) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        /* TEMA */
+        function trocarTema() {
+            document.body.classList.toggle("dark");
+            let botao = document.querySelector(".tema");
+
+            if (document.body.classList.contains("dark")) {
+                botao.innerHTML = "🌞 Modo Dia";
+            } else {
+                botao.innerHTML = "🌙 Modo Noite";
+            }
+        }
+    </script>
+</body>
+
+</html>
