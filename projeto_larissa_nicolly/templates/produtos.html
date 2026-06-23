@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cardápio - Café Amélie</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+    }
+
+    body{
+        background:#f5efe8;
+        font-family:'Poppins', sans-serif;
+        color:#4b2e23;
+    }
+
+    .menu-container{
+        width:90%;
+        max-width:1200px;
+        margin:auto;
+        padding:60px 0;
+    }
+
+    .menu-header{
+        text-align:center;
+        margin-bottom:60px;
+    }
+
+    .menu-subtitle{
+        color:#b87333;
+        font-style:italic;
+        font-size:18px;
+    }
+
+    .menu-header h2{
+        font-family:'Playfair Display', serif;
+        font-size:52px;
+        margin-top:10px;
+    }
+
+    .line-decorator{
+        width:100px;
+        height:3px;
+        background:#b87333;
+        margin:20px auto;
+        border-radius:10px;
+    }
+
+    .menu-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+        gap:30px;
+    }
+
+    .menu-item{
+        background:white;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+        transition:0.3s;
+    }
+
+    .menu-item:hover{
+        transform:translateY(-5px);
+    }
+
+    .menu-item img{
+        width:100%;
+        height:250px;
+        object-fit:cover;
+    }
+
+    .item-details{
+        padding:25px;
+    }
+
+    .item-title-row{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:15px;
+    }
+
+    .item-title-row h4{
+        font-size:24px;
+    }
+
+    .item-price{
+        background:#f5ebe0;
+        padding:8px 15px;
+        border-radius:20px;
+        font-weight:bold;
+        color:#5c3d2e;
+    }
+
+    .item-description{
+        color:#7f6a5b;
+        margin-bottom:20px;
+    }
+
+    button{
+        background:#5c3d2e;
+        color:white;
+        border:none;
+        padding:12px 20px;
+        border-radius:30px;
+        cursor:pointer;
+        transition:0.3s;
+        width:100%;
+    }
+
+    button:hover{
+        transform:scale(1.03);
+    }
+
+    .esgotado{
+        background:#999;
+    }
+
+    .top-buttons{
+        display:flex;
+        justify-content:center;
+        gap:20px;
+        margin-bottom:50px;
+        flex-wrap:wrap;
+    }
+
+    .top-buttons a{
+        text-decoration:none;
+    }
+
+    .nav-btn{
+        background:#5c3d2e;
+        color:white;
+        padding:12px 22px;
+        border-radius:30px;
+    }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="menu-container">
+
+        <div class="top-buttons">
+
+            <a href="/">
+                <div class="nav-btn">
+                    Voltar ao Início
+                </div>
+            </a>
+
+            <a href="/carrinho">
+                <div class="nav-btn">
+                    Meu Carrinho
+                </div>
+            </a>
+
+        </div>
+
+        <header class="menu-header">
+
+            <span class="menu-subtitle">
+                Feitos com grãos selecionados
+            </span>
+
+            <h2>
+                Nosso Cardápio Artesanal
+            </h2>
+
+            <div class="line-decorator"></div>
+
+        </header>
+
+        <div class="menu-grid">
+
+            {% for produto in produtos %}
+
+            <div class="menu-item">
+
+                <img
+                    src="{{ url_for('static', filename='imagens/' + produto[4]) }}"
+                >
+
+                <div class="item-details">
+
+                    <div class="item-title-row">
+
+                        <h4>
+                            {{ produto[1] }}
+                        </h4>
+
+                        <span class="item-price">
+                            R$ {{ produto[2] }}
+                        </span>
+
+                    </div>
+
+                    <p class="item-description">
+                        Produto artesanal preparado com ingredientes selecionados ☕
+                    </p>
+
+                    <p>
+                        Estoque: {{ produto[5] }}
+                    </p>
+
+                    {% if produto[5] > 0 %}
+
+                    <a href="/add/{{ produto[1] }}/{{ produto[2] }}">
+
+                        <button>
+                            Adicionar ao Carrinho
+                        </button>
+
+                    </a>
+
+                    {% else %}
+
+                    <button class="esgotado">
+                        Esgotado
+                    </button>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</body>
+</html>

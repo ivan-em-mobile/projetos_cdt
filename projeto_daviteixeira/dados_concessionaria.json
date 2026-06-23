@@ -1,0 +1,43 @@
+{
+    "carros": [
+        {
+            "id": 1,
+            "modelo": "Civic",
+            "marca": "Honda",
+            "ano": 2022,
+            "preco": 120000.0,
+            "status": "disponível"
+        },
+        {
+            "id": 2,
+            "modelo": "Corolla",
+            "marca": "Toyota",
+            "ano": 2023,
+            "preco": 130000.0,
+            "status": "disponível"
+        }
+    ],
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "João Silva",
+            "telefone": "11999999999",
+            "email": "joao@email.com"
+        },
+        {
+            "id": 2,
+            "nome": "Maria Souza",
+            "telefone": "11888888888",
+            "email": "maria@email.com"
+        }
+    ],
+    "vendas": [
+        {
+            "id": 1,
+            "cliente_id": 1,
+            "carro_id": 1,
+            "data_venda": "2026-05-26",
+            "valor": 118000.0
+        }
+    ]
+}

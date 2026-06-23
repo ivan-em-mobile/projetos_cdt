@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Painel Admin</title>
+
+    <style>
+
+        body {
+            font-family: Arial;
+            background-color: #f5f5f5;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #5c3d2e;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        button {
+            background: #5c3d2e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .pedido-box {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .status {
+            font-weight: bold;
+            color: #5c3d2e;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <a href="/">
+        <button>
+            Voltar ao Início
+        </button>
+    </a>
+
+    <h1>Painel Administrativo ☕</h1>
+
+    <!-- FATURAMENTO -->
+    <div class="card">
+
+        <h2>Faturamento</h2>
+
+        <p>
+            Total vendido: R$ {{ faturamento }}
+        </p>
+
+    </div>
+
+    <!-- EXPORTAÇÃO -->
+    <div class="card">
+
+        <h2>Exportação</h2>
+
+        <a href="/exportar-json">
+
+            <button>
+                Exportar Pedidos JSON
+            </button>
+
+        </a>
+
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="card">
+
+        <h2>Pedidos</h2>
+
+        {% for pedido in pedidos %}
+
+        <div class="pedido-box">
+
+            <p>
+                <strong>ID:</strong> {{ pedido[0] }}
+            </p>
+
+            <p>
+                <strong>Cliente:</strong> {{ pedido[1] }}
+            </p>
+
+            <p>
+                <strong>Endereço:</strong> {{ pedido[2] }}
+            </p>
+
+            <p>
+                <strong>Observação:</strong> {{ pedido[3] }}
+            </p>
+
+            <p>
+                <strong>Produto:</strong> {{ pedido[4] }}
+            </p>
+
+            <p>
+                <strong>Preço:</strong> R$ {{ pedido[5] }}
+            </p>
+
+            <p class="status">
+                Status Atual: {{ pedido[6] }}
+            </p>
+
+            <!-- ATUALIZAR STATUS -->
+            <form action="/atualizar-status" method="POST">
+
+                <input
+                    type="hidden"
+                    name="id_pedido"
+                    value="{{ pedido[0] }}"
+                >
+
+                <select name="status">
+
+                    <option value="Recebido">
+                        Recebido
+                    </option>
+
+                    <option value="Preparando">
+                        Preparando
+                    </option>
+
+                    <option value="Saiu para entrega">
+                        Saiu para entrega
+                    </option>
+
+                    <option value="Entregue">
+                        Entregue
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Atualizar Status
+                </button>
+
+            </form>
+
+            <br>
+
+            <!-- EXCLUIR -->
+            <a href="/excluir-pedido/{{ pedido[0] }}">
+
+                <button>
+                    Excluir Pedido
+                </button>
+
+            </a>
+
+        </div>
+
+        <hr>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- ESTOQUE -->
+    <div class="card">
+
+        <h2>Controle de Estoque</h2>
+
+        {% for produto in produtos %}
+
+        <form action="/atualizar-estoque" method="POST">
+
+            <p>
+                {{ produto[1] }} — Estoque: {{ produto[5] }}
+            </p>
+
+            <input
+                type="hidden"
+                name="nome"
+                value="{{ produto[1] }}"
+            >
+
+            <input
+                type="number"
+                name="estoque"
+                placeholder="Novo estoque"
+                required
+            >
+
+            <button type="submit">
+                Atualizar
+            </button>
+
+        </form>
+
+        <hr>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>
+```

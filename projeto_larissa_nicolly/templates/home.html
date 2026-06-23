@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Café Amélie</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        scroll-behavior:smooth;
+    }
+
+    body{
+        background:#f5efe8;
+        color:#4b2e23;
+        font-family:'Poppins', sans-serif;
+    }
+
+    a{
+        text-decoration:none;
+    }
+
+    /* NAVBAR */
+
+    .navbar{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:20px 8%;
+        background:white;
+        position:sticky;
+        top:0;
+        z-index:100;
+        box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .logo{
+        font-family:'Playfair Display', serif;
+        font-size:32px;
+        color:#5c3d2e;
+        font-weight:bold;
+    }
+
+    .nav-links{
+        display:flex;
+        gap:30px;
+        list-style:none;
+    }
+
+    .nav-links a{
+        color:#5c3d2e;
+        font-weight:500;
+        transition:0.3s;
+    }
+
+    .nav-links a:hover{
+        color:#b87333;
+    }
+
+    .btn-header{
+        background:#5c3d2e;
+        color:white;
+        padding:12px 24px;
+        border-radius:30px;
+        transition:0.3s;
+    }
+
+    .btn-header:hover{
+        transform:scale(1.05);
+    }
+
+    /* HERO */
+
+.hero{
+    height:90vh;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url('/static/imagens/capa.jpg');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+    color:white;
+
+    padding:20px;
+}
+
+    .hero-content{
+        max-width:800px;
+    }
+
+    .hero h1{
+        font-family:'Playfair Display', serif;
+        font-size:72px;
+        margin-bottom:20px;
+    }
+
+    .hero p{
+        font-size:22px;
+        margin-bottom:40px;
+    }
+
+    .hero-buttons{
+        display:flex;
+        justify-content:center;
+        gap:20px;
+        flex-wrap:wrap;
+    }
+
+    .btn{
+        padding:15px 30px;
+        border-radius:30px;
+        font-weight:600;
+        transition:0.3s;
+    }
+
+    .btn-primary{
+        background:#e6ccb2;
+        color:#4b2e23;
+    }
+
+    .btn-primary:hover{
+        transform:scale(1.05);
+    }
+
+    .btn-secondary{
+        border:2px solid white;
+        color:white;
+    }
+
+    .btn-secondary:hover{
+        background:white;
+        color:#4b2e23;
+    }
+
+    /* CARDS */
+
+    .menu-highlights{
+        padding:90px 8%;
+        text-align:center;
+    }
+
+    .menu-highlights h2{
+        font-family:'Playfair Display', serif;
+        font-size:48px;
+        margin-bottom:10px;
+    }
+
+    .section-subtitle{
+        color:#7b5a4a;
+        margin-bottom:50px;
+        font-style:italic;
+    }
+
+    .menu-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+        gap:30px;
+    }
+
+    .menu-card{
+        background:white;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0 5px 20px rgba(0,0,0,0.08);
+        transition:0.3s;
+    }
+
+    .menu-card:hover{
+        transform:translateY(-5px);
+    }
+
+    .menu-card img{
+        width:100%;
+        height:250px;
+        object-fit:cover;
+    }
+
+    .menu-content{
+        padding:25px;
+    }
+
+    .menu-content h3{
+        margin-bottom:10px;
+        font-size:24px;
+    }
+
+    .menu-content p{
+        color:#7f6a5b;
+        margin-bottom:20px;
+    }
+
+    .price{
+        background:#f5ebe0;
+        color:#5c3d2e;
+        padding:8px 15px;
+        border-radius:20px;
+        font-weight:bold;
+    }
+
+    /* SOBRE */
+
+    .about{
+        background:#ede0d4;
+        padding:80px 8%;
+        text-align:center;
+    }
+
+    .about h2{
+        font-family:'Playfair Display', serif;
+        font-size:42px;
+        margin-bottom:20px;
+    }
+
+    .about p{
+        max-width:700px;
+        margin:auto;
+        font-size:18px;
+        line-height:1.8;
+    }
+
+    /* FOOTER */
+
+    .footer{
+        background:#2b1e16;
+        color:#d6ccc2;
+        text-align:center;
+        padding:30px;
+    }
+
+    /* RESPONSIVO */
+
+    @media(max-width:768px){
+
+        .navbar{
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .hero h1{
+            font-size:48px;
+        }
+
+        .hero p{
+            font-size:18px;
+        }
+
+        .hero-buttons{
+            flex-direction:column;
+        }
+
+    }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            ☕ Café Amélie
+        </div>
+
+        <nav>
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/">Início</a>
+                </li>
+
+                <li>
+                    <a href="/produtos">Cardápio</a>
+                </li>
+
+                <li>
+                    <a href="/carrinho">Carrinho</a>
+                </li>
+
+                <li>
+                    <a href="/login">Admin</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <a href="/produtos" class="btn-header">
+            Fazer Pedido
+        </a>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Brewed Fresh, Served Warm.
+            </h1>
+
+            <p>
+                Cafés especiais, doces artesanais e uma experiência acolhedora em cada pedido ☕
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/produtos" class="btn btn-primary">
+                    Ver Cardápio
+                </a>
+
+                <a href="/login" class="btn btn-secondary">
+                    Área do Dono
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- DESTAQUES -->
+
+    <section class="menu-highlights">
+
+        <h2>
+            Mais Pedidos
+        </h2>
+
+        <p class="section-subtitle">
+            Os favoritos dos nossos clientes
+        </p>
+
+        <div class="menu-grid">
+
+            <div class="menu-card">
+
+                <img src="/static/imagens/expresso.jpg">
+
+                <div class="menu-content">
+
+                    <h3>
+                        Café Expresso Paris
+                    </h3>
+
+                    <p>
+                        Intenso, aromático e perfeito para começar o dia.
+                    </p>
+
+                    <span class="price">
+                        R$ 5,00
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="menu-card">
+
+                <img src="/static/imagens/cappuccino.webp">
+
+                <div class="menu-content">
+
+                    <h3>
+                        Cappuccino Cremoso
+                    </h3>
+
+                    <p>
+                        Espresso, leite vaporizado e espuma cremosa.
+                    </p>
+
+                    <span class="price">
+                        R$ 8,00
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="menu-card">
+
+                <img src="/static/imagens/mocha.jpg">
+
+                <div class="menu-content">
+
+                    <h3>
+                        Mocha Chocolate Belga
+                    </h3>
+
+                    <p>
+                        Mistura perfeita de café e chocolate premium.
+                    </p>
+
+                    <span class="price">
+                        R$ 10,00
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- SOBRE -->
+
+    <section class="about">
+
+        <h2>
+            Sobre Nós
+        </h2>
+
+        <p>
+            Inspirado nos cafés parisienses, o Café Amélie nasceu para transformar cada pausa em um momento especial. Servimos cafés selecionados, sobremesas artesanais e uma experiência aconchegante para nossos clientes.
+        </p>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <p>
+            © 2026 Café Amélie — Todos os direitos reservados.
+        </p>
+
+    </footer>
+
+</body>
+</html>
+```

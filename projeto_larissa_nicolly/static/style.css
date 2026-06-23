@@ -1,0 +1,94 @@
+body{
+    background:#ede6df;
+    margin:0;
+    font-family:Arial;
+    text-align:center;
+}
+
+.hero{
+    margin-top:60px;
+}
+
+.logo{
+    font-family: 'Playfair Display', serif;
+    font-size:80px;
+    color:#4b2e23;
+    margin-bottom:10px;
+    text-align:center;
+}
+
+.frase{
+    font-family: 'Playfair Display', serif;
+    font-size:32px;
+    color:#7b5a4a;
+    font-style:italic;
+    letter-spacing:1px;
+}
+
+/* CARDÁPIO */
+.produto {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* BOTÃO */
+button{
+    background:#5c3d2e;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:30px;
+    margin:10px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+/* LINKS */
+.nav {
+    text-align: center;
+    margin: 10px;
+}
+
+.nav a {
+    margin: 10px;
+    color: #8b5e3c;
+    font-weight: bold;
+}
+
+/* CARD CARRINHO */
+.card {
+    background: white;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #8b5e3c;
+}
+
+a:visited {
+    color: #8b5e3c;
+}
+
+a:hover {
+    color: #5a3e36;
+}
+
+.banner{
+    width:75%;
+    border-radius:25px;
+    margin-top:30px;
+    box-shadow:0px 5px 20px rgba(0,0,0,0.2);
+}

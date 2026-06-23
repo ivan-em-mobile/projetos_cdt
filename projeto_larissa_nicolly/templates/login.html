@@ -1,0 +1,208 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login Admin - Café Amélie</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body{
+            background:#fdfbf7;
+            color:#4a3b32;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:20px;
+        }
+
+        .login-container{
+            background:white;
+            width:100%;
+            max-width:420px;
+            padding:40px 30px;
+            border-radius:16px;
+            box-shadow:0 4px 25px rgba(74,59,50,0.08);
+            border:1px solid #f0eae4;
+        }
+
+        .login-header{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .login-logo{
+            font-size:24px;
+            font-weight:bold;
+            color:#6f4e37;
+            display:block;
+            margin-bottom:10px;
+        }
+
+        .login-header h2{
+            font-size:28px;
+            color:#362820;
+            margin-bottom:5px;
+        }
+
+        .login-header p{
+            color:#7f6a5b;
+            font-size:14px;
+        }
+
+        .login-form{
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .input-group{
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+
+        .input-group label{
+            font-size:14px;
+            font-weight:600;
+            color:#665246;
+        }
+
+        .input-group input{
+            padding:12px 16px;
+            border:1px solid #d6ccc2;
+            border-radius:25px;
+            font-size:15px;
+            background:#fdfbf7;
+        }
+
+        .input-group input:focus{
+            outline:none;
+            border-color:#6f4e37;
+            box-shadow:0 0 0 3px rgba(111,78,55,0.1);
+        }
+
+        .btn-login{
+            background:#6f4e37;
+            color:white;
+            border:none;
+            padding:14px;
+            border-radius:25px;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .btn-login:hover{
+            background:#563c2b;
+        }
+
+        .login-footer{
+            text-align:center;
+            margin-top:25px;
+        }
+
+        .btn-back{
+            display:inline-block;
+            text-decoration:none;
+            color:#6f4e37;
+            border:2px solid #6f4e37;
+            padding:10px 22px;
+            border-radius:25px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .btn-back:hover{
+            background:#6f4e37;
+            color:white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="login-container">
+
+        <div class="login-header">
+
+            <span class="login-logo">
+                ☕ Café Amélie
+            </span>
+
+            <h2>
+                Painel Administrativo
+            </h2>
+
+            <p>
+                Entre para gerenciar pedidos e estoque
+            </p>
+
+        </div>
+
+        <form action="/login" method="POST" class="login-form">
+
+            <div class="input-group">
+
+                <label>
+                    Usuário
+                </label>
+
+                <input
+                    type="text"
+                    name="usuario"
+                    placeholder="Digite seu usuário"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    name="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+
+            </div>
+
+            <button type="submit" class="btn-login">
+                Entrar
+            </button>
+
+        </form>
+
+        <div class="login-footer">
+
+            <a href="/" class="btn-back">
+                Voltar ao Início
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
+```

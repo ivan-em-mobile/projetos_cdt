@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acompanhar Pedido - Café Amélie</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body{
+            background:#fdfbf7;
+            color:#4a3b32;
+            padding:40px 20px;
+        }
+
+        .tracking-container{
+            max-width:650px;
+            margin:0 auto;
+            background:white;
+            padding:40px 30px;
+            border-radius:16px;
+            box-shadow:0 4px 20px rgba(74,59,50,0.06);
+            border:1px solid #f0eae4;
+        }
+
+        .tracking-header{
+            text-align:center;
+            margin-bottom:35px;
+        }
+
+        .tracking-header h2{
+            font-size:30px;
+            color:#362820;
+            margin-bottom:8px;
+        }
+
+        .tracking-header p{
+            color:#7f6a5b;
+        }
+
+        .status-timeline{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom:35px;
+            gap:15px;
+            flex-wrap:wrap;
+        }
+
+        .step{
+            flex:1;
+            min-width:120px;
+            text-align:center;
+            padding:15px;
+            border-radius:14px;
+            background:#ede0d4;
+            color:#9c8879;
+            transition:0.3s;
+        }
+
+        .step.active{
+            background:#6f4e37;
+            color:white;
+        }
+
+        .step-icon{
+            font-size:28px;
+            margin-bottom:10px;
+        }
+
+        .current-badge-box{
+            background:#f5ebe0;
+            padding:15px;
+            border-radius:12px;
+            text-align:center;
+            font-weight:600;
+            margin-bottom:35px;
+        }
+
+        .badge{
+            background:#6f4e37;
+            color:white;
+            padding:4px 14px;
+            border-radius:15px;
+            margin-left:8px;
+        }
+
+        .order-details h3{
+            margin-bottom:15px;
+            color:#362820;
+        }
+
+        .details-box{
+            border:1px solid #f0eae4;
+            border-radius:12px;
+            padding:20px;
+            background:#fdfbf7;
+        }
+
+        .order-item{
+            margin-bottom:15px;
+        }
+
+        .item-main{
+            display:flex;
+            justify-content:space-between;
+            font-weight:600;
+        }
+
+        .item-observation{
+            font-size:13px;
+            color:#b87333;
+            margin-top:6px;
+        }
+
+        .tracking-footer{
+            text-align:center;
+            margin-top:35px;
+        }
+
+        .btn-back{
+            display:inline-block;
+            margin-top:15px;
+            background:transparent;
+            color:#6f4e37;
+            border:2px solid #6f4e37;
+            padding:10px 25px;
+            border-radius:25px;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .btn-back:hover{
+            background:#6f4e37;
+            color:white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <main class="tracking-container">
+
+        <header class="tracking-header">
+
+            <h2>
+                ☕ Acompanhe seu Pedido
+            </h2>
+
+            <p>
+                Olá,
+                <strong>{{ pedido.cliente }}</strong>
+            </p>
+
+        </header>
+
+        <section class="status-timeline">
+
+            <div class="step {% if pedido.status in ['Recebido', 'Preparando', 'Saiu para entrega', 'Entregue'] %}active{% endif %}">
+
+                <div class="step-icon">
+                    📋
+                </div>
+
+                <p>
+                    Recebido
+                </p>
+
+            </div>
+
+            <div class="step {% if pedido.status in ['Preparando', 'Saiu para entrega', 'Entregue'] %}active{% endif %}">
+
+                <div class="step-icon">
+                    ☕
+                </div>
+
+                <p>
+                    Preparando
+                </p>
+
+            </div>
+
+            <div class="step {% if pedido.status in ['Saiu para entrega', 'Entregue'] %}active{% endif %}">
+
+                <div class="step-icon">
+                    🛵
+                </div>
+
+                <p>
+                    Saiu
+                </p>
+
+            </div>
+
+            <div class="step {% if pedido.status == 'Entregue' %}active{% endif %}">
+
+                <div class="step-icon">
+                    ✅
+                </div>
+
+                <p>
+                    Entregue
+                </p>
+
+            </div>
+
+        </section>
+
+        <div class="current-badge-box">
+
+            Status Atual:
+
+            <span class="badge">
+                {{ pedido.status }}
+            </span>
+
+        </div>
+
+        <section class="order-details">
+
+            <h3>
+                Resumo do Pedido
+            </h3>
+
+            <div class="details-box">
+
+                <div class="order-item">
+
+                    <div class="item-main">
+
+                        <span>
+                            ☕ {{ pedido.produto }}
+                        </span>
+
+                        <span>
+                            R$ {{ pedido.preco }}
+                        </span>
+
+                    </div>
+
+                    <p class="item-observation">
+
+                        ⚠️ {{ pedido.observacao }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="tracking-footer">
+
+            <p>
+                Obrigado por escolher o Café Amélie ☕
+            </p>
+
+            <a href="/produtos" class="btn-back">
+                Voltar ao Cardápio
+            </a>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>
+```

@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pedido Confirmado</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    background:#fdfbf7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    background:white;
+    width:100%;
+    max-width:550px;
+    border-radius:20px;
+    padding:45px;
+    text-align:center;
+    box-shadow:0 5px 25px rgba(0,0,0,0.08);
+}
+
+.icon{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+h1{
+    color:#362820;
+    margin-bottom:10px;
+}
+
+p{
+    color:#7f6a5b;
+    line-height:1.6;
+}
+
+.card{
+    background:#f8f4ef;
+    padding:20px;
+    border-radius:14px;
+    margin:30px 0;
+    text-align:left;
+}
+
+.status{
+    margin-top:10px;
+    font-weight:bold;
+    color:#6f4e37;
+}
+
+.btn{
+    display:block;
+    width:100%;
+    background:#6f4e37;
+    color:white;
+    text-decoration:none;
+    padding:15px;
+    border-radius:30px;
+    margin-top:15px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#563c2b;
+}
+
+.btn-sec{
+    background:transparent;
+    border:2px solid #6f4e37;
+    color:#6f4e37;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="icon">
+🎉
+</div>
+
+<h1>
+Pedido Confirmado!
+</h1>
+
+<p>
+Seu pedido foi enviado para nossos baristas ☕
+Uma confirmação será enviada para seu email.
+</p>
+
+<div class="card">
+
+<p>
+<strong>Cliente:</strong>
+{{ pedido.cliente }}
+</p>
+
+<p>
+<strong>Endereço:</strong>
+{{ pedido.endereco }}
+</p>
+
+<p>
+<strong>Status:</strong>
+<span class="status">
+{{ pedido.status }}
+</span>
+</p>
+
+</div>
+
+<a href="/acompanhar" class="btn">
+Acompanhar Pedido
+</a>
+
+<a href="/produtos" class="btn btn-sec">
+Voltar ao Cardápio
+</a>
+
+</div>
+
+</body>
+</html>
+

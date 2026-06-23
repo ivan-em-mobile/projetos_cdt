@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Central dos Tênis</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#070b14;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* HEADER */
+
+header{
+    width:100%;
+    background:rgba(10,15,30,0.95);
+    backdrop-filter:blur(10px);
+    padding:20px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:2px solid #2563eb;
+}
+
+.logo{
+    font-size:34px;
+    font-weight:800;
+}
+
+.logo span{
+    color:#38bdf8;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#cbd5e1;
+    text-decoration:none;
+    font-size:17px;
+    font-weight:500;
+    transition:0.3s;
+    position:relative;
+}
+
+nav a:hover{
+    color:white;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    width:0%;
+    height:2px;
+    background:#38bdf8;
+    left:0;
+    bottom:-6px;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* HERO */
+
+.hero{
+    min-height:90vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1600&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
+
+.hero-content h1{
+    font-size:70px;
+    margin-bottom:20px;
+    font-weight:800;
+}
+
+.hero-content p{
+    font-size:22px;
+    color:#d1d5db;
+    margin-bottom:30px;
+}
+
+.hero-content button{
+    padding:16px 35px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(90deg,#38bdf8,#2563eb);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.hero-content button:hover{
+    transform:scale(1.05);
+}
+
+/* CONTAINER */
+
+.container{
+    display:flex;
+    gap:30px;
+    padding:40px;
+}
+
+/* LOGIN */
+
+.login-box{
+    width:350px;
+    background:white;
+    border-radius:30px;
+    padding:35px;
+    color:#111827;
+    box-shadow:0 20px 50px rgba(0,0,0,0.4);
+    height:fit-content;
+}
+
+.login-topo h2{
+    font-size:38px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.login-topo p{
+    color:#6b7280;
+    margin-bottom:25px;
+}
+
+.tabs{
+    display:flex;
+    background:#f3f4f6;
+    padding:5px;
+    border-radius:14px;
+    margin-bottom:25px;
+}
+
+.tab{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:transparent;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.tab.active{
+    background:linear-gradient(90deg,#2563eb,#38bdf8);
+    color:white;
+}
+
+.login-box input{
+    width:100%;
+    padding:16px;
+    margin-bottom:15px;
+    border-radius:14px;
+    border:1px solid #d1d5db;
+    outline:none;
+}
+
+.btn-login{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(90deg,#2563eb,#38bdf8);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-login:hover{
+    transform:translateY(-3px);
+}
+
+.status{
+    margin-top:20px;
+    background:#f3f4f6;
+    padding:15px;
+    border-radius:14px;
+    text-align:center;
+    font-weight:700;
+    color:#2563eb;
+}
+
+/* PRODUTOS */
+
+.content{
+    flex:1;
+}
+
+.topo-produtos{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.topo-produtos h1{
+    font-size:48px;
+}
+
+.search{
+    width:320px;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:#111827;
+    color:white;
+    outline:none;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:28px;
+}
+
+.card{
+    background:#111827;
+    border-radius:28px;
+    overflow:hidden;
+    transition:0.4s;
+    position:relative;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 25px 45px rgba(0,0,0,0.5);
+}
+
+.card img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+
+.tag{
+    position:absolute;
+    top:18px;
+    left:18px;
+    background:#ef4444;
+    color:white;
+    padding:7px 14px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.card-info{
+    padding:22px;
+}
+
+.card-info h3{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.card-info p{
+    color:#94a3b8;
+    margin-bottom:12px;
+}
+
+.preco-antigo{
+    color:#ef4444;
+    text-decoration:line-through;
+    font-size:15px;
+}
+
+.preco{
+    font-size:30px;
+    color:#38bdf8;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.card-info button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(90deg,#10b981,#059669);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.card-info button:hover{
+    transform:scale(1.03);
+}
+
+/* CARRINHO */
+
+.carrinho{
+    margin-top:50px;
+    background:#111827;
+    border-radius:30px;
+    padding:35px;
+}
+
+.carrinho h2{
+    margin-bottom:25px;
+    font-size:32px;
+}
+
+.item{
+    background:#1e293b;
+    padding:16px;
+    border-radius:14px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.total{
+    margin-top:20px;
+    font-size:32px;
+    color:#38bdf8;
+    font-weight:800;
+}
+
+.finalizar{
+    width:100%;
+    margin-top:20px;
+    padding:17px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(90deg,#10b981,#22c55e);
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:60px;
+    padding:40px;
+    text-align:center;
+    background:#0f172a;
+    color:#94a3b8;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:1000px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .login-box{
+        width:100%;
+    }
+
+    .hero-content h1{
+        font-size:50px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        CENTRAL <span>DOS TÊNIS</span>
+    </div>
+
+    <nav>
+
+        <a href="javascript:void(0)">Início</a>
+
+        <a href="javascript:void(0)">Masculino</a>
+
+        <a href="javascript:void(0)">Feminino</a>
+
+        <a href="javascript:void(0)">Jordan</a>
+
+        <a href="javascript:void(0)">Promoções</a>
+
+    </nav>
+
+</header>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>OS MELHORES TÊNIS ESTÃO AQUI</h1>
+
+        <p>
+            Nike, Adidas, Jordan, Puma e muito mais
+        </p>
+
+        <button>
+            Comprar Agora
+        </button>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    <!-- LOGIN -->
+
+    <div class="login-box">
+
+        <div class="login-topo">
+
+            <h2>ENTRAR</h2>
+
+            <p>
+                Acesse sua conta para comprar
+            </p>
+
+        </div>
+
+        <div class="tabs">
+
+            <button class="tab active" id="btnLogin"
+            onclick="mostrarLogin()">
+                Login
+            </button>
+
+            <button class="tab" id="btnCadastro"
+            onclick="mostrarCadastro()">
+                Cadastro
+            </button>
+
+        </div>
+
+        <!-- LOGIN -->
+
+        <div id="areaLogin">
+
+            <input type="text"
+            id="loginUsuario"
+            placeholder="Usuário">
+
+            <input type="password"
+            id="loginSenha"
+            placeholder="Senha">
+
+            <button class="btn-login"
+            onclick="fazerLogin()">
+                Entrar
+            </button>
+
+        </div>
+
+        <!-- CADASTRO -->
+
+        <div id="areaCadastro"
+        style="display:none;">
+
+            <input type="text"
+            id="nome"
+            placeholder="Nome Completo">
+
+            <input type="email"
+            id="email"
+            placeholder="E-mail">
+
+            <input type="text"
+            id="telefone"
+            placeholder="Telefone">
+
+            <input type="text"
+            id="cidade"
+            placeholder="Cidade">
+
+            <input type="text"
+            id="usuario"
+            placeholder="Usuário">
+
+            <input type="password"
+            id="senha"
+            placeholder="Senha">
+
+            <button class="btn-login"
+            onclick="criarConta()">
+                Criar Conta
+            </button>
+
+        </div>
+
+        <div class="status" id="status">
+            Nenhum usuário logado
+        </div>
+
+    </div>
+
+    <!-- PRODUTOS -->
+
+    <div class="content">
+
+        <div class="topo-produtos">
+
+            <h1 id="tituloCategoria">
+                Lançamentos 🔥
+            </h1>
+
+            <input
+            type="text"
+            class="search"
+            placeholder="Pesquisar tênis..."
+            onkeyup="pesquisar(this.value)"
+            >
+
+        </div>
+
+        <div class="cards" id="cards"></div>
+
+        <div class="carrinho">
+
+            <h2>🛒 Carrinho</h2>
+
+            <div id="listaCarrinho"></div>
+
+            <div class="total" id="total">
+                Total: R$ 0.00
+            </div>
+
+            <button class="finalizar"
+            onclick="finalizarCompra()">
+                💳 Finalizar Compra
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 Central dos Tênis - Todos os direitos reservados
+</footer>
+
+<script>
+
+const estoque = [
+
+{
+    marca:"Nike",
+    modelo:"Air Max 90",
+    preco:799.90,
+    desconto:10,
+    categoria:"masculino",
+    imagem:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1000"
+},
+
+{
+    marca:"Nike",
+    modelo:"Jordan 1",
+    preco:999.90,
+    desconto:15,
+    categoria:"masculino",
+    imagem:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1000"
+},
+
+{
+    marca:"Adidas",
+    modelo:"Ultraboost Feminino",
+    preco:699.90,
+    desconto:20,
+    categoria:"feminino",
+    imagem:"https://images.unsplash.com/photo-1543508282-6319a3e2621f?q=80&w=1000"
+},
+
+{
+    marca:"Nike",
+    modelo:"Air Force Feminino",
+    preco:649.90,
+    desconto:25,
+    categoria:"feminino",
+    imagem:"https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000"
+},
+
+{
+    marca:"Puma",
+    modelo:"RS-X",
+    preco:450.00,
+    desconto:30,
+    categoria:"masculino",
+    imagem:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=1000"
+},
+
+{
+    marca:"Vans",
+    modelo:"Old Skool Feminino",
+    preco:399.90,
+    desconto:40,
+    categoria:"feminino",
+    imagem:"https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=1000"
+},
+
+{
+    marca:"Jordan",
+    modelo:"Jordan 4 Retro",
+    preco:1799.90,
+    desconto:5,
+    categoria:"masculino",
+    imagem:"https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1000"
+},
+
+{
+    marca:"Nike",
+    modelo:"Air Zoom Pegasus",
+    preco:549.90,
+    desconto:35,
+    categoria:"feminino",
+    imagem:"https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=1000"
+}
+
+];
+
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+let carrinho = [];
+
+let usuarioLogado = null;
+
+function mostrarProdutos(lista = estoque){
+
+    const cards = document.getElementById("cards");
+
+    cards.innerHTML = "";
+
+    lista.forEach((tenis,index)=>{
+
+        const precoComDesconto =
+        tenis.preco - (tenis.preco * tenis.desconto / 100);
+
+        cards.innerHTML += `
+
+        <div class="card">
+
+            <div class="tag">
+                ${tenis.desconto}% OFF
+            </div>
+
+            <img src="${tenis.imagem}">
+
+            <div class="card-info">
+
+                <h3>${tenis.marca}</h3>
+
+                <p>${tenis.modelo}</p>
+
+                <div class="preco-antigo">
+                    R$ ${tenis.preco.toFixed(2)}
+                </div>
+
+                <div class="preco">
+                    R$ ${precoComDesconto.toFixed(2)}
+                </div>
+
+                <button onclick="adicionarCarrinho(${index})">
+                    Adicionar ao Carrinho
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function pesquisar(valor){
+
+    const filtrado = estoque.filter(tenis =>
+
+        tenis.marca.toLowerCase().includes(valor.toLowerCase()) ||
+
+        tenis.modelo.toLowerCase().includes(valor.toLowerCase())
+
+    );
+
+    mostrarProdutos(filtrado);
+
+}
+
+function mostrarLogin(){
+
+    document.getElementById("areaLogin").style.display = "block";
+
+    document.getElementById("areaCadastro").style.display = "none";
+
+    document.getElementById("btnLogin")
+    .classList.add("active");
+
+    document.getElementById("btnCadastro")
+    .classList.remove("active");
+
+}
+
+function mostrarCadastro(){
+
+    document.getElementById("areaLogin").style.display = "none";
+
+    document.getElementById("areaCadastro").style.display = "block";
+
+    document.getElementById("btnCadastro")
+    .classList.add("active");
+
+    document.getElementById("btnLogin")
+    .classList.remove("active");
+
+}
+
+function criarConta(){
+
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const telefone = document.getElementById("telefone").value;
+    const cidade = document.getElementById("cidade").value;
+    const usuario = document.getElementById("usuario").value;
+    const senha = document.getElementById("senha").value;
+
+    if(
+        nome == "" ||
+        email == "" ||
+        telefone == "" ||
+        cidade == "" ||
+        usuario == "" ||
+        senha == ""
+    ){
+
+        alert("Preencha todos os campos!");
+        return;
+
+    }
+
+    usuarios.push({
+        nome,
+        email,
+        telefone,
+        cidade,
+        usuario,
+        senha
+    });
+
+    localStorage.setItem(
+        "usuarios",
+        JSON.stringify(usuarios)
+    );
+
+    alert("Conta criada com sucesso!");
+
+    mostrarLogin();
+
+}
+
+function fazerLogin(){
+
+    const usuario =
+    document.getElementById("loginUsuario").value;
+
+    const senha =
+    document.getElementById("loginSenha").value;
+
+    const encontrado = usuarios.find(u =>
+
+        u.usuario == usuario &&
+        u.senha == senha
+
+    );
+
+    if(encontrado){
+
+        usuarioLogado = encontrado;
+
+        document.getElementById("status").innerHTML =
+        `👤 ${encontrado.nome}`;
+
+        alert("Login realizado!");
+
+    }
+
+    else{
+
+        alert("Usuário ou senha incorretos!");
+
+    }
+
+}
+
+function adicionarCarrinho(index){
+
+    if(usuarioLogado == null){
+
+        alert("Faça login primeiro!");
+        return;
+
+    }
+
+    carrinho.push(estoque[index]);
+
+    atualizarCarrinho();
+
+}
+
+function atualizarCarrinho(){
+
+    const lista =
+    document.getElementById("listaCarrinho");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    carrinho.forEach((item)=>{
+
+        const precoFinal =
+        item.preco - (item.preco * item.desconto / 100);
+
+        total += precoFinal;
+
+        lista.innerHTML += `
+
+        <div class="item">
+
+            <span>
+                ${item.marca} - ${item.modelo}
+            </span>
+
+            <strong>
+                R$ ${precoFinal.toFixed(2)}
+            </strong>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("total").innerHTML =
+
+    `Total: R$ ${total.toFixed(2)}`;
+
+}
+
+function finalizarCompra(){
+
+    if(carrinho.length == 0){
+
+        alert("Carrinho vazio!");
+        return;
+
+    }
+
+    alert("Compra finalizada com sucesso!");
+
+    carrinho = [];
+
+    atualizarCarrinho();
+
+}
+
+/* MENU */
+
+document.querySelectorAll("nav a")[0].onclick = () => {
+
+    document.getElementById("tituloCategoria")
+    .innerHTML = "Lançamentos 🔥";
+
+    mostrarProdutos(estoque);
+
+};
+
+document.querySelectorAll("nav a")[1].onclick = () => {
+
+    document.getElementById("tituloCategoria")
+    .innerHTML = "Masculino 👟";
+
+    const masculino = estoque.filter(t =>
+
+        t.categoria == "masculino"
+
+    );
+
+    mostrarProdutos(masculino);
+
+};
+
+document.querySelectorAll("nav a")[2].onclick = () => {
+
+    document.getElementById("tituloCategoria")
+    .innerHTML = "Feminino 💖";
+
+    const feminino = estoque.filter(t =>
+
+        t.categoria == "feminino"
+
+    );
+
+    mostrarProdutos(feminino);
+
+};
+
+document.querySelectorAll("nav a")[3].onclick = () => {
+
+    document.getElementById("tituloCategoria")
+    .innerHTML = "Jordan 🏀";
+
+    const jordan = estoque.filter(t =>
+
+        t.marca == "Jordan"
+
+    );
+
+    mostrarProdutos(jordan);
+
+};
+
+document.querySelectorAll("nav a")[4].onclick = () => {
+
+    document.getElementById("tituloCategoria")
+    .innerHTML = "Promoções 💸";
+
+    const promo = estoque.filter(t =>
+
+        t.desconto >= 20
+
+    );
+
+    mostrarProdutos(promo);
+
+};
+
+mostrarProdutos();
+
+</script>
+
+</body>
+</html>
