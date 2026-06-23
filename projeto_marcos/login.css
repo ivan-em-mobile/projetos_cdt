@@ -1,0 +1,79 @@
+body {
+    background-image: url("background.png");
+    background-color: gold;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-top: 120px;
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+header img {
+    display: block;
+    max-width: 100px;
+    height: auto;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.login-card h1 {
+    color: gold;
+    margin-bottom: 25px;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: gold;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-card a {
+    display: inline-block;
+    margin-top: 18px;
+    color: #ffe080;
+    text-decoration: none;
+}
+header{
+        
+}

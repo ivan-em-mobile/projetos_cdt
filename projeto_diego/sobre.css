@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("background.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* NAV - MENU REFINADO */
+nav {
+  background: rgba(0, 0, 0, 0.85);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+  padding: 8px 12px;
+}
+
+nav ul li a:hover {
+  color: gold;
+}
+
+/* Classe para destacar onde o usuário está */
+nav ul li a.active {
+  color: gold;
+  border-bottom: 2px solid gold;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+.hero h1 {
+  font-size: 55px;
+  color: gold;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #ddd;
+}
+
+/* CARDS */
+.card {
+  width: 90%;
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 35px;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.06);
+}
+
+.card h2 {
+  color: gold;
+  font-size: 30px;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.card p {
+  color: #ddd;
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* LISTA DENTRO DO CARD */
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  font-size: 20px;
+  margin: 20px 0;
+  color: white;
+}
+
+/* BOTÃO VOLTAR */
+.btn-voltar {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  background: rgba(0, 0, 0, 0.82);
+  color: gold;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 100;
+}
+
+.btn-voltar:hover {
+  background: gold;
+  color: black;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 35px;
+  color: gold;
+  font-size: 18px;
+  border-top: 1px solid rgba(255, 215, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  nav ul {
+    gap: 15px;
+  }
+
+  nav ul li a {
+    font-size: 14px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .btn-voltar {
+    left: 10px;
+    bottom: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}

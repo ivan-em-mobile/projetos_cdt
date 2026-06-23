@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family: Arial, sans-serif;
+
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    color: gold;
+    font-size: 45px;
+
+    margin-top: 10px;
+}
+
+/* MAIN */
+main {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      padding: 20px;
+      color: blue;
+}
+
+/* CARD */
+.card {
+    width: 90%;
+    max-width: 700px;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    border-radius: 25px;
+
+    padding: 40px;
+
+    border: 1px solid gold;
+
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+/* INPUTS */
+input {
+    padding: 18px;
+
+    border: none;
+    border-radius: 15px;
+
+    background: #1b1b1b;
+
+    color: white;
+
+    font-size: 18px;
+}
+
+/* BOTÃO */
+button {
+    padding: 18px;
+
+    border-radius: 15px;
+
+    border: 1px solid gold;
+
+    background: black;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: gold;
+    color: black;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+
+    padding: 15px;
+
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,291 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    overflow-x: hidden;
+}
+
+
+/* OVERLAY */
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(255, 215, 0, .12), transparent 70%);
+    z-index: -1;
+}
+
+
+/* HEADER */
+
+header {
+    display: flex;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 45px;
+    color: gold;
+    font-weight: 800;
+}
+
+
+/* NAV */
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: .3s;
+}
+
+nav ul li a:hover {
+    color: gold;
+}
+
+
+/* BOTÃO */
+
+.back-btn {
+    text-decoration: none;
+    color: black;
+    background: gold;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.back-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px gold;
+}
+
+
+/* CONTAINER */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 70px 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+
+/* CARDS */
+
+.card {
+    background: rgba(0, 0, 0, .55);
+    border: 1px solid rgba(255, 215, 0, .15);
+    border-radius: 25px;
+    padding: 35px;
+    backdrop-filter: blur(10px);
+    transition: .4s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: gold;
+    box-shadow: 0 0 35px rgba(255, 215, 0, .2);
+}
+
+.card h2 {
+    font-size: 38px;
+    color: gold;
+    margin-bottom: 30px;
+}
+
+
+/* ITENS */
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    font-size: 19px;
+}
+
+.item:last-child {
+    border: none;
+}
+
+.item strong {
+    color: gold;
+}
+
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 35px;
+    color: gold;
+    font-size: 18px;
+    border-top: 1px solid rgba(255, 215, 0, .1);
+    background: rgba(0, 0, 0, .5);
+}
+
+
+/* RESPONSIVO */
+
+@media(max-width:768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+    }
+
+    header h1 {
+        font-size: 34px;
+    }
+
+    nav ul {
+        gap: 18px;
+    }
+
+    nav ul li a {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 40px 15px;
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    .card h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .item {
+        font-size: 16px;
+    }
+
+    .back-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    footer {
+        font-size: 15px;
+    }
+}
+
+
+/* NAV CARD */
+
+.nav-card {
+    width: 90%;
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, .65);
+    border: 1px solid rgba(255, 215, 0, .15);
+    border-radius: 22px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, .05);
+}
+
+
+/* MENU */
+
+.nav-card ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-card ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 17px;
+    transition: .3s;
+    font-weight: 500;
+}
+
+.nav-card ul li a:hover {
+    color: gold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, .35);
+}
+
+
+/* RESPONSIVO */
+
+@media(max-width:768px) {
+    .nav-card {
+        padding: 16px;
+    }
+
+    .nav-card ul {
+        gap: 18px;
+    }
+
+    .nav-card ul li a {
+        font-size: 14px;
+    }
+}
+
+h1 {
+    font-size: 45px;
+    color: gold;
+    font-weight: 800;
+    text-align: center;
+}
+
+button {
+    padding: 10px;
+
+    border-radius: 15px;
+
+    border: 1px solid gold;
+
+    background: black;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+    background: gold;
+    color: black;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sobre.css" />
+    <title>Sobre nós - SMD Barbearia</title>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="logo.png" alt="Logo SMD Barbearia" width="100" height="70">
+        </a>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="sobrenos.html" class="active">Sobre nós</a></li>
+                <li><a href="tabela.html">Tabela de preços</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="cadastro.html">Agendar</a></li>
+                <li><a href="localizacao.html">Localização</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <h1>💈 Sobre a SMD Barbearia</h1>
+            <p>Mais que uma barbearia, uma experiência premium.</p>
+        </section>
+
+        <section class="card ">
+            <h2>
+                A Barbearia SMD nasceu com a missão de elevar a autoestima masculina através de cortes modernos, atendimento de qualidade e um ambiente diferenciado.
+            </h2>
+
+            <p>
+                Aqui não é apenas um corte de cabelo — é uma experiência completa, onde estilo, atitude e confiança se encontram.
+            </p>
+
+            <p>
+                Nossa equipe trabalha com dedicação para entregar o melhor resultado possível para cada cliente.
+            </p>
+        </section>
+
+        <section class="card ">
+            <h2>🔥 O que oferecemos</h2>
+
+            <ul>
+                <li>💈 Atendimento personalizado</li>
+                <li>🔥 Profissionais experientes</li>
+                <li>⚡ Ambiente moderno e confortável</li>
+                <li>✂️ Cortes atualizados com tendências</li>
+            </ul>
+        </section>
+
+        <button class="btn-voltar " onclick="window.location.href='index.html' ">
+      ← Voltar para o início
+    </button>
+
+        <footer>© 2026 SMD BARBEARIA — Todos os direitos reservados.</footer>
+
+        <!-- SCRIPT MENU MOBILE -->
+        <script>
+            const mobileMenu = document.getElementById("mobile-menu ");
+            const navList = document.getElementById("nav-list ");
+
+            mobileMenu.addEventListener("click ", () => {
+                navList.classList.toggle("active ");
+                mobileMenu.classList.toggle("is-active ");
+            });
+        </script>
+</body>
+
+</html>

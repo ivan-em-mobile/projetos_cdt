@@ -1,0 +1,217 @@
+body {
+    background-image: url("background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    font-size: 18px;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 10px 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.login-btn {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    text-decoration: none;
+    background: gold;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+nav {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    background: transparent;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: gold;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.bar {
+    display: block;
+    height: 3px;
+    width: 25px;
+    background-color: #ffffff;
+    margin: 4px 0;
+    border-radius: 3px;
+    transition: 0.4s;
+}
+
+main {
+    margin-top: 160px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #000000;
+    letter-spacing: 2px;
+    background-color: gold;
+    padding: 10px;
+    font-size: 52px;
+}
+
+h3 {
+    margin: 20px 0 30px;
+    color: #ffffff;
+    background-color: rgba(90, 79, 18, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 28px;
+}
+
+button:not(.menu-toggle) {
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #000000, #0a0a0a);
+    color: gold;
+    border: 1px solid gold;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:not(.menu-toggle):hover {
+    background: gold;
+    color: black;
+    box-shadow: 0 0 10px gold;
+}
+
+.horario,
+.endereco,
+.premium {
+    margin: 30px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 1000px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(217, 255, 0, 0.3);
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.horario:hover,
+.endereco:hover,
+.premium:hover {
+    border: 1px solid gold;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.3);
+}
+
+footer {
+    text-align: center;
+    padding: 35px;
+    color: gold;
+    font-size: 18px;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 110px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        text-align: center;
+        padding: 10px 0;
+    }
+    nav ul.active {
+        display: flex;
+    }
+    nav ul li {
+        width: 100%;
+    }
+    nav ul li a {
+        display: block;
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+    main {
+        margin-top: 100px;
+    }
+    h1 {
+        font-size: 34px;
+    }
+    h3 {
+        font-size: 22px;
+    }
+    .login-btn {
+        right: 70px;
+        top: 15px;
+        padding: 8px 15px;
+    }
+}

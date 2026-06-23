@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="CADASTRO.CSS" />
+
+    <title>SMD Barbearia</title>
+</head>
+
+<body>
+    
+
+    <!-- HEADER -->
+    <header>
+
+        <a href="index.html" class="logo-link">
+            <img src="logo.png" alt="Logo SMD Barbearia" width="100" height="70">
+        </a>
+
+        <h1>AGENDAMENTO</h1>
+
+    </header>
+
+    <!-- MAIN -->
+   <main>
+
+    <section class="card">
+
+        <form>
+
+            <input type="text"
+                placeholder="Digite seu nome"
+                required>
+
+            <input type="text"
+                placeholder="Email ou WhatsApp"
+                required>
+
+            <!-- CALENDÁRIO -->
+            <input type="date" required>
+
+            <!-- HORÁRIO -->
+            <input type="time" required>
+
+            <button onclick="window.location.href='cadastro_ok.html'">Agendar</button>
+
+        
+
+        </form>
+        
+
+    </section>
+   
+
+</main>
+
+<script>
+
+    function agendar() {
+
+        alert("Agendamento realizado com sucesso!");
+
+    }
+
+</script>
+
+<script>
+    function finalizarAgendamento() {
+
+        const nome = document.querySelector('input[name="nome"]').value;
+
+        alert("Agendamento realizado com sucesso para " + nome + "!");
+
+        return true;
+    }
+</script>
+
+</section>
+
+<script>
+    function finalizarAgendamento() {
+
+        alert("Agendamento realizado com sucesso!");
+
+        window.location.href = "index.html";
+    }
+</script>
+
+            </form>
+
+        </section>
+
+    </main>
+   
+    
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 SMD BARBEARIA</p>
+    </footer>
+
+</body>
+
+</html>
