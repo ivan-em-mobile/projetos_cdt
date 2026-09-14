@@ -206,7 +206,7 @@ PLANOS_HTML = """<!DOCTYPE html>
         function assinar(plano) {
             const divStatus = document.getElementById('status-assinatura');
             divStatus.style.display = 'block';
-            divStatus.innerText = '✅ Plano ' + plano + ' selecionado com sucesso!';
+            divStatus.innerText = '✅ Plano ' + plano + ' selecionado com sucesso! Redirecionando para área do aluno...';
         }
     </script>
 </body>
@@ -252,16 +252,19 @@ AULAS_HTML = """<!DOCTYPE html>
             <div class="aula-box">
                 <h3>Crossfit</h3>
                 <p>🕒 Seg / Quat - 07:00</p>
+                <p>Vagas: 5 restantes</p>
                 <button class="btn-reservar" id="btn-reservar-crossfit" onclick="reservar('Crossfit 07:00')">Reservar Vaga</button>
             </div>
             <div class="aula-box">
                 <h3>Spinning</h3>
                 <p>🕒 Ter / Quinta - 18:00</p>
+                <p>Vagas: 2 restantes</p>
                 <button class="btn-reservar" id="btn-reservar-spinning" onclick="reservar('Spinning 18:00')">Reservar Vaga</button>
             </div>
             <div class="aula-box">
                 <h3>Pilates</h3>
                 <p>🕒 Seg / Sex - 19:30</p>
+                <p>Vagas: 3 restantes</p>
                 <button class="btn-reservar" id="btn-reservar-pilates" onclick="reservar('Pilates 19:30')">Reservar Vaga</button>
             </div>
         </div>
@@ -436,7 +439,7 @@ class AutomacaoGymFit:
             driver.quit()
 
 # ==========================================
-# 3. INTERFACE GRÁFICA TKINTER COMPLETA
+# 3. INTERFACE GRAPHICA TKINTER COMPLETA
 # ==========================================
 
 def rodar_em_thread(funcao, *args):
