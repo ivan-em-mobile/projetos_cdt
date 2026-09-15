@@ -19,7 +19,7 @@ COR_AZUL_PROFUNDO = "#004a6d"  # Fundo dos quadros (frames)
 COR_AMARELO       = "#edcd01"  # Títulos e destaques
 COR_VERDE         = "#00e04b"  # Botões de confirmação / sucesso
 COR_LARANJA       = "#e03f2a"  # Botão de cadastro e acentos
-COR_TURQUESA      = "#00e3e6"  # Botões dos itens do cardápio
+COR_TURQUESA      = "#00e3e6"  # Botões dos itens do cardápio e ações secundárias
 COR_ROSA         = "#fd3168"  # Botões de logout / alerta
 COR_AZUL_CLARO    = "#d9fbff"  # Textos secundários e rótulos
 
@@ -95,7 +95,7 @@ CARDAPIO = {
 }
 
 # -----------------------------------------------------------------------------
-# PASSO 4: Interface Gráfica Principal (Tkinter com Nova Paleta)
+# PASSO 4: Interface Gráfica Principal (Tkinter)
 # -----------------------------------------------------------------------------
 class AplicaçãoHamburgueria:
     def __init__(self, root):
@@ -107,7 +107,7 @@ class AplicaçãoHamburgueria:
         self.usuario_logado = None
         self.carrinho = []
 
-        # Fundo principal escuro (Azul Petróleo)
+        # Fundo principal escuro
         self.root.configure(bg=COR_AZUL_PETROLEO)
         
         # Inicializa o banco de dados
@@ -127,7 +127,6 @@ class AplicaçãoHamburgueria:
     def mostrar_tela_login(self):
         self.limpar_tela()
 
-        # Título principal em Amarelo
         lbl_titulo = tk.Label(
             self.root, 
             text="🍔 Hamburgueria CDT", 
@@ -137,11 +136,9 @@ class AplicaçãoHamburgueria:
         )
         lbl_titulo.pack(pady=25)
 
-        # Container do formulário com fundo Azul Profundo
         frame = tk.Frame(self.root, bg=COR_AZUL_PROFUNDO, padx=25, pady=25)
         frame.pack(pady=10)
 
-        # Rótulos e Campos
         tk.Label(frame, text="E-mail:", font=("Arial", 11, "bold"), fg=COR_AZUL_CLARO, bg=COR_AZUL_PROFUNDO).grid(row=0, column=0, sticky="w", pady=8)
         self.ent_email = tk.Entry(frame, width=28, font=("Arial", 11))
         self.ent_email.grid(row=0, column=1, pady=8, padx=5)
@@ -150,7 +147,6 @@ class AplicaçãoHamburgueria:
         self.ent_senha = tk.Entry(frame, width=28, font=("Arial", 11), show="*")
         self.ent_senha.grid(row=1, column=1, pady=8, padx=5)
 
-        # Botão Entrar (Verde com texto escuro para contraste)
         btn_login = tk.Button(
             frame, 
             text="Entrar", 
@@ -163,7 +159,6 @@ class AplicaçãoHamburgueria:
         )
         btn_login.grid(row=2, column=1, sticky="e", pady=15)
 
-        # Botão Criar Conta (Laranja)
         btn_cadastrar = tk.Button(
             self.root, 
             text="Criar Nova Conta", 
@@ -284,7 +279,19 @@ class AplicaçãoHamburgueria:
         )
         lbl_welcome.pack(side="left")
 
-        # Botão Sair em Rosa
+        # Botão para ver Histórico de Pedidos (Turquesa)
+        btn_historico = tk.Button(
+            frame_topo, 
+            text="📋 Meus Pedidos", 
+            font=("Arial", 9, "bold"), 
+            bg=COR_TURQUESA, 
+            fg=COR_AZUL_PETROLEO, 
+            relief="flat",
+            command=self.abrir_janela_historico
+        )
+        btn_historico.pack(side="left", padx=15)
+
+        # Botão Sair da Conta (Rosa)
         btn_logout = tk.Button(
             frame_topo, 
             text="Sair da Conta", 
@@ -300,7 +307,7 @@ class AplicaçãoHamburgueria:
         frame_conteudo = tk.Frame(self.root, bg=COR_AZUL_PETROLEO)
         frame_conteudo.pack(fill="both", expand=True, padx=15, pady=5)
 
-        # Coluna Esquerda: Cardápio (Azul Profundo)
+        # Coluna Esquerda: Cardápio
         frame_cardapio = tk.LabelFrame(
             frame_conteudo, 
             text="🍔 Cardápio", 
@@ -312,7 +319,6 @@ class AplicaçãoHamburgueria:
         )
         frame_cardapio.pack(side="left", fill="both", expand=True, padx=5)
 
-        # Itens do Cardápio (Botões em Turquesa com texto escuro)
         for cod, item in CARDAPIO.items():
             btn_item = tk.Button(
                 frame_cardapio, 
@@ -358,7 +364,6 @@ class AplicaçãoHamburgueria:
         )
         self.lbl_total.pack(pady=5)
 
-        # Botão Checkout em Verde
         btn_checkout = tk.Button(
             frame_carrinho, 
             text="Finalizar Pedido", 
@@ -410,7 +415,6 @@ class AplicaçãoHamburgueria:
             return
 
         endereco_final = f"{logradouro}, Nº {numero} - {bairro}, {localidade}/{uf} (CEP: {cep})"
-
         resumo_itens = ", ".join([item['nome'] for item in self.carrinho])
         
         conexao = conectar_banco()
@@ -425,6 +429,73 @@ class AplicaçãoHamburgueria:
         messagebox.showinfo("Sucesso!", f"Pedido Realizado com Sucesso!\n\nItens: {resumo_itens}\nTotal: R$ {total:.2f}\nEntrega: {endereco_final}")
         self.carrinho.clear()
         self.atualizar_carrinho()
+
+    # -------------------------------------------------------------------------
+    # TELA 3: NOVA TELA DE HISTÓRICO DE PEDIDOS (SQLITE)
+    # -------------------------------------------------------------------------
+    def abrir_janela_historico(self):
+        """Abre uma janela modal exibindo todos os pedidos do usuário gravados no SQLite."""
+        # Busca no banco de dados SQLite
+        conexao = conectar_banco()
+        cursor = conexao.cursor()
+        cursor.execute("""
+            SELECT id, resumo_itens, valor_total, endereco 
+            FROM pedidos 
+            WHERE usuario_id = ?
+            ORDER BY id DESC
+        """, (self.usuario_logado["id"],))
+        pedidos = cursor.fetchall()
+        conexao.close()
+
+        if not pedidos:
+            messagebox.showinfo("Histórico Vazio", "Você ainda não possui nenhum pedido registrado!")
+            return
+
+        # Cria a janela do Histórico (Janela Sobreposta)
+        janela_hist = tk.Toplevel(self.root)
+        janela_hist.title("📋 Histórico de Pedidos")
+        janela_hist.geometry("650x380")
+        janela_hist.configure(bg=COR_AZUL_PETROLEO)
+
+        lbl_titulo = tk.Label(
+            janela_hist, 
+            text=f"Histórico de Pedidos de {self.usuario_logado['nome']}", 
+            font=("Arial", 14, "bold"), 
+            fg=COR_AMARELO, 
+            bg=COR_AZUL_PETROLEO
+        )
+        lbl_titulo.pack(pady=10)
+
+        # Configuração da Tabela (Treeview)
+        colunas = ("id", "itens", "total", "endereco")
+        tabela = ttk.Treeview(janela_hist, columns=colunas, show="headings", height=10)
+
+        tabela.heading("id", text="Nº Pedido")
+        tabela.heading("itens", text="Itens do Pedido")
+        tabela.heading("total", text="Valor Total")
+        tabela.heading("endereco", text="Endereço de Entrega")
+
+        tabela.column("id", width=80, anchor="center")
+        tabela.column("itens", width=220)
+        tabela.column("total", width=90, anchor="center")
+        tabela.column("endereco", width=220)
+
+        # Inserção das linhas na tabela
+        for ped in pedidos:
+            tabela.insert("", tk.END, values=(ped[0], ped[1], f"R$ {ped[2]:.2f}", ped[3]))
+
+        tabela.pack(fill="both", expand=True, padx=15, pady=10)
+
+        btn_fechar = tk.Button(
+            janela_hist, 
+            text="Fechar", 
+            font=("Arial", 10, "bold"), 
+            bg=COR_ROSA, 
+            fg="white", 
+            relief="flat",
+            command=janela_hist.destroy
+        )
+        btn_fechar.pack(pady=10)
 
 # -----------------------------------------------------------------------------
 # PASSO 5: Execução do Programa
