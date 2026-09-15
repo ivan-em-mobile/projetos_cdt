@@ -101,7 +101,7 @@ class AplicaçãoHamburgueria:
     def __init__(self, root):
         self.root = root
         self.root.title("🍔 Hamburgueria CDT - Sistema de Pedidos")
-        self.root.geometry("680x580")
+        self.root.geometry("680x580") #Esse tamanho é suficiente para acomodar todos os elementos da interface sem scroll
         self.root.resizable(False, False)
         
         self.usuario_logado = None
