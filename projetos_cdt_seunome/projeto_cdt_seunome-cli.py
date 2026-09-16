@@ -107,7 +107,7 @@ def cadastrar_usuario():
     email = input("Digite seu e-mail: ").strip().lower()
     
     # pwinput mascara cada caractere digitado com '*'
-    senha = pwinput.pwinput(prompt="Digite sua senha: ", mask="*").strip()
+    senha = pwinput.pwinput(prompt="Digite sua senha: ", mask="🤯").strip()
 
     if not nome or not email or not senha:
         print("❌ [ERRO] Todos os campos devem ser preenchidos!")
@@ -129,7 +129,7 @@ def fazer_login():
     email = input("E-mail: ").strip().lower()
     
     # pwinput mascara cada caractere digitado com '*'
-    senha = pwinput.pwinput(prompt="Senha: ", mask="*").strip()
+    senha = pwinput.pwinput(prompt="Senha: ", mask="🤯").strip()
 
     conexao = conectar_banco()
     cursor = conexao.cursor()
