@@ -1,0 +1,427 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Relatórios | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Relatórios
+        </h1>
+
+        <p>
+            Indicadores administrativos e operacionais da academia
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Visão geral
+        </h2>
+
+        <p>
+            Indicadores principais da operação
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <article class="card">
+
+            <span class="card-title">
+                Total de alunos
+            </span>
+
+            <strong class="card-value">
+                {{ geral.total_alunos }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Alunos ativos
+            </span>
+
+            <strong class="card-value">
+                {{ geral.alunos_ativos }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Assinaturas ativas
+            </span>
+
+            <strong class="card-value">
+                {{ geral.assinaturas_ativas }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Planos ativos
+            </span>
+
+            <strong class="card-value">
+                {{ geral.planos_ativos }}
+            </strong>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Relatório financeiro
+        </h2>
+
+        <p>
+            Situação das cobranças e recebimentos
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <article class="card">
+
+            <span class="card-title">
+                Total recebido
+            </span>
+
+            <strong class="card-value">
+                R$ {{ "%.2f"|format(financeiro.total_recebido) }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Valor pendente
+            </span>
+
+            <strong class="card-value">
+                R$ {{ "%.2f"|format(financeiro.total_pendente) }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Valor atrasado
+            </span>
+
+            <strong class="card-value">
+                R$ {{ "%.2f"|format(financeiro.total_atrasado) }}
+            </strong>
+
+        </article>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos realizados
+            </span>
+
+            <strong>
+                {{ financeiro.quantidade_pagos }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos pendentes
+            </span>
+
+            <strong>
+                {{ financeiro.quantidade_pendentes }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos atrasados
+            </span>
+
+            <strong>
+                {{ financeiro.quantidade_atrasados }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Relatório de acessos
+        </h2>
+
+        <p>
+            Controle de entradas registradas
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <article class="card">
+
+            <span class="card-title">
+                Total de acessos
+            </span>
+
+            <strong class="card-value">
+                {{ acessos.total_acessos }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Autorizados
+            </span>
+
+            <strong class="card-value">
+                {{ acessos.autorizados }}
+            </strong>
+
+        </article>
+
+
+        <article class="card">
+
+            <span class="card-title">
+                Negados
+            </span>
+
+            <strong class="card-value">
+                {{ acessos.negados }}
+            </strong>
+
+        </article>
+
+    </div>
+
+
+    <div class="section-title">
+
+        <h2>
+            Ranking de frequência
+        </h2>
+
+        <p>
+            Alunos com maior quantidade de registros de acesso
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Posição
+                    </th>
+
+                    <th>
+                        Aluno
+                    </th>
+
+                    <th>
+                        Quantidade de acessos
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for aluno in acessos.ranking_alunos %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            {{ aluno.nome }}
+                        </td>
+
+                        <td>
+                            {{ aluno.quantidade }}
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="empty-table"
+                        >
+                            Nenhum acesso registrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Relatório de planos
+        </h2>
+
+        <p>
+            Distribuição das assinaturas ativas
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Plano
+                    </th>
+
+                    <th>
+                        Valor mensal
+                    </th>
+
+                    <th>
+                        Assinaturas ativas
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for plano in planos %}
+
+                    <tr>
+
+                        <td>
+                            {{ plano.nome }}
+                        </td>
+
+                        <td>
+                            R$ {{ "%.2f"|format(plano.valor) }}
+                        </td>
+
+                        <td>
+                            {{ plano.quantidade_assinaturas }}
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="3"
+                            class="empty-table"
+                        >
+                            Nenhum plano cadastrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

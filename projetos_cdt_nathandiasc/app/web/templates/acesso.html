@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Controle de Acesso | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Controle de Acesso
+        </h1>
+
+        <p>
+            Validação de entrada dos alunos na academia
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Registrar tentativa de acesso
+        </h2>
+
+        <p>
+            Selecione o aluno que está tentando entrar
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('acesso') }}"
+        class="form-grid"
+    >
+
+        <div class="form-group form-span-2">
+
+            <label for="aluno_id">
+                Aluno
+            </label>
+
+            <select
+                id="aluno_id"
+                name="aluno_id"
+                required
+            >
+
+                <option value="">
+                    Selecione um aluno
+                </option>
+
+                {% for aluno in alunos %}
+
+                    <option value="{{ aluno.id }}">
+
+                        #{{ aluno.id }}
+                        -
+                        {{ aluno.nome }}
+                        -
+                        {{ aluno.status }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Verificar acesso
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Regras de acesso
+        </h2>
+
+        <p>
+            O sistema verifica automaticamente as condições do aluno
+        </p>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Aluno cadastrado
+            </span>
+
+            <strong>
+                Obrigatório
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Aluno ativo
+            </span>
+
+            <strong>
+                Obrigatório
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Assinatura ativa
+            </span>
+
+            <strong>
+                Obrigatório
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamento atrasado
+            </span>
+
+            <strong>
+                Bloqueia acesso
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Histórico de acessos
+        </h2>
+
+        <p>
+            Total de registros: {{ acessos|length }}
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Aluno
+                    </th>
+
+                    <th>
+                        Data
+                    </th>
+
+                    <th>
+                        Hora
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Motivo
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for acesso in acessos %}
+
+                    {% set aluno =
+                        alunos_por_id.get(
+                            acesso.aluno_id
+                        )
+                    %}
+
+                    <tr>
+
+                        <td>
+                            {{ acesso.id }}
+                        </td>
+
+                        <td>
+
+                            {% if aluno %}
+                                {{ aluno.nome }}
+                            {% else %}
+                                Aluno não encontrado
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            {{ acesso.data_hora.strftime("%d/%m/%Y") }}
+                        </td>
+
+                        <td>
+                            {{ acesso.data_hora.strftime("%H:%M:%S") }}
+                        </td>
+
+                        <td>
+
+                            {% if acesso.status == "autorizado" %}
+
+                                <span class="status status-ativo">
+                                    Autorizado
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-inativo">
+                                    Negado
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if acesso.motivo %}
+
+                                {{ acesso.motivo }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty-table"
+                        >
+                            Nenhum acesso registrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

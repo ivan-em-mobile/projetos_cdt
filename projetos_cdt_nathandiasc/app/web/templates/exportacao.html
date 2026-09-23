@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Exportação JSON | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Exportação JSON
+        </h1>
+
+        <p>
+            Exportação administrativa do banco de dados
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Autenticação administrativa
+        </h2>
+
+        <p>
+            Informe as credenciais autorizadas para realizar a exportação
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('exportacao') }}"
+        class="form-grid"
+    >
+
+        <div class="form-group form-span-2">
+
+            <label for="usuario">
+                Usuário
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                name="usuario"
+                placeholder="Usuário administrativo"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group form-span-2">
+
+            <label for="senha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Senha"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Exportar banco para JSON
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Sobre a exportação
+        </h2>
+
+        <p>
+            O arquivo contém os principais dados operacionais da academia
+        </p>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Alunos
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Planos
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Assinaturas
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Acessos
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Treinos
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Exercícios
+            </span>
+
+            <strong>
+                Incluído
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Usuários e senhas
+            </span>
+
+            <strong>
+                Não exportados
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Segurança
+        </h2>
+
+        <p>
+            A exportação é uma operação restrita
+        </p>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Usuário autorizado
+            </span>
+
+            <strong>
+                {{ usuario_root }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Senha
+            </span>
+
+            <strong>
+                Mascarada durante a digitação
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Cópia local
+            </span>
+
+            <strong>
+                data/exports/
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Download
+            </span>
+
+            <strong>
+                JSON
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

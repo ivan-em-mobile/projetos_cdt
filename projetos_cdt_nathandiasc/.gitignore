@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Banco de dados local
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos temporários
+*.log
+*.tmp
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Cache de testes
+.pytest_cache/
+
+# Arquivos exportados
+data/exports/*.json
