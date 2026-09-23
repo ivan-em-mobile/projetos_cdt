@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+QR Code | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            QR Code
+        </h1>
+
+        <p>
+            Acesso rápido à aplicação pelo celular
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Acessar SmartFit Gym Manager
+        </h2>
+
+        <p>
+            Escaneie o QR Code com um dispositivo conectado à mesma rede
+        </p>
+
+    </div>
+
+
+    <div
+        style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+        "
+    >
+
+        <img
+            src="{{ url_for('qr_code_imagem') }}"
+            alt="QR Code de acesso ao SmartFit Gym Manager"
+            style="
+                width: 100%;
+                max-width: 280px;
+                height: auto;
+                display: block;
+            "
+        >
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Endereço da aplicação
+            </span>
+
+            <strong
+                style="
+                    overflow-wrap: anywhere;
+                    text-align: right;
+                "
+            >
+                {{ url_aplicacao }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Porta
+            </span>
+
+            <strong>
+                5000
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Rede
+            </span>
+
+            <strong>
+                Mesma rede local
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Como utilizar
+        </h2>
+
+        <p>
+            O computador precisa manter o servidor Web em execução
+        </p>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                1. Servidor Flask
+            </span>
+
+            <strong>
+                Ligado
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                2. Celular
+            </span>
+
+            <strong>
+                Mesma rede
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                3. Câmera
+            </span>
+
+            <strong>
+                Escanear QR Code
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                4. Navegador
+            </span>
+
+            <strong>
+                Abrir aplicação
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

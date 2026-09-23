@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        SmartFit Gym Manager
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <span class="brand-main">
+                    SMARTFIT
+                </span>
+
+                <span class="brand-sub">
+                    GYM MANAGER
+                </span>
+
+            </div>
+
+            <nav class="menu">
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'dashboard' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('alunos') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'alunos' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Alunos
+                </a>
+
+                <a
+                    href="{{ url_for('planos') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'planos' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Planos
+                </a>
+
+                <a
+                    href="{{ url_for('assinaturas') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'assinaturas' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Assinaturas
+                </a>
+
+                <a
+                    href="{{ url_for('pagamentos') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'pagamentos' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Pagamentos
+                </a>
+
+                <a
+                    href="{{ url_for('acesso') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'acesso' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Controle de Acesso
+                </a>
+
+                <a
+                    href="{{ url_for('relatorios') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'relatorios' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Relatórios
+                </a>
+
+                <a
+                    href="{{ url_for('exportacao') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'exportacao' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    Exportar JSON
+                </a>
+
+                <a
+                    href="{{ url_for('qr_code') }}"
+                    class="menu-item
+                    {% if request.endpoint == 'qr_code' %}
+                    active
+                    {% endif %}
+                    "
+                >
+                    QR Code
+                </a>
+
+            </nav>
+
+            <div class="sidebar-version">
+                Versão {{ versao }}
+            </div>
+
+        </aside>
+
+        <main class="main-content">
+
+            {% with mensagens =
+                get_flashed_messages(
+                    with_categories=true
+                )
+            %}
+
+                {% if mensagens %}
+
+                    <div class="messages">
+
+                        {% for categoria, mensagem in mensagens %}
+
+                            <div
+                                class="message
+                                message-{{ categoria }}"
+                            >
+                                {{ mensagem }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
