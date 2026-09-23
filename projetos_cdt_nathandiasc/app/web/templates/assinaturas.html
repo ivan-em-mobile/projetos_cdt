@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Assinaturas | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Assinaturas
+        </h1>
+
+        <p>
+            Associação entre alunos e planos
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Criar nova assinatura
+        </h2>
+
+        <p>
+            Selecione um aluno e um plano
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('assinaturas') }}"
+        class="form-grid"
+    >
+
+        <div class="form-group form-span-2">
+
+            <label for="aluno_id">
+                Aluno
+            </label>
+
+            <select
+                id="aluno_id"
+                name="aluno_id"
+                required
+            >
+
+                <option value="">
+                    Selecione um aluno
+                </option>
+
+                {% for aluno in alunos %}
+
+                    <option value="{{ aluno.id }}">
+                        {{ aluno.nome }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group form-span-2">
+
+            <label for="plano_id">
+                Plano
+            </label>
+
+            <select
+                id="plano_id"
+                name="plano_id"
+                required
+            >
+
+                <option value="">
+                    Selecione um plano
+                </option>
+
+                {% for plano in planos %}
+
+                    <option value="{{ plano.id }}">
+                        {{ plano.nome }}
+                        -
+                        R$ {{ "%.2f"|format(plano.valor) }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="data_inicio">
+                Data de início
+            </label>
+
+            <input
+                type="date"
+                id="data_inicio"
+                name="data_inicio"
+                value="{{ hoje }}"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="data_fim">
+                Data final
+            </label>
+
+            <input
+                type="date"
+                id="data_fim"
+                name="data_fim"
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Criar assinatura
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Assinaturas cadastradas
+        </h2>
+
+        <p>
+            Total: {{ assinaturas|length }}
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Aluno
+                    </th>
+
+                    <th>
+                        Plano
+                    </th>
+
+                    <th>
+                        Início
+                    </th>
+
+                    <th>
+                        Fim
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for assinatura in assinaturas %}
+
+                    <tr>
+
+                        <td>
+                            {{ assinatura.id }}
+                        </td>
+
+                        <td>
+                            {{
+                                nomes_alunos.get(
+                                    assinatura.aluno_id,
+                                    "Aluno não encontrado"
+                                )
+                            }}
+                        </td>
+
+                        <td>
+                            {{
+                                nomes_planos.get(
+                                    assinatura.plano_id,
+                                    "Plano não encontrado"
+                                )
+                            }}
+                        </td>
+
+                        <td>
+                            {{ assinatura.data_inicio.strftime("%d/%m/%Y") }}
+                        </td>
+
+                        <td>
+
+                            {% if assinatura.data_fim %}
+
+                                {{ assinatura.data_fim.strftime("%d/%m/%Y") }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if assinatura.status == "ativa" %}
+
+                                <span class="status status-ativo">
+                                    Ativa
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-inativo">
+                                    {{ assinatura.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty-table"
+                        >
+                            Nenhuma assinatura cadastrada.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
