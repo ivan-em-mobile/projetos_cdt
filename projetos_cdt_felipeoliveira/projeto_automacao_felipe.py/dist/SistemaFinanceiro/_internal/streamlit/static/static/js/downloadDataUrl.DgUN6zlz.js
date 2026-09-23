@@ -1,0 +1,1 @@
+function e(e,t){let n=new Date,r=e=>String(e).padStart(2,`0`),i=`${n.getFullYear()}-${r(n.getMonth()+1)}-${r(n.getDate())}T${r(n.getHours())}-${r(n.getMinutes())}`,a=document.createElement(`a`);a.href=e,a.download=`${i}_chart.${t}`,a.style.display=`none`,document.body.appendChild(a),a.click(),document.body.removeChild(a)}export{e as t};

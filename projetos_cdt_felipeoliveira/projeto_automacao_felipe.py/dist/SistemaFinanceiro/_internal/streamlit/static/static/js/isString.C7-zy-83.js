@@ -1,0 +1,1 @@
+import{n as e,r as t}from"./isSymbol.CmW3dkoN.js";import{r as n}from"./toString.tRXNBxtF.js";var r=`[object String]`;function i(i){return typeof i==`string`||!n(i)&&e(i)&&t(i)==r}export{i as t};
