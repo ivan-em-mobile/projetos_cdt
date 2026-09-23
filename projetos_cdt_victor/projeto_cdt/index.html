@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitFlow - Sua Academia de Alta Performance</title>
+    <style>
+        /* RESET & VARIÁVEIS (Tons Leves em Azul) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --bg-color: #f4f8fc;
+            --card-bg: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
+            --success: #22c55e;
+            --success-bg: #dcfce7;
+            --success-text: #166534;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER & NAVEGAÇÃO */
+        header {
+            background-color: var(--card-bg);
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            padding: 8px 16px;
+            font-weight: 600;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        nav button:hover, nav button.active {
+            color: var(--primary);
+            background-color: var(--primary-light);
+        }
+
+        /* SEÇÕES DO SITE (SPA) */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* HERO SECTION (INÍCIO) */
+        .hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 70px 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 17px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-principal {
+            background-color: #ffffff;
+            color: var(--primary);
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-principal:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* PLANOS */
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-section h2 {
+            font-size: 28px;
+            color: var(--text-dark);
+        }
+
+        .title-section p {
+            color: var(--text-muted);
+        }
+
+        .grid-planos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card-plano {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card-plano.destaque {
+            border: 2px solid var(--primary);
+            transform: scale(1.02);
+        }
+
+        .tag-destaque {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: #fff;
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .preco {
+            font-size: 34px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .preco span {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .recursos {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .recursos li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .recursos li::before {
+            content: "✓ ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* AULAS COLETIVAS */
+        .grid-aulas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .aula-box {
+            background: var(--card-bg);
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .aula-box:hover {
+            transform: translateY(-3px);
+        }
+
+        .aula-box h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .aula-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn-reservar {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-reservar:hover {
+            background: var(--primary-hover);
+        }
+
+        #reserva-confirmada {
+            display: none;
+            background: var(--success-bg);
+            color: var(--success-text);
+            padding: 15px;
+            text-align: center;
+            margin-top: 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* ÁREA DO ALUNO / LOGIN */
+        .card-login {
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        #dashboard {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .ficha-treino {
+            background: var(--primary-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+            border: 1px solid #dbeafe;
+        }
+
+        .ficha-treino ul {
+            margin-left: 20px;
+            margin-top: 10px;
+            color: var(--text-dark);
+        }
+
+        /* BOTÃO CIRCULAR FLUTUANTE DO CHATBOT */
+        #chat-toggle-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            z-index: 10000;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #chat-toggle-btn:hover {
+            transform: scale(1.08);
+            background-color: var(--primary-hover);
+        }
+
+        /* CAIXA DO CHATBOT (OCULTA POR PADRÃO) */
+        #chatbot-container {
+            display: none; /* Inicialmente Oculto */
+            position: fixed;
+            bottom: 95px;
+            right: 25px;
+            width: 330px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            z-index: 9999;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #chat-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+        }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .chat-close-btn:hover {
+            opacity: 1;
+        }
+
+        #chat-box {
+            height: 240px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chat-msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .bot-msg {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .user-msg {
+            background: var(--primary);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            font-size: 13px;
+            outline: none;
+            background: transparent;
+        }
+
+        #btn-chat-enviar {
+            background: var(--primary);
+            border: none;
+            color: #fff;
+            padding: 0 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        #btn-chat-enviar:hover {
+            background: var(--primary-hover);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            #chatbot-container {
+                width: calc(100% - 40px);
+                right: 20px;
+                bottom: 90px;
+            }
+
+            #chat-toggle-btn {
+                right: 20px;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / MENU -->
+    <header>
+        <div class="logo" onclick="mostrarPagina('inicio')">⚡ FitFlow</div>
+        <nav>
+            <button id="nav-inicio" class="active" onclick="mostrarPagina('inicio')">Início</button>
+            <button id="nav-planos" onclick="mostrarPagina('planos')">Planos</button>
+            <button id="nav-aulas" onclick="mostrarPagina('aulas')">Agendar Aulas</button>
+            <button id="nav-login" onclick="mostrarPagina('login')">Área do Aluno</button>
+        </nav>
+    </header>
+
+    <!-- PÁGINA 1: INÍCIO -->
+    <section id="page-inicio" class="page-section active">
+        <div class="hero">
+            <h1>Transforme Seu Corpo e Mente</h1>
+            <p>A melhor estrutura e os melhores profissionais à sua disposição para alcançar seus objetivos.</p>
+            <button class="btn-principal" onclick="mostrarPagina('planos')">Conheça Nossos Planos</button>
+        </div>
+
+        <div class="container" style="margin-top: 0;">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🏋️‍♂️</span>
+                    <h3>Equipamentos Modernos</h3>
+                    <p>Maquinário de última geração preparado para todos os níveis de treino.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🧘‍♀️</span>
+                    <h3>Aulas Diversificadas</h3>
+                    <p>Crossfit, Spinning, Pilates, Yoga e muito mais para manter sua rotina viva.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">👨‍🏫</span>
+                    <h3>Acompanhamento VIP</h3>
+                    <p>Profissionais qualificados para montar treinos focados na sua evolução.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PÁGINA 2: PLANOS -->
+    <section id="page-planos" class="page-section">
+        <div class="container">
+            <div class="title-section">
+                <h2>Nossos Planos</h2>
+                <p>Escolha a opção ideal para a sua rotina de exercícios.</p>
+            </div>
+
+            <div class="grid-planos">
+                <div class="card-plano">
+                    <div>
+                        <h3>Plano Mensal</h3>
+                        <div class="preco">R$ 99<span>/mês</span></div>
+                        <ul class="recursos">
+                            <li>Acesso livre à musculação</li>
+                            <li>Horários ilimitados</li>
+                            <li>Sem fidelidade</li>
+                        </ul>
+                    </div>
+                    <button class="btn-reservar" onclick="assinarPlano('Mensal')">Assinar Agora</button>
+                </div>
+
+                <div class="card-plano destaque">
+                    <span class="tag-destaque">MAIS POPULAR</span>
+                    <div>
+                        <h3>Plano VIP</h3>
+                        <div class="preco">R$ 149<span>/mês</span></div>
+                        <ul class="recursos">
+                            <li>Acesso total à musculação</li>
+                            <li>Aulas coletivas inclusas</li>
+                            <li>Acesso ao App de Treino</li>
+                            <li>1 Avaliação física mensal</li>
+                        </ul>
+                    </div>
+                    <button class="btn-reservar" onclick="assinarPlano('VIP')">Assinar Agora</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PÁGINA 3: AGENDAR AULAS -->
+    <section id="page-aulas" class="page-section">
+        <div class="container">
+            <div class="title-section">
+                <h2>Agende Sua Aula</h2>
+                <p>Garanta sua vaga nas modalidades em grupo com antecedência.</p>
+            </div>
+
+            <div class="grid-aulas">
+                <div class="aula-box">
+                    <h3>🏋️ Crossfit</h3>
+                    <p>Segunda e Quarta - 07:00</p>
+                    <button class="btn-reservar" onclick="reservarAula('Crossfit (Seg/Qua 07:00)')">Reservar Vaga</button>
+                </div>
+                <div class="aula-box">
+                    <h3>🚴 Spinning</h3>
+                    <p>Terça e Quinta - 18:30</p>
+                    <button class="btn-reservar" onclick="reservarAula('Spinning (Ter/Qui 18:30)')">Reservar Vaga</button>
+                </div>
+                <div class="aula-box">
+                    <h3>🧘 Pilates</h3>
+                    <p>Sexta-feira - 09:00</p>
+                    <button class="btn-reservar" onclick="reservarAula('Pilates (Sex 09:00)')">Reservar Vaga</button>
+                </div>
+            </div>
+
+            <div id="reserva-confirmada"></div>
+        </div>
+    </section>
+
+    <!-- PÁGINA 4: ÁREA DO ALUNO -->
+    <section id="page-login" class="page-section">
+        <div class="container">
+            <!-- FORMULÁRIO DE LOGIN -->
+            <div class="card-login" id="login-form-container">
+                <div class="title-section" style="margin-bottom: 20px;">
+                    <h2>Área do Aluno</h2>
+                    <p>Acesse seu treino e progresso</p>
+                </div>
+                <form onsubmit="fazerLogin(event)">
+                    <div class="form-group">
+                        <label for="input-user">E-mail ou Matrícula</label>
+                        <input type="text" id="input-user" placeholder="Digite seu e-mail..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-pass">Senha</label>
+                        <input type="password" id="input-pass" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-reservar">Entrar na Conta</button>
+                </form>
+            </div>
+
+            <!-- PAINEL DO ALUNO (LOGADO) -->
+            <div class="card-login" id="dashboard" style="max-width: 550px;">
+                <div class="title-section" style="margin-bottom: 15px;">
+                    <h2 id="welcome-msg">Bem-vindo(a), Aluno!</h2>
+                    <p style="color: var(--primary); font-weight: bold;">Status: Plano VIP Ativo</p>
+                </div>
+
+                <div class="ficha-treino">
+                    <h4>💪 Treino de Hoje: Peito e Tríceps</h4>
+                    <ul>
+                        <li>Supino Reto - 4 séries de 10</li>
+                        <li>Supino Inclinado com Halteres - 3 séries de 12</li>
+                        <li>Crucifixo na Máquina - 3 séries de 15</li>
+                        <li>Tríceps Corda - 4 séries de 12</li>
+                    </ul>
+                </div>
+
+                <button onclick="fazerLogout()" class="btn-reservar" style="margin-top: 20px; background: #ef4444;">Sair da Conta</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTÃO CIRCULAR FLUTUANTE DE ACESSO AO CHAT -->
+    <button id="chat-toggle-btn" onclick="toggleChat()" title="Abrir Chat de Atendimento">
+        💬
+    </button>
+
+    <!-- CHATBOT FLUTUANTE INTEGRADO (INICIALMENTE OCULTO) -->
+    <div id="chatbot-container">
+        <div id="chat-header">
+            <span>🤖 Assistente FitFlow</span>
+            <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+        </div>
+        <div id="chat-box">
+            <div class="chat-msg bot-msg">
+                Olá! Sou o assistente virtual da FitFlow. Como posso te ajudar hoje?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+            <button id="btn-chat-enviar">Enviar</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 FitFlow / GymFit. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT GERAL DAS FUNCIONALIDADES -->
+    <script>
+        // 1. NAVEGAÇÃO ENTRE PÁGINAS (SPA)
+        function mostrarPagina(paginaId) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+
+            const targetSection = document.getElementById(`page-${paginaId}`);
+            const targetNav = document.getElementById(`nav-${paginaId}`);
+
+            if (targetSection) targetSection.classList.add('active');
+            if (targetNav) targetNav.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 2. FUNÇÕES DE ASSINATURA E AULAS
+        function assinarPlano(plano) {
+            alert(`Você selecionou o Plano ${plano}! Redirecionando para a área de pagamento seguro...`);
+        }
+
+        function reservarAula(aula) {
+            const confirmBox = document.getElementById('reserva-confirmada');
+            confirmBox.innerText = `✓ Sua vaga para ${aula} foi confirmada com sucesso!`;
+            confirmBox.style.display = 'block';
+            
+            setTimeout(() => {
+                confirmBox.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // 3. LOGIN SIMULADO DO ALUNO
+        function fazerLogin(event) {
+            event.preventDefault();
+            const usuario = document.getElementById('input-user').value;
+            
+            document.getElementById('welcome-msg').innerText = `Bem-vindo(a), ${usuario.split('@')[0]}!`;
+            document.getElementById('login-form-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function fazerLogout() {
+            document.getElementById('login-form-container').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('input-user').value = '';
+            document.getElementById('input-pass').value = '';
+        }
+
+        // 4. ABRIR E FECHAR O CHATBOT VIA BOTÃO FLUTUANTE
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatbot-container');
+            const chatToggleBtn = document.getElementById('chat-toggle-btn');
+
+            if (chatContainer.style.display === 'flex' || chatContainer.style.display === 'block') {
+                chatContainer.style.display = 'none';
+                chatToggleBtn.innerText = '💬';
+            } else {
+                chatContainer.style.display = 'block';
+                chatToggleBtn.innerText = '✕';
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        // 5. LÓGICA DO CHATBOT
+        const chatInput = document.getElementById('chat-input');
+        const btnEnviar = document.getElementById('btn-chat-enviar');
+        const chatBox = document.getElementById('chat-box');
+
+        function adicionarMensagem(texto, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-msg', sender === 'user' ? 'user-msg' : 'bot-msg');
+            msgDiv.innerText = texto;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function responderBot(msg) {
+            let resposta = "Desculpe, não entendi. Você pode perguntar sobre 'horário', 'planos', 'preço' ou 'aulas'.";
+            const texto = msg.toLowerCase();
+
+            if (texto.includes('olá') || texto.includes('oi') || texto.includes('bom dia') || texto.includes('boa tarde')) {
+                resposta = "Olá! Seja bem-vindo à FitFlow. Como posso te ajudar hoje?";
+            } else if (texto.includes('horário') || texto.includes('horario') || texto.includes('funciona')) {
+                resposta = "Funcionamos de segunda a sexta das 06:00 às 23:00, e aos sábados das 08:00 às 16:00.";
+            } else if (texto.includes('plano') || texto.includes('preço') || texto.includes('preco') || texto.includes('valor')) {
+                resposta = "Oferecemos o Plano Mensal (R$ 99/mês) e o Plano VIP (R$ 149/mês). Você pode conferir os detalhes na aba 'Planos'!";
+            } else if (texto.includes('aula') || texto.includes('agendar') || texto.includes('crossfit') || texto.includes('spinning')) {
+                resposta = "Temos aulas de Crossfit, Spinning e Pilates. Acesse a aba 'Agendar Aulas' para garantir sua vaga!";
+            }
+
+            setTimeout(() => {
+                adicionarMensagem(resposta, 'bot');
+            }, 500);
+        }
+
+        btnEnviar.addEventListener('click', () => {
+            const texto = chatInput.value.trim();
+            if (texto) {
+                adicionarMensagem(texto, 'user');
+                chatInput.value = '';
+                responderBot(texto);
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') btnEnviar.click();
+        });
+    </script>
+</body>
+</html>
