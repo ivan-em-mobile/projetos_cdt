@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sintonia</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        :root {
+
+            --background: #fceef4;
+
+            --card: #ffffff;
+
+            --input: #f8e2eb;
+
+            --primary: #b84d78;
+
+            --primary-hover: #a64069;
+
+            --text: #321d29;
+
+            --secondary: #765c68;
+
+            --shadow: rgba(80, 30, 55, 0.15);
+        }
+
+
+        /* MODO ESCURO */
+
+        @media (prefers-color-scheme: dark) {
+
+            :root {
+
+                --background: #24151f;
+
+                --card: #321d2a;
+
+                --input: #432636;
+
+                --primary: #c45a83;
+
+                --primary-hover: #d36a92;
+
+                --text: #f8eaf0;
+
+                --secondary: #cdb8c2;
+
+                --shadow: rgba(0, 0, 0, 0.35);
+            }
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            padding: 30px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            margin: 50px auto;
+
+            padding: 42px;
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 12px 35px var(--shadow);
+        }
+
+
+        h1 {
+
+            margin-bottom: 10px;
+
+            text-align: center;
+
+            font-size: 38px;
+        }
+
+
+        .welcome {
+
+            margin-bottom: 35px;
+
+            text-align: center;
+
+            color: var(--secondary);
+
+            line-height: 1.6;
+
+            font-size: 16px;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 22px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background: var(--input);
+
+            color: var(--text);
+
+            font-size: 16px;
+
+            transition:
+                box-shadow 0.2s ease;
+        }
+
+
+        input::placeholder {
+
+            color: var(--secondary);
+        }
+
+
+        input:focus,
+        select:focus {
+
+            box-shadow:
+                0 0 0 2px var(--primary);
+        }
+
+
+        .generate-button {
+
+            width: 100%;
+
+            padding: 16px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background 0.3s ease,
+                transform 0.3s ease;
+        }
+
+
+        .generate-button:hover {
+
+            background: var(--primary-hover);
+
+            transform: translateY(-2px);
+        }
+
+
+        .logout {
+
+            display: block;
+
+            width: fit-content;
+
+            margin: 25px auto 0;
+
+            color: var(--secondary);
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                color 0.2s ease;
+        }
+
+
+        .logout:hover {
+
+            color: var(--primary);
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+
+                margin: 25px auto;
+
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+        <h1>Sintonia</h1>
+
+        <p class="welcome">
+
+            Olá!
+
+            <br>
+
+            Crie uma playlist baseada
+            no seu momento.
+
+        </p>
+
+
+        <form
+            action="{{ url_for('gerar') }}"
+            method="POST"
+        >
+
+            <!-- CIDADE -->
+
+            <div class="form-group">
+
+                <label for="cidade">
+                    Cidade
+                </label>
+
+                <input
+                    type="text"
+                    id="cidade"
+                    name="cidade"
+                    placeholder="Ex: São Paulo"
+                    value="Sao Paulo"
+                    required
+                >
+
+            </div>
+
+
+            <!-- HUMOR -->
+
+            <div class="form-group">
+
+                <label for="humor">
+                    Como você está se sentindo?
+                </label>
+
+                <select
+                    id="humor"
+                    name="humor"
+                >
+
+                    <option value="Feliz">
+                        Feliz
+                    </option>
+
+                    <option value="Triste">
+                        Triste
+                    </option>
+
+                    <option value="Calmo">
+                        Calmo
+                    </option>
+
+                    <option value="Animado">
+                        Animado
+                    </option>
+
+                    <option value="Romântico">
+                        Romântico
+                    </option>
+
+                    <option value="Melancólico">
+                        Melancólico
+                    </option>
+
+                    <option value="Energético">
+                        Energético
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ARTISTA -->
+
+            <div class="form-group">
+
+                <label for="artista">
+                    Artista favorito
+                </label>
+
+                <input
+                    type="text"
+                    id="artista"
+                    name="artista"
+                    placeholder="Ex: ATEEZ"
+                >
+
+            </div>
+
+
+            <!-- BOTÃO -->
+
+            <button
+                type="submit"
+                class="generate-button"
+            >
+                Criar minha playlist
+            </button>
+
+        </form>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            Sair do Spotify
+        </a>
+
+    </main>
+
+</body>
+
+</html>

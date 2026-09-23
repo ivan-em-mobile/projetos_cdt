@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sintonia — Acesso Master</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+            background: #f7dce8;
+            color: #351d29;
+        }
+
+        .login {
+            width: 360px;
+            padding: 35px;
+
+            background: #fff7fa;
+            border-radius: 18px;
+
+            box-shadow: 0 15px 40px rgba(80, 20, 50, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.7;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+
+            border: 1px solid #d8b8c5;
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #b93668;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #982b56;
+        }
+
+        .erro {
+            margin-bottom: 18px;
+            padding: 10px;
+
+            background: #f5c9d8;
+            border-radius: 8px;
+
+            color: #7b173d;
+            text-align: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #24151d;
+                color: #f8e9ef;
+            }
+
+            .login {
+                background: #321d28;
+            }
+
+            input {
+                background: #261820;
+                color: white;
+                border-color: #634252;
+            }
+
+            .erro {
+                background: #542536;
+                color: #ffd9e6;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login">
+
+        <h1>Sintonia</h1>
+
+        <div class="subtitle">
+            Acesso Master
+        </div>
+
+        {% if erro %}
+            <div class="erro">
+                {{ erro }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            <label for="usuario">
+                Usuário
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                name="usuario"
+                required
+            >
+
+            <label for="senha">
+                Senha
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                required
+            >
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
