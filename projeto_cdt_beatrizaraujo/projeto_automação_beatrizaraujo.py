@@ -28,7 +28,7 @@ VINHO_ESCURO = "#351722"
 
 VINHO_CLARO = "#7A4056"
 
-DOURADO = "#B8945F"
+DOURADO = "#DCB376"
 
 DOURADO_CLARO = "#E8D7B8"
 
@@ -634,7 +634,7 @@ class Aplicativo(tk.Tk):
 
         self.geometry("1360x820")
 
-        self.minsize(1100, 700)
+        self.minsize(130, 700)
 
         self.configure(bg=FUNDO)
 
