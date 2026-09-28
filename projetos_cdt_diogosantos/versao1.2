@@ -1,0 +1,1173 @@
+
+import tkinter as tk
+from tkinter import ttk, messagebox
+import sqlite3
+import json
+from datetime import datetime
+from faker import Faker
+
+
+# ==========================================================
+# CONFIGURAÇÕES DA LOJA
+# ==========================================================
+
+NOME_LOJA = "LOJA DO DIOGO E MATHEUS"
+SUBTITULO = "A PRONTA ENTREGA"
+BANDEIRA = "🇧🇷"
+
+BANCO_DADOS = "loja_camisas.db"
+ARQUIVO_JSON = "configuracao.json"
+
+TAXA_ENTREGA = 10.00
+
+fake = Faker("pt_BR")
+
+
+# ==========================================================
+# TIMES BRASILEIROS
+# ==========================================================
+
+TIMES = [
+    "Athletico-PR",
+    "Atletico-MG",
+    "Bahia",
+    "Botafogo",
+    "Chapecoense",
+    "Corinthians",
+    "Coritiba",
+    "Cruzeiro",
+    "Flamengo",
+    "Fluminense",
+    "Gremio",
+    "Internacional",
+    "Mirassol",
+    "Palmeiras",
+    "Red Bull Bragantino",
+    "Remo",
+    "Santos",
+    "Sao Paulo",
+    "Vasco",
+    "Vitoria"
+]
+
+
+# ==========================================================
+# PREÇOS DAS CAMISAS
+# ==========================================================
+
+PRECOS = {}
+
+for time in TIMES:
+
+    if time == "Internacional":
+        PRECOS[time] = 200.00
+
+    elif time in [
+        "Fluminense",
+        "Corinthians",
+        "Gremio",
+        "Botafogo"
+    ]:
+        PRECOS[time] = 180.00
+
+    else:
+        PRECOS[time] = 120.00
+
+
+# ==========================================================
+# BRINDES DAS CAMISAS
+# ==========================================================
+
+def obter_brinde(time):
+
+    if time == "Internacional":
+        return "Bone do Inter + Caneca do Inter"
+
+    return f"Bone do {time} + Caneca do {time}"
+
+
+# ==========================================================
+# BANCO DE DADOS SQLITE
+# ==========================================================
+
+def conectar_banco():
+
+    return sqlite3.connect(BANCO_DADOS)
+
+
+def preparar_banco():
+
+    conexao = conectar_banco()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS produtos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL UNIQUE,
+            preco REAL NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS clientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            email TEXT NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pedidos (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cliente TEXT NOT NULL,
+            total REAL NOT NULL,
+            data TEXT NOT NULL
+        )
+    """)
+
+    for time in TIMES:
+
+        nome_produto = f"Camisa {time}"
+        preco = PRECOS[time]
+
+        cursor.execute("""
+            INSERT OR IGNORE INTO produtos
+            (nome, preco)
+            VALUES (?, ?)
+        """, (
+            nome_produto,
+            preco
+        ))
+
+        cursor.execute("""
+            UPDATE produtos
+            SET preco = ?
+            WHERE nome = ?
+        """, (
+            preco,
+            nome_produto
+        ))
+
+    conexao.commit()
+    conexao.close()
+
+
+# ==========================================================
+# ARQUIVO JSON
+# ==========================================================
+
+def salvar_configuracao_json():
+
+    configuracao = {
+        "nome_loja": NOME_LOJA,
+        "subtitulo": SUBTITULO,
+        "bandeira": BANDEIRA,
+        "categoria": "Camisas de Times Brasileiros",
+        "quantidade_times": len(TIMES),
+        "taxa_entrega": TAXA_ENTREGA,
+        "times": TIMES,
+        "precos": PRECOS
+    }
+
+    with open(
+        ARQUIVO_JSON,
+        "w",
+        encoding="utf-8"
+    ) as arquivo:
+
+        json.dump(
+            configuracao,
+            arquivo,
+            ensure_ascii=False,
+            indent=4
+        )
+
+
+# ==========================================================
+# FUNÇÕES DO SISTEMA
+# ==========================================================
+
+def listar_produtos():
+
+    conexao = conectar_banco()
+
+    produtos = conexao.execute("""
+        SELECT id, nome, preco
+        FROM produtos
+        ORDER BY id
+    """).fetchall()
+
+    conexao.close()
+
+    return produtos
+
+
+def calcular_total_camisas(carrinho):
+
+    return sum(
+        item["subtotal"]
+        for item in carrinho
+    )
+
+
+def calcular_total(carrinho):
+
+    total_camisas = calcular_total_camisas(carrinho)
+
+    return total_camisas + TAXA_ENTREGA
+
+
+def salvar_pedido(cliente, carrinho):
+
+    total = calcular_total(carrinho)
+
+    data = datetime.now().strftime(
+        "%d/%m/%Y %H:%M"
+    )
+
+    conexao = conectar_banco()
+
+    conexao.execute("""
+        INSERT INTO pedidos
+        (cliente, total, data)
+        VALUES (?, ?, ?)
+    """, (
+        cliente,
+        total,
+        data
+    ))
+
+    conexao.commit()
+    conexao.close()
+
+    return total, data
+
+
+def salvar_cliente(nome, email):
+
+    conexao = conectar_banco()
+
+    conexao.execute("""
+        INSERT INTO clientes
+        (nome, email)
+        VALUES (?, ?)
+    """, (
+        nome,
+        email
+    ))
+
+    conexao.commit()
+    conexao.close()
+
+
+def gerar_cliente():
+
+    nome = fake.name()
+    email = fake.email()
+
+    salvar_cliente(
+        nome,
+        email
+    )
+
+    return nome, email
+
+
+def listar_historico():
+
+    conexao = conectar_banco()
+
+    pedidos = conexao.execute("""
+        SELECT id, cliente, total, data
+        FROM pedidos
+        ORDER BY id DESC
+    """).fetchall()
+
+    conexao.close()
+
+    return pedidos
+
+
+# ==========================================================
+# INTERFACE TKINTER
+# ==========================================================
+
+class Aplicacao:
+
+    def __init__(self, janela):
+
+        self.janela = janela
+
+        self.janela.title(
+            NOME_LOJA
+        )
+
+        self.janela.geometry(
+            "1150x760"
+        )
+
+        self.janela.minsize(
+            950,
+            650
+        )
+
+        self.carrinho = []
+
+        self.criar_fundo()
+        self.criar_interface()
+
+    # ======================================================
+    # FUNDO METADE BRANCO E METADE VERMELHO
+    # ======================================================
+
+    def criar_fundo(self):
+
+        self.fundo = tk.Canvas(
+            self.janela,
+            highlightthickness=0
+        )
+
+        self.fundo.pack(
+            fill="both",
+            expand=True
+        )
+
+        self.fundo.bind(
+            "<Configure>",
+            self.desenhar_fundo
+        )
+
+    def desenhar_fundo(self, evento=None):
+
+        largura = self.janela.winfo_width()
+        altura = self.janela.winfo_height()
+
+        metade = largura // 2
+
+        self.fundo.delete(
+            "fundo"
+        )
+
+        self.fundo.create_rectangle(
+            0,
+            0,
+            metade,
+            altura,
+            fill="white",
+            outline="",
+            tags="fundo"
+        )
+
+        self.fundo.create_rectangle(
+            metade,
+            0,
+            largura,
+            altura,
+            fill="#c62828",
+            outline="",
+            tags="fundo"
+        )
+
+    # ======================================================
+    # INTERFACE PRINCIPAL
+    # ======================================================
+
+    def criar_interface(self):
+
+        self.conteudo = tk.Frame(
+            self.fundo,
+            bg="white",
+            padx=20,
+            pady=10
+        )
+
+        self.fundo.create_window(
+            0,
+            0,
+            anchor="nw",
+            window=self.conteudo,
+            tags="conteudo"
+        )
+
+        self.fundo.bind(
+            "<Configure>",
+            self.ajustar_conteudo,
+            add="+"
+        )
+
+        titulo = tk.Label(
+            self.conteudo,
+            text=NOME_LOJA,
+            font=("Arial", 24, "bold"),
+            bg="white",
+            fg="#b71c1c"
+        )
+
+        titulo.pack(
+            pady=5
+        )
+
+        subtitulo = tk.Label(
+            self.conteudo,
+            text=SUBTITULO,
+            font=("Arial", 14, "bold"),
+            bg="white",
+            fg="#333333"
+        )
+
+        subtitulo.pack(
+            pady=2
+        )
+
+        bandeira = tk.Label(
+            self.conteudo,
+            text=BANDEIRA,
+            font=("Arial", 28),
+            bg="white"
+        )
+
+        bandeira.pack(
+            pady=3
+        )
+
+        entrega = tk.Label(
+            self.conteudo,
+            text="Taxa de entrega fixa: R$ 10,00",
+            font=("Arial", 11, "bold"),
+            bg="white",
+            fg="#c62828"
+        )
+
+        entrega.pack(
+            pady=3
+        )
+
+        self.criar_area_produtos()
+        self.criar_area_compra()
+        self.criar_area_carrinho()
+        self.criar_area_finalizacao()
+
+    def ajustar_conteudo(self, evento=None):
+
+        largura = self.janela.winfo_width()
+        altura = self.janela.winfo_height()
+
+        self.fundo.itemconfig(
+            "conteudo",
+            width=max(
+                500,
+                largura // 2
+            ),
+            height=altura
+        )
+
+    # ======================================================
+    # ÁREA DE PRODUTOS
+    # ======================================================
+
+    def criar_area_produtos(self):
+
+        frame = tk.LabelFrame(
+            self.conteudo,
+            text="Camisas disponíveis",
+            font=("Arial", 11, "bold"),
+            bg="white",
+            padx=8,
+            pady=8
+        )
+
+        frame.pack(
+            fill="both",
+            expand=True,
+            pady=8
+        )
+
+        self.tabela = ttk.Treeview(
+            frame,
+            columns=(
+                "numero",
+                "produto",
+                "preco",
+                "brinde"
+            ),
+            show="headings",
+            height=10
+        )
+
+        self.tabela.heading(
+            "numero",
+            text="Número"
+        )
+
+        self.tabela.heading(
+            "produto",
+            text="Camisa"
+        )
+
+        self.tabela.heading(
+            "preco",
+            text="Preço"
+        )
+
+        self.tabela.heading(
+            "brinde",
+            text="Brinde"
+        )
+
+        self.tabela.column(
+            "numero",
+            width=70,
+            anchor="center"
+        )
+
+        self.tabela.column(
+            "produto",
+            width=210
+        )
+
+        self.tabela.column(
+            "preco",
+            width=100,
+            anchor="center"
+        )
+
+        self.tabela.column(
+            "brinde",
+            width=300
+        )
+
+        self.tabela.pack(
+            side="left",
+            fill="both",
+            expand=True
+        )
+
+        barra = ttk.Scrollbar(
+            frame,
+            orient="vertical",
+            command=self.tabela.yview
+        )
+
+        barra.pack(
+            side="right",
+            fill="y"
+        )
+
+        self.tabela.configure(
+            yscrollcommand=barra.set
+        )
+
+        for produto_id, nome, preco in listar_produtos():
+
+            time = nome.replace(
+                "Camisa ",
+                ""
+            )
+
+            brinde = obter_brinde(
+                time
+            )
+
+            self.tabela.insert(
+                "",
+                "end",
+                values=(
+                    produto_id,
+                    nome,
+                    f"R$ {preco:.2f}",
+                    brinde
+                )
+            )
+
+    # ======================================================
+    # ÁREA DE COMPRA
+    # ======================================================
+
+    def criar_area_compra(self):
+
+        frame = tk.Frame(
+            self.conteudo,
+            bg="white"
+        )
+
+        frame.pack(
+            pady=5
+        )
+
+        tk.Label(
+            frame,
+            text="Quantidade:",
+            bg="white",
+            font=("Arial", 11)
+        ).grid(
+            row=0,
+            column=0,
+            padx=5
+        )
+
+        self.campo_quantidade = tk.Entry(
+            frame,
+            width=8
+        )
+
+        self.campo_quantidade.insert(
+            0,
+            "1"
+        )
+
+        self.campo_quantidade.grid(
+            row=0,
+            column=1,
+            padx=5
+        )
+
+        tk.Button(
+            frame,
+            text="Adicionar ao Carrinho",
+            command=self.adicionar_carrinho,
+            bg="#b71c1c",
+            fg="white",
+            font=("Arial", 10, "bold")
+        ).grid(
+            row=0,
+            column=2,
+            padx=10
+        )
+
+    # ======================================================
+    # CARRINHO
+    # ======================================================
+
+    def criar_area_carrinho(self):
+
+        frame = tk.LabelFrame(
+            self.conteudo,
+            text="Carrinho de Compras",
+            font=("Arial", 11, "bold"),
+            bg="white",
+            padx=8,
+            pady=8
+        )
+
+        frame.pack(
+            fill="x",
+            pady=5
+        )
+
+        self.lista_carrinho = ttk.Treeview(
+            frame,
+            columns=(
+                "produto",
+                "quantidade",
+                "brinde",
+                "subtotal"
+            ),
+            show="headings",
+            height=4
+        )
+
+        self.lista_carrinho.heading(
+            "produto",
+            text="Produto"
+        )
+
+        self.lista_carrinho.heading(
+            "quantidade",
+            text="Quantidade"
+        )
+
+        self.lista_carrinho.heading(
+            "brinde",
+            text="Brinde"
+        )
+
+        self.lista_carrinho.heading(
+            "subtotal",
+            text="Subtotal"
+        )
+
+        self.lista_carrinho.column(
+            "produto",
+            width=180
+        )
+
+        self.lista_carrinho.column(
+            "quantidade",
+            width=80,
+            anchor="center"
+        )
+
+        self.lista_carrinho.column(
+            "brinde",
+            width=300
+        )
+
+        self.lista_carrinho.column(
+            "subtotal",
+            width=100,
+            anchor="center"
+        )
+
+        self.lista_carrinho.pack(
+            fill="x",
+            expand=True
+        )
+
+        tk.Button(
+            frame,
+            text="Remover Item",
+            command=self.remover_carrinho,
+            bg="#c62828",
+            fg="white"
+        ).pack(
+            pady=5
+        )
+
+        self.label_total = tk.Label(
+            frame,
+            text=(
+                "Camisas: R$ 0.00\n"
+                "Entrega: R$ 0.00\n"
+                "Total: R$ 0.00"
+            ),
+            font=("Arial", 13, "bold"),
+            bg="white",
+            fg="#b71c1c"
+        )
+
+        self.label_total.pack(
+            pady=5
+        )
+
+    # ======================================================
+    # FINALIZAÇÃO
+    # ======================================================
+
+    def criar_area_finalizacao(self):
+
+        frame = tk.Frame(
+            self.conteudo,
+            bg="white"
+        )
+
+        frame.pack(
+            pady=8
+        )
+
+        tk.Label(
+            frame,
+            text="Nome do Cliente:",
+            bg="white",
+            font=("Arial", 11)
+        ).grid(
+            row=0,
+            column=0,
+            padx=5
+        )
+
+        self.campo_cliente = tk.Entry(
+            frame,
+            width=25
+        )
+
+        self.campo_cliente.grid(
+            row=0,
+            column=1,
+            padx=5
+        )
+
+        tk.Button(
+            frame,
+            text="Gerar Cliente Faker",
+            command=self.gerar_cliente_gui,
+            bg="#7d3c98",
+            fg="white"
+        ).grid(
+            row=0,
+            column=2,
+            padx=5
+        )
+
+        tk.Button(
+            frame,
+            text="Finalizar Pedido",
+            command=self.finalizar_pedido,
+            bg="#229954",
+            fg="white",
+            font=("Arial", 11, "bold")
+        ).grid(
+            row=1,
+            column=1,
+            pady=10
+        )
+
+        tk.Button(
+            frame,
+            text="Histórico de Pedidos",
+            command=self.mostrar_historico,
+            bg="#34495e",
+            fg="white"
+        ).grid(
+            row=1,
+            column=2,
+            pady=10
+        )
+
+    # ======================================================
+    # ADICIONAR AO CARRINHO
+    # ======================================================
+
+    def adicionar_carrinho(self):
+
+        selecionado = self.tabela.selection()
+
+        if not selecionado:
+
+            messagebox.showwarning(
+                "Atenção",
+                "Selecione uma camisa."
+            )
+
+            return
+
+        try:
+
+            quantidade = int(
+                self.campo_quantidade.get()
+            )
+
+            if quantidade <= 0:
+                raise ValueError
+
+        except ValueError:
+
+            messagebox.showerror(
+                "Erro",
+                "Digite uma quantidade válida."
+            )
+
+            return
+
+        item = self.tabela.item(
+            selecionado[0]
+        )
+
+        valores = item["values"]
+
+        produto = valores[1]
+
+        preco_texto = str(
+            valores[2]
+        ).replace(
+            "R$ ",
+            ""
+        ).replace(
+            ",",
+            "."
+        )
+
+        preco = float(
+            preco_texto
+        )
+
+        subtotal = preco * quantidade
+
+        time = produto.replace(
+            "Camisa ",
+            ""
+        )
+
+        brinde = obter_brinde(
+            time
+        )
+
+        self.carrinho.append({
+            "produto": produto,
+            "quantidade": quantidade,
+            "subtotal": subtotal,
+            "brinde": brinde
+        })
+
+        self.atualizar_carrinho()
+
+        messagebox.showinfo(
+            "Sucesso",
+            f"Camisa adicionada ao carrinho!\n\n"
+            f"Produto: {produto}\n"
+            f"Quantidade: {quantidade}\n\n"
+            f"Brinde incluso:\n"
+            f"{brinde}\n\n"
+            f"Taxa de entrega: R$ {TAXA_ENTREGA:.2f}"
+        )
+
+    # ======================================================
+    # ATUALIZAR CARRINHO
+    # ======================================================
+
+    def atualizar_carrinho(self):
+
+        for item in self.lista_carrinho.get_children():
+
+            self.lista_carrinho.delete(
+                item
+            )
+
+        for item in self.carrinho:
+
+            self.lista_carrinho.insert(
+                "",
+                "end",
+                values=(
+                    item["produto"],
+                    item["quantidade"],
+                    item["brinde"],
+                    f"R$ {item['subtotal']:.2f}"
+                )
+            )
+
+        total_camisas = calcular_total_camisas(
+            self.carrinho
+        )
+
+        total_final = calcular_total(
+            self.carrinho
+        )
+
+        self.label_total.config(
+            text=(
+                f"Camisas: R$ {total_camisas:.2f}\n"
+                f"Entrega: R$ {TAXA_ENTREGA:.2f}\n"
+                f"Total: R$ {total_final:.2f}"
+            )
+        )
+
+    # ======================================================
+    # REMOVER DO CARRINHO
+    # ======================================================
+
+    def remover_carrinho(self):
+
+        selecionado = self.lista_carrinho.selection()
+
+        if not selecionado:
+
+            messagebox.showwarning(
+                "Atenção",
+                "Selecione um item do carrinho."
+            )
+
+            return
+
+        indice = self.lista_carrinho.index(
+            selecionado[0]
+        )
+
+        self.carrinho.pop(
+            indice
+        )
+
+        self.atualizar_carrinho()
+
+    # ======================================================
+    # GERAR CLIENTE FAKER
+    # ======================================================
+
+    def gerar_cliente_gui(self):
+
+        nome, email = gerar_cliente()
+
+        self.campo_cliente.delete(
+            0,
+            tk.END
+        )
+
+        self.campo_cliente.insert(
+            0,
+            nome
+        )
+
+        messagebox.showinfo(
+            "Cliente Faker",
+            f"Nome: {nome}\n"
+            f"E-mail: {email}"
+        )
+
+    # ======================================================
+    # FINALIZAR PEDIDO
+    # ======================================================
+
+    def finalizar_pedido(self):
+
+        if not self.carrinho:
+
+            messagebox.showwarning(
+                "Atenção",
+                "Adicione uma camisa ao carrinho."
+            )
+
+            return
+
+        cliente = self.campo_cliente.get().strip()
+
+        if not cliente:
+
+            messagebox.showwarning(
+                "Atenção",
+                "Digite o nome do cliente."
+            )
+
+            return
+
+        total_camisas = calcular_total_camisas(
+            self.carrinho
+        )
+
+        total, data = salvar_pedido(
+            cliente,
+            self.carrinho
+        )
+
+        texto_brindes = ""
+
+        for item in self.carrinho:
+
+            texto_brindes += (
+                f"- {item['produto']}: "
+                f"{item['brinde']}\n"
+            )
+
+        messagebox.showinfo(
+            "Pedido Finalizado",
+            f"Cliente: {cliente}\n"
+            f"Valor das camisas: R$ {total_camisas:.2f}\n"
+            f"Taxa de entrega: R$ {TAXA_ENTREGA:.2f}\n"
+            f"Total final: R$ {total:.2f}\n"
+            f"Data: {data}\n\n"
+            f"BRINDES INCLUSOS:\n"
+            f"{texto_brindes}\n"
+            f"Obrigado pela compra!"
+        )
+
+        self.carrinho.clear()
+
+        self.atualizar_carrinho()
+
+        self.campo_cliente.delete(
+            0,
+            tk.END
+        )
+
+    # ======================================================
+    # HISTÓRICO DE PEDIDOS
+    # ======================================================
+
+    def mostrar_historico(self):
+
+        pedidos = listar_historico()
+
+        janela_historico = tk.Toplevel(
+            self.janela
+        )
+
+        janela_historico.title(
+            "Histórico de Pedidos"
+        )
+
+        janela_historico.geometry(
+            "700x400"
+        )
+
+        tabela = ttk.Treeview(
+            janela_historico,
+            columns=(
+                "id",
+                "cliente",
+                "total",
+                "data"
+            ),
+            show="headings"
+        )
+
+        tabela.heading(
+            "id",
+            text="ID"
+        )
+
+        tabela.heading(
+            "cliente",
+            text="Cliente"
+        )
+
+        tabela.heading(
+            "total",
+            text="Total"
+        )
+
+        tabela.heading(
+            "data",
+            text="Data"
+        )
+
+        tabela.column(
+            "id",
+            width=60,
+            anchor="center"
+        )
+
+        tabela.column(
+            "cliente",
+            width=200
+        )
+
+        tabela.column(
+            "total",
+            width=120,
+            anchor="center"
+        )
+
+        tabela.column(
+            "data",
+            width=150,
+            anchor="center"
+        )
+
+        tabela.pack(
+            fill="both",
+            expand=True,
+            padx=10,
+            pady=10
+        )
+
+        for pedido in pedidos:
+
+            pedido_id, cliente, total, data = pedido
+
+            tabela.insert(
+                "",
+                "end",
+                values=(
+                    pedido_id,
+                    cliente,
+                    f"R$ {total:.2f}",
+                    data
+                )
+            )
+
+
+# ==========================================================
+# EXECUÇÃO DO PROGRAMA
+# ==========================================================
+
+if __name__ == "__main__":
+
+    preparar_banco()
+
+    salvar_configuracao_json()
+
+    janela_principal = tk.Tk()
+
+    aplicativo = Aplicacao(
+        janela_principal
+    )
+
+    janela_principal.mainloop()
