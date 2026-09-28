@@ -1,0 +1,796 @@
+/* =========================================================
+   BURGER HOUSE - STYLE.CSS
+   Projeto acadêmico - Curso de Web Design
+   ========================================================= */
+
+
+/* =========================================================
+   CORES E CONFIGURAÇÕES
+   ========================================================= */
+
+:root {
+  --cor-primaria: #fa8900;
+  --cor-primaria-escura: #0847a8;
+  --cor-destaque: #ff7a00;
+  --cor-destaque-escura: #d35400;
+  --cor-fundo: #fdfaf5;
+  --cor-superficie: #ffffff;
+  --cor-texto: #1a1a1a;
+  --cor-muted: #555555;
+  --cor-borda: #e6e1d8;
+  --raio: 12px;
+  --sombra: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --max: 1100px;
+}
+
+
+/* =========================================================
+   CONFIGURAÇÃO GERAL
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+}
+
+
+/* Container principal */
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+
+/* =========================================================
+   ACESSIBILIDADE
+   ========================================================= */
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--cor-primaria);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+
+.site-header {
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid var(--cor-borda);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+}
+
+
+/* Logo */
+
+.logo {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--cor-primaria);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.logo:hover {
+  color: var(--cor-destaque);
+}
+
+
+/* Menu */
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: var(--cor-texto);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-list a:hover {
+  color: var(--cor-destaque);
+}
+
+
+/* =========================================================
+   HERO / ÁREA PRINCIPAL
+   ========================================================= */
+
+.hero {
+  position: relative;
+  padding: 2rem 0 3rem;
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.35),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("../img/banner1.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  text-align: center;
+}
+
+
+/* Título do Hero */
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 0.75rem;
+}
+
+
+/* Texto do Hero */
+
+.lead {
+  font-size: 1.15rem;
+  opacity: 0.95;
+  margin: 0 auto 1.5rem;
+  max-width: 36rem;
+}
+
+
+/* =========================================================
+   CARROSSEL
+   ========================================================= */
+
+.carousel-container {
+  max-width: 1100px;
+  position: relative;
+  margin: 10px auto;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.30);
+  background: #111;
+}
+
+
+/* Cada slide */
+
+.slide {
+  display: none;
+  position: relative;
+}
+
+
+/* Imagens do carrossel */
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+
+/* =========================================================
+   LEGENDA DO CARROSSEL
+   ========================================================= */
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.70);
+  color: #ffffff;
+  padding: 15px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BOTÕES DO CARROSSEL
+   ========================================================= */
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 16px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 22px;
+  background: rgba(0, 0, 0, 0.35);
+  user-select: none;
+  z-index: 2;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.prev {
+  left: 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.next {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.prev:hover,
+.next:hover {
+  background: rgba(0, 0, 0, 0.80);
+}
+
+
+/* =========================================================
+   PONTINHOS DO CARROSSEL
+   ========================================================= */
+
+.dots-container {
+  text-align: center;
+  padding: 12px;
+}
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background-color: #bbbbbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+
+.dot:hover,
+.dot.active {
+  background-color: var(--cor-destaque);
+}
+
+
+/* =========================================================
+   ANIMAÇÃO DO CARROSSEL
+   ========================================================= */
+
+.fade {
+  animation: fadeAnim 1.2s;
+}
+
+@keyframes fadeAnim {
+  from {
+    opacity: 0.4;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   SEÇÕES
+   ========================================================= */
+
+.section {
+  padding: 3rem 0;
+}
+
+.section--alt {
+  background: var(--cor-superficie);
+}
+
+.section h2 {
+  font-size: 1.9rem;
+  margin: 0 0 1.5rem;
+  color: var(--cor-primaria-escura);
+}
+
+
+/* =========================================================
+   CARDÁPIO
+   ========================================================= */
+
+.cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+
+/* Cada produto */
+
+.card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: 1.25rem;
+  box-shadow: var(--sombra);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  position: relative;
+}
+
+
+/* Detalhe laranja no topo do card */
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--cor-destaque);
+  border-radius: 12px 12px 0 0;
+}
+
+
+/* Efeito ao passar o mouse */
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+
+/* Nome do produto */
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  color: var(--cor-primaria);
+  font-size: 1.1rem;
+}
+
+
+/* Descrição */
+
+.card p {
+  margin-top: 0.4rem;
+}
+
+
+/* Preço */
+
+.card .preco {
+  font-weight: 800;
+  color: var(--cor-destaque-escura);
+  font-size: 1.15rem;
+  margin-top: 0.8rem;
+}
+
+
+/* =========================================================
+   CORREÇÃO DO MENU CARDÁPIO
+   ========================================================= */
+
+#cardapio {
+  scroll-margin-top: 100px;
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE CONTATO
+   ========================================================= */
+
+.form {
+  max-width: 520px;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font: inherit;
+  background: var(--cor-superficie);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--cor-primaria);
+  box-shadow:
+    0 0 0 3px rgba(10, 99, 241, 0.12);
+  outline: none;
+}
+
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+
+.btn {
+  display: inline-block;
+  background: var(--cor-primaria);
+  color: #ffffff;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.btn:hover {
+  background: var(--cor-destaque);
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MENSAGENS DO FORMULÁRIO
+   ========================================================= */
+
+.muted {
+  color: var(--cor-muted);
+  font-size: 0.9rem;
+}
+
+.form-status {
+  margin-top: 1rem;
+  min-height: 1.5rem;
+  font-weight: 600;
+}
+
+.form-status.ok {
+  color: #2e7d6b;
+}
+
+.form-status.erro {
+  color: #b83a2d;
+}
+
+
+/* =========================================================
+   🤖 ASSISTENTE ROBÔ
+   ========================================================= */
+
+.assistente {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  z-index: 999;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+
+/* Imagem do robô */
+
+.robo-img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 5px 8px rgba(0, 0, 0, 0.25));
+  animation: roboFlutuar 3s ease-in-out infinite;
+}
+
+
+/* Animação do robô */
+
+@keyframes roboFlutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+
+/* Caixa de conversa */
+
+.chat {
+  width: 300px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25);
+  border: 2px solid var(--cor-primaria);
+}
+
+
+/* Área das mensagens */
+
+#mensagens {
+  background: #f5f7fb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+
+  /* Limite de altura e barra de rolagem */
+  max-height: 250px;
+  overflow-y: auto;
+
+  /* Ajustes de texto */
+  font-size: 0.85rem;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  color: var(--cor-texto);
+
+  /* NOVO: separa as mensagens */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+/* =========================================================
+   ESPAÇAMENTO DAS MENSAGENS DO ROBÔ
+   ========================================================= */
+
+.mensagem-robo,
+.mensagem-cliente {
+  margin: 0;
+  line-height: 1.5;
+  padding: 2px 0;
+}
+
+
+/* Campo de texto do robô */
+
+#entradaUsuario {
+  width: calc(100% - 75px);
+  padding: 9px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+#entradaUsuario:focus {
+  border-color: var(--cor-primaria);
+}
+
+
+/* Botão Enviar do robô */
+
+.chat button {
+  width: 65px;
+  margin-left: 5px;
+  padding: 9px 5px;
+  border: none;
+  border-radius: 8px;
+  background: var(--cor-primaria);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat button:hover {
+  background: var(--cor-destaque);
+}
+
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+
+.site-footer {
+  background: var(--cor-primaria-escura);
+  color: #ffffff;
+  padding: 1.5rem 0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .header-inner {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .nav-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .slide img {
+    height: 320px;
+  }
+
+  .assistente {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .robo-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .chat {
+    width: 270px;
+  }
+}
+
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .header-inner {
+    padding: 0.8rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .nav-list {
+    gap: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .hero {
+    padding: 1rem 0 2rem;
+  }
+
+  .carousel-container {
+    border-radius: 8px;
+  }
+
+  .slide img {
+    height: 230px;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .prev,
+  .next {
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  .section {
+    padding: 2rem 0;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .assistente {
+    right: 10px;
+    bottom: 10px;
+    gap: 5px;
+  }
+
+  .robo-img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .chat {
+    width: 230px;
+    padding: 10px;
+  }
+
+  #mensagens {
+    font-size: 0.85rem;
+    padding: 9px;
+
+    /* Mantém o espaçamento no celular */
+    gap: 10px;
+  }
+
+  #entradaUsuario {
+    width: calc(100% - 70px);
+    font-size: 0.8rem;
+  }
+
+  .chat button {
+    width: 60px;
+    font-size: 0.8rem;
+  }
+}
+
+
+/* =========================================================
+   MOVIMENTO REDUZIDO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
