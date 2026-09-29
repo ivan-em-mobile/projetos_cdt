@@ -1,0 +1,29 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "nome": "Root Master",
+            "senha": "12345678",
+            "nivel": "Administrador"
+        }
+    ],
+    "sqlite_sequence": [
+        {
+            "name": "usuarios",
+            "seq": 1
+        },
+        {
+            "name": "usuarios_db",
+            "seq": 1
+        }
+    ],
+    "logs_sistema": [],
+    "usuarios_db": [
+        {
+            "id": 1,
+            "nome": "Root Master",
+            "senha": "12345678",
+            "nivel": "Administrador"
+        }
+    ]
+}

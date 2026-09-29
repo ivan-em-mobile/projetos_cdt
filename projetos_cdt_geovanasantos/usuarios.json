@@ -1,0 +1,12 @@
+[
+    {
+        "usuario": "gaby",
+        "senha": "root",
+        "tipo": "Comum"
+    },
+    {
+        "usuario": "ge",
+        "senha": "2302",
+        "tipo": "Administrador"
+    }
+]

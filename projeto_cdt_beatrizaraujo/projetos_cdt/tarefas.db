@@ -1,0 +1,19 @@
+BANCO = "tarefas.db"
+
+conexao = sqlite3.connect(BANCO)
+cursor = conexao.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS tarefas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tarefa TEXT,
+    prazo TEXT,
+    responsavel TEXT,
+    prioridade TEXT,
+    categoria TEXT,
+    status TEXT
+)
+""")
+
+conexao.commit()
+conexao.close()

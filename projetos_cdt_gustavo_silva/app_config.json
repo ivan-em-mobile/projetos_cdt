@@ -1,0 +1,17 @@
+{
+    "perfis": [
+        {
+            "id": "p1",
+            "nome": "Jogador Principal",
+            "cor_acento": "roxo",
+            "gemini_key": "",
+            "atalhos_custom": [],
+            "foto_perfil": "C:/Users/Aluno/Downloads/WhatsApp Image 2026-09-23 at 08.58.51.jpeg",
+            "fundo_imagem": "",
+            "modo_layout": "grid",
+            "cor_fundo": "#0F172A"
+        }
+    ],
+    "ultimo_perfil": "p_1790170633",
+    "modo_tema": "dark"
+}

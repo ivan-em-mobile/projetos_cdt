@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Sintonia</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+
+            --background: #fceef4;
+            --card: #ffffff;
+
+            --primary: #b84d78;
+            --primary-hover: #a64069;
+
+            --text: #321d29;
+            --secondary: #765c68;
+
+            --shadow: rgba(80, 30, 55, 0.15);
+        }
+
+
+        /* MODO ESCURO */
+
+        @media (prefers-color-scheme: dark) {
+
+            :root {
+
+                --background: #24151f;
+                --card: #321d2a;
+
+                --primary: #c45a83;
+                --primary-hover: #d36a92;
+
+                --text: #f8eaf0;
+                --secondary: #cdb8c2;
+
+                --shadow: rgba(0, 0, 0, 0.35);
+            }
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 25px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            padding: 50px 45px;
+
+            text-align: center;
+
+            background: var(--card);
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 12px 35px var(--shadow);
+        }
+
+
+        h1 {
+
+            margin-bottom: 15px;
+
+            font-size: 42px;
+
+            font-weight: 700;
+
+            letter-spacing: -1px;
+        }
+
+
+        p {
+
+            margin-bottom: 32px;
+
+            color: var(--secondary);
+
+            line-height: 1.6;
+
+            font-size: 16px;
+        }
+
+
+        .spotify-button {
+
+            display: inline-block;
+
+            padding: 15px 32px;
+
+            background: var(--primary);
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            border-radius: 30px;
+
+            transition:
+                background 0.3s ease,
+                transform 0.3s ease;
+        }
+
+
+        .spotify-button:hover {
+
+            background: var(--primary-hover);
+
+            transform: translateY(-2px);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+        <h1>Sintonia</h1>
+
+        <p>
+            Crie uma playlist personalizada
+            de acordo com seu momento,
+            o clima e seu artista favorito.
+        </p>
+
+        <a
+            href="{{ url_for('login') }}"
+            class="spotify-button"
+        >
+            Entrar com Spotify
+        </a>
+
+    </main>
+
+</body>
+
+</html>
