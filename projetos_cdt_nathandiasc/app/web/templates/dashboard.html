@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Dashboard | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+        <h1>
+            Dashboard
+        </h1>
+
+        <p>
+            Visão geral da academia
+        </p>
+    </div>
+
+</header>
+
+
+<section class="cards">
+
+    <article class="card">
+
+        <span class="card-title">
+            Alunos
+        </span>
+
+        <strong class="card-value">
+            {{ geral.total_alunos }}
+        </strong>
+
+    </article>
+
+
+    <article class="card">
+
+        <span class="card-title">
+            Assinaturas ativas
+        </span>
+
+        <strong class="card-value">
+            {{ geral.assinaturas_ativas }}
+        </strong>
+
+    </article>
+
+
+    <article class="card">
+
+        <span class="card-title">
+            Total recebido
+        </span>
+
+        <strong class="card-value">
+            R$ {{ "%.2f"|format(financeiro.total_recebido) }}
+        </strong>
+
+    </article>
+
+
+    <article class="card">
+
+        <span class="card-title">
+            Acessos
+        </span>
+
+        <strong class="card-value">
+            {{ acessos.total_acessos }}
+        </strong>
+
+    </article>
+
+</section>
+
+
+<section class="section">
+
+    <h2>
+        Resumo da operação
+    </h2>
+
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                Alunos ativos
+            </span>
+
+            <strong>
+                {{ geral.alunos_ativos }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Planos ativos
+            </span>
+
+            <strong>
+                {{ geral.planos_ativos }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos pendentes
+            </span>
+
+            <strong>
+                {{ financeiro.quantidade_pendentes }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Pagamentos atrasados
+            </span>
+
+            <strong>
+                {{ financeiro.quantidade_atrasados }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Acessos autorizados
+            </span>
+
+            <strong>
+                {{ acessos.autorizados }}
+            </strong>
+
+        </div>
+
+
+        <div class="summary-row">
+
+            <span>
+                Acessos negados
+            </span>
+
+            <strong>
+                {{ acessos.negados }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
