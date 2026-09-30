@@ -1,0 +1,669 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    max-width: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+    color: #111111;
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+
+    max-width: 100%;
+}
+
+
+/* ================================
+   SIDEBAR
+================================ */
+
+.sidebar {
+    width: 230px;
+    min-height: 100vh;
+
+    background: #111111;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+
+    padding: 30px 25px;
+}
+
+.brand-main {
+    color: #ffd400;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand-sub {
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    margin-top: 3px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 10px;
+}
+
+.menu-item {
+    color: white;
+
+    text-decoration: none;
+
+    padding: 13px 25px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.menu-item:hover {
+    background: #ffd400;
+    color: #111111;
+}
+
+.menu-item.active {
+    background: #ffd400;
+    color: #111111;
+}
+
+.sidebar-version {
+    margin-top: auto;
+
+    padding: 25px;
+
+    font-size: 12px;
+    color: #aaaaaa;
+}
+
+
+/* ================================
+   CONTEÚDO
+================================ */
+
+.main-content {
+    margin-left: 230px;
+
+    width: calc(100% - 230px);
+
+    padding: 32px;
+
+    min-width: 0;
+}
+
+.page-header {
+    background: white;
+
+    padding: 25px 30px;
+
+    margin-bottom: 30px;
+
+    border-radius: 6px;
+
+    min-width: 0;
+}
+
+.page-header h1 {
+    font-size: 28px;
+}
+
+.page-header p {
+    margin-top: 6px;
+
+    color: #777777;
+
+    font-size: 14px;
+}
+
+
+/* ================================
+   DASHBOARD
+================================ */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.card {
+    background: white;
+
+    padding: 24px;
+
+    border-radius: 6px;
+
+    min-width: 0;
+}
+
+.card-title {
+    display: block;
+
+    color: #777777;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+.card-value {
+    display: block;
+
+    font-size: 25px;
+
+    overflow-wrap: anywhere;
+}
+
+.section {
+    margin-top: 35px;
+}
+
+.section h2 {
+    font-size: 20px;
+
+    margin-bottom: 15px;
+}
+
+.summary {
+    background: white;
+
+    padding: 25px 30px;
+
+    border-radius: 6px;
+
+    min-width: 0;
+}
+
+.summary-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+    gap: 15px;
+}
+
+.summary-row:last-child {
+    border-bottom: none;
+}
+
+.summary-row span {
+    color: #555555;
+}
+
+
+/* ================================
+   MENSAGENS
+================================ */
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 14px 18px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    overflow-wrap: anywhere;
+}
+
+.message-sucesso {
+    background: #dff5e1;
+    color: #156b25;
+}
+
+.message-erro {
+    background: #fde2e2;
+    color: #a51f1f;
+}
+
+
+/* ================================
+   SEÇÕES
+================================ */
+
+.section-card {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 6px;
+
+    margin-bottom: 25px;
+
+    min-width: 0;
+}
+
+.section-title {
+    margin-bottom: 22px;
+
+    min-width: 0;
+}
+
+.section-title h2 {
+    font-size: 19px;
+
+    overflow-wrap: anywhere;
+}
+
+.section-title p {
+    margin-top: 5px;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ================================
+   FORMULÁRIOS
+================================ */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+    min-width: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.form-span-2 {
+    grid-column: span 2;
+}
+
+.form-group label {
+    margin-bottom: 7px;
+
+    color: #555555;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 11px 12px;
+
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 2px solid #ffd400;
+    border-color: #ffd400;
+}
+
+.form-actions {
+    display: flex;
+    align-items: end;
+
+    min-width: 0;
+}
+
+.button {
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 4px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.button-primary {
+    width: 100%;
+
+    background: #111111;
+    color: white;
+}
+
+.button-primary:hover {
+    background: #ffd400;
+    color: #111111;
+}
+
+
+/* ================================
+   TABELAS
+================================ */
+
+.table-wrapper {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 760px;
+}
+
+thead {
+    background: #111111;
+    color: white;
+}
+
+th,
+td {
+    padding: 13px 14px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #eeeeee;
+
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #fafafa;
+}
+
+.status {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 12px;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    text-transform: capitalize;
+}
+
+.status-ativo {
+    background: #dff5e1;
+    color: #156b25;
+}
+
+.status-inativo {
+    background: #fde2e2;
+    color: #a51f1f;
+}
+
+.empty-table {
+    text-align: center;
+
+    color: #777777;
+
+    padding: 30px;
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .form-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .app {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .sidebar {
+        position: static;
+
+        width: 100%;
+        min-height: auto;
+    }
+
+    .brand {
+        padding: 18px 15px 14px;
+    }
+
+    .brand-main {
+        font-size: 21px;
+    }
+
+    .brand-sub {
+        font-size: 13px;
+    }
+
+    .menu {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        margin-top: 0;
+
+        width: 100%;
+    }
+
+    .menu-item {
+        min-width: 0;
+
+        padding: 11px 10px;
+
+        font-size: 11px;
+        line-height: 1.2;
+
+        white-space: normal;
+        overflow-wrap: anywhere;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .sidebar-version {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+
+        width: 100%;
+        max-width: 100%;
+
+        padding: 10px;
+
+        min-width: 0;
+    }
+
+    .page-header {
+        padding: 16px;
+
+        margin-bottom: 10px;
+
+        width: 100%;
+    }
+
+    .page-header h1 {
+        font-size: 22px;
+
+        overflow-wrap: anywhere;
+    }
+
+    .page-header p {
+        font-size: 12px;
+
+        line-height: 1.35;
+
+        overflow-wrap: anywhere;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .card-value {
+        font-size: 22px;
+    }
+
+    .summary {
+        padding: 14px;
+    }
+
+    .summary-row {
+        gap: 10px;
+
+        font-size: 13px;
+
+        flex-wrap: wrap;
+    }
+
+    .section-card {
+        padding: 14px;
+
+        margin-bottom: 10px;
+
+        width: 100%;
+    }
+
+    .section-title {
+        margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+        font-size: 18px;
+
+        line-height: 1.2;
+    }
+
+    .section-title p {
+        font-size: 12px;
+
+        line-height: 1.35;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        width: 100%;
+    }
+
+    .form-span-2 {
+        grid-column: span 1;
+    }
+
+    .form-actions {
+        display: block;
+
+        width: 100%;
+    }
+
+    .button-primary {
+        width: 100%;
+
+        padding: 12px 10px;
+
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 14px;
+    }
+
+    .table-wrapper {
+        max-width: 100%;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+}
