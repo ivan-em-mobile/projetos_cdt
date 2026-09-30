@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academia RH Fitness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Importando o CSS via Flask url_for -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+<body>
+
+    <!-- CHATBOT FLUTUANTE -->
+    <button class="chat-btn" id="chatBtnToggle" type="button" aria-label="Abrir assistente virtual"><i class="fa-solid fa-comments"></i></button>
+
+    <div class="chat-container" id="chatContainer" aria-hidden="true">
+        <div class="chat-header">
+            <h4><i class="fa-solid fa-robot"></i> Assistente RH Fitness</h4>
+            <button class="close-chat" id="chatCloseBtn" type="button" aria-label="Fechar chat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">Fala, maromba! Sou o assistente virtual da RH Fitness. Posso tirar dúvidas sobre treinos, planos, horários e suplementos. Como posso ajudar?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Digite sua dúvida...">
+            <button id="chatSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <a href="#home" class="logo" id="logoAdminTrigger">RH <span>Fitness</span></a>
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <nav id="navMenu">
+            <ul>
+                <li><a href="#home" class="nav-link">Início</a></li>
+                <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                <li><a href="#modalidades" class="nav-link">Modalidades</a></li>
+                <li><a href="#planos" class="nav-link">Planos</a></li>
+                <li><a href="#calculadora" class="nav-link">Calculadora IMC</a></li>
+                <li><a href="#contato" class="nav-link">Matrícula</a></li>
+            </ul>
+        </nav>
+        <a href="#contato" class="btn-matricula">Matricule-se</a>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <h1>Supere Seus Limites na <span>RH Fitness</span></h1>
+        <p>Estrutura completa, equipamentos de alta tecnologia e acompanhamento profissional para você alcançar a sua melhor versão.</p>
+        <a href="#contato" class="btn-matricula btn-hero">Comece Agora</a>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre">
+        <h2 class="section-title">Sobre a <span>Academia</span></h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>A <strong>Academia RH Fitness</strong> foi concebida sob os mais rigorosos padrões de excelência, combinando alta performance, inovação e bem-estar em uma infraestrutura completa. Nossos ambientes foram estrategicamente projetados para oferecer total conforto, ergonomia e segurança, proporcionando uma experiência de treino diferenciada e altamente motivadora.</p>
+                <p>Contamos com uma equipe de profissionais altamente capacitados para montar fichas customizadas para hipertrofia, emagrecimento ou condicionamento físico avançado.</p>
+            </div>
+            <div class="about-img"></div>
+        </div>
+    </section>
+
+    <!-- MODALIDADES -->
+    <section id="modalidades" style="background: #0a0a0a;">
+        <h2 class="section-title">Nossas <span>Modalidades</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-video-container">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80" alt="Musculação" loading="lazy" decoding="async">
+                </div>
+                <div class="service-content">
+                    <div>
+                        <h3>Musculação</h3>
+                        <p>Área completa com pesos livres e máquinas de última geração para desenvolvimento de massa muscular.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-video-container">
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80" alt="Treinamento Funcional" loading="lazy" decoding="async">
+                </div>
+                <div class="service-content">
+                    <div>
+                        <h3>Treinamento Funcional</h3>
+                        <p>Dinâmicas voltadas para agilidade, fortalecimento do core e otimização de movimentos naturais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-video-container">
+                    <img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=800&q=80" alt="Cardio Avançado" loading="lazy" decoding="async">
+                </div>
+                <div class="service-content">
+                    <div>
+                        <h3>Cardio Avançado</h3>
+                        <p>Esteiras, bikes e simuladores modernos para o máximo rendimento do seu sistema cardiorrespiratório.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANOS -->
+    <section id="planos">
+        <h2 class="section-title">Escolha seu <span>Plano</span></h2>
+        <div class="plans-grid">
+            <div class="plan-card">
+                <h3>Plano Mensal</h3>
+                <div class="price">R$ 90,00 <span>/mês</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Acesso livre à musculação</li>
+                    <li><i class="fa-solid fa-check"></i> Horário flexível</li>
+                </ul>
+                <button class="btn-matricula btn-escolher-plano" data-plano="Plano Mensal (R$ 90,00/mês)">Escolher Plano</button>
+            </div>
+
+            <div class="plan-card active">
+                <div class="popular-badge">MAIS POPULAR</div>
+                <h3>Plano Semestral</h3>
+                <div class="price">R$ 150,00 <span>/mês</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Acesso total à academia</li>
+                    <li><i class="fa-solid fa-check"></i> Acompanhamento com instrutores</li>
+                    <li><i class="fa-solid fa-check"></i> Congele por até 30 dias</li>
+                </ul>
+                <button class="btn-matricula btn-escolher-plano" data-plano="Plano Semestral (R$ 150,00/mês)">Escolher Plano</button>
+            </div>
+
+            <div class="plan-card">
+                <h3>Plano Anual VIP</h3>
+                <div class="price">R$ 250,00 <span>/mês</span></div>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Todos os benefícios inclusos</li>
+                    <li><i class="fa-solid fa-check"></i> Camisa exclusiva RH Fitness</li>
+                </ul>
+                <button class="btn-matricula btn-escolher-plano" data-plano="Plano Anual VIP (R$ 250,00/mês)">Escolher Plano</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAINEL ADMINISTRATIVO -->
+    <section id="admin-section">
+        <h2 class="section-title">Painel <span>Administrativo</span></h2>
+        
+        <div class="admin-login-box" id="adminLoginBox">
+            <i class="fa-solid fa-lock admin-icon"></i>
+            <h3 class="admin-title">Acesso Restrito</h3>
+            <p class="admin-description">Insira as credenciais de acesso</p>
+            <input type="text" id="adminUser" placeholder="Usuário" autocomplete="username">
+            <input type="password" id="adminPassword" placeholder="Senha" autocomplete="current-password">
+            <button class="btn-matricula btn-full" id="btnLoginAdmin" type="button">Entrar no Painel</button>
+            <p id="adminLoginError" style="color: var(--danger); font-size: 12px; margin-top: 10px; display: none;">Usuário ou senha incorretos!</p>
+        </div>
+
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-header-flex">
+                <h3 class="admin-heading"><i class="fa-solid fa-users-gear"></i> Gestão de Alunos e Matrículas</h3>
+                <button class="btn-acao logout-button" id="btnLogoutAdmin" type="button">Sair do Painel</button>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h5>Total de Alunos</h5>
+                    <span id="statTotal">0</span>
+                </div>
+                <div class="stat-card">
+                    <h5>Ativos</h5>
+                    <span id="statAtivos" class="stat-active">0</span>
+                </div>
+                <div class="stat-card">
+                    <h5>Pendentes</h5>
+                    <span id="statPendentes" class="stat-pending">0</span>
+                </div>
+                <div class="stat-card">
+                    <h5>Débito Automático</h5>
+                    <span id="statDebito" class="stat-auto">0</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome do Aluno</th>
+                            <th>CPF</th>
+                            <th>Plano</th>
+                            <th>Pagamento / Débito Auto</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULADORA IMC -->
+    <section id="calculadora" style="background: #0a0a0a; text-align: center;">
+        <h2 class="section-title">Calculadora de <span>IMC</span></h2>
+        <div class="imc-box">
+            <div class="form-group">
+                <label>Peso (kg)</label>
+                <input type="number" id="peso" class="form-control" placeholder="Ex: 70" step="0.1">
+            </div>
+            <div class="form-group">
+                <label>Altura (m)</label>
+                <input type="number" id="altura" class="form-control" placeholder="Ex: 1.75" step="0.01">
+            </div>
+            <button id="btnCalcularIMC" class="btn-imc" type="button">Calcular IMC</button>
+            <div id="resultado-imc" style="margin-top: 20px; font-size: 14px; font-weight: 600;"></div>
+        </div>
+    </section>
+
+    <!-- CONTATO / MATRÍCULA -->
+    <section id="contato">
+        <h2 class="section-title">Faça sua <span>Matrícula</span></h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p><i class="fa-solid fa-location-dot"></i> Rua Antônio José Bastos, 238 - Parque Regina, São Paulo - SP</p>
+                <p><i class="fa-solid fa-phone"></i> (11) 96716-1959</p>
+                <p><i class="fa-solid fa-envelope"></i> contato@rhfitness.com.br</p>
+                <p><i class="fa-solid fa-shield-check"></i> Pagamento 100% seguro e instantâneo.</p>
+            </div>
+            
+            <form class="contact-form" id="contactForm">
+                <input type="text" id="inputNome" placeholder="Seu Nome Completo" autocomplete="name" required>
+                <input type="text" id="inputCpf" placeholder="CPF (Ex: 000.000.000-00)" inputmode="numeric" autocomplete="off" maxlength="14" required>
+                <input type="email" id="inputEmail" placeholder="Seu E-mail" autocomplete="email" required>
+                
+                <select id="planoSelecionado" required>
+                    <option value="" disabled selected>Plano Selecionado</option>
+                    <option value="Plano Mensal (R$ 90,00/mês)">Plano Mensal (R$ 90,00/mês)</option>
+                    <option value="Plano Semestral (R$ 150,00/mês)">Plano Semestral (R$ 150,00/mês)</option>
+                    <option value="Plano Anual VIP (R$ 250,00/mês)">Plano Anual VIP (R$ 250,00/mês)</option>
+                </select>
+
+                <select id="formaPagamento" required>
+                    <option value="" disabled selected>Selecione a Forma de Pagamento</option>
+                    <option value="pix">PIX (Aprovação Instantânea)</option>
+                    <option value="cartao">Cartão de Crédito (Débito Automático)</option>
+                    <option value="boleto">Boleto Bancário (Pendente de Compensação)</option>
+                </select>
+                
+                <div class="btn-center-wrapper">
+                    <button type="submit" class="btn-matricula">Concluir Matrícula</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FEEDBACK SUCESSO -->
+    <div id="feedback-sucesso">
+        <div class="pix-success-badge" id="badgeFeedback"><i class="fa-solid fa-check-circle"></i> <span id="badgeText">Matrícula Realizada!</span></div>
+        <i class="fa-solid fa-circle-check feedback-icon" id="iconFeedback"></i>
+        <span id="textoFeedback">Bem-vindo à RH Fitness. Seu acesso já está liberado!</span>
+        
+        <div class="supine-animation-container">
+            <svg width="120" height="75" viewBox="0 0 130 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="55" width="80" height="8" rx="3" fill="#3f3f46"/>
+                <rect x="40" y="63" width="8" height="18" rx="2" fill="#27272a"/>
+                <rect x="82" y="63" width="8" height="18" rx="2" fill="#27272a"/>
+                <ellipse cx="65" cy="50" rx="9" ry="7" fill="#f4f4f5"/>
+                <rect x="52" y="45" width="26" height="12" rx="4" fill="#2563eb"/>
+                <line x1="56" y1="47" x2="45" y2="32" stroke="#f4f4f5" stroke-width="4" stroke-linecap="round"/>
+                <line x1="74" y1="47" x2="85" y2="32" stroke="#f4f4f5" stroke-width="4" stroke-linecap="round"/>
+                <g class="animated-barbell">
+                    <line x1="30" y1="30" x2="100" y2="30" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+                    <rect x="26" y="22" width="6" height="16" rx="2" fill="#2563eb"/>
+                    <rect x="98" y="22" width="6" height="16" rx="2" fill="#2563eb"/>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <footer class="footer"><p>&copy; 2026 Academia RH Fitness. Todos os direitos reservados.</p></footer>
+
+    <!-- Importando o JavaScript via Flask url_for -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
