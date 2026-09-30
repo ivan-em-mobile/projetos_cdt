@@ -231,4 +231,4 @@ O seu repositório no GitHub será a base do seu projeto. Use este espaço para 
 **Entrega:** O projeto deve estar documentado em um repositório no GitHub na pasta Modulo_15/ do seu repositório e envie o link para avaliação.
 
 ---
-**Pronto para continuar a jornada? #BoraCodar** ✨
+**Pronto para continuar a jornada? #BoraCodar** ✨ 
