@@ -1,8 +1,3 @@
-Aqui tens o ficheiro **`README.md`** completo, adaptado especificamente para a versão Desktop (`desktop.py`) da **STARK IA**, mantendo a estrutura organizada e clara para o teu repositório no GitHub.
-
----
-
-```markdown
 # STARK IA — Assistente de Carreira e Busca de Vagas (Versão Desktop)
 
 A **STARK IA** é uma aplicação desktop desenvolvida em Python que combina um chat interativo de orientação profissional com a automação de pesquisa de vagas de emprego em tempo real no portal da Catho.
@@ -82,7 +77,7 @@ pip install -r requirements.txt
 Executa o ficheiro principal da aplicação desktop:
 
 ```bash
-python desktop.py
+python app_starkai_lucasprates.py
 
 ```
 
@@ -91,7 +86,7 @@ python desktop.py
 ## 📂 Estrutura de Ficheiros
 
 ```text
-├── desktop.py          # Código principal da aplicação desktop (CustomTkinter + Selenium)
+├── app_starkai_lucasprates.py          # Código principal da aplicação desktop (CustomTkinter + Selenium)
 ├── requirements.txt    # Lista de dependências do projeto
 ├── stark_logo.ico      # Ícone da aplicação (opcional)
 └── README.md           # Documentação do projeto
@@ -102,7 +97,7 @@ python desktop.py
 
 ## 💡 Como Usar a STARK IA
 
-1. Abra a aplicação executando o `desktop.py`.
+1. Abra a aplicação executando o `app_starkai_lucasprates.py`.
 2. No campo de texto na parte inferior, digite a sua dúvida ou o que procura:
 * *Exemplo de Orientação:* "Como devo me preparar para uma entrevista de emprego?"
 * *Exemplo de Busca de Vagas:* "Quero vagas para Engenheiro Químico em São Paulo"
