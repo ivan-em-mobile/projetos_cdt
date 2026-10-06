@@ -1,0 +1,29 @@
+[
+    {
+        "timestamp": "2026-09-17 18:12:15",
+        "tipo": "NOVA_META",
+        "detalhes": {
+            "nome": "Carro",
+            "alvo": 55000.0,
+            "atual": 14500.0
+        }
+    },
+    {
+        "timestamp": "2026-09-17 18:21:09",
+        "tipo": "CONVERSAO_MOEDA",
+        "detalhes": {
+            "origem": "USD",
+            "destino": "BRL",
+            "valor_origem": 145.6,
+            "valor_convertido": 746.3310399999999,
+            "taxa": 5.1259
+        }
+    },
+    {
+        "timestamp": "2026-09-17 18:32:38",
+        "tipo": "EXCLUSAO_META",
+        "detalhes": {
+            "id": 1
+        }
+    }
+]
