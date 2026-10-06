@@ -1,0 +1,514 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Pagamentos | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Pagamentos
+        </h1>
+
+        <p>
+            Cobranças e recebimentos da academia
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Gerar cobrança
+        </h2>
+
+        <p>
+            Gere uma cobrança para uma assinatura ativa
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('pagamentos') }}"
+        class="form-grid"
+    >
+
+        <input
+            type="hidden"
+            name="acao"
+            value="gerar_cobranca"
+        >
+
+
+        <div class="form-group form-span-2">
+
+            <label for="assinatura_id">
+                Assinatura
+            </label>
+
+            <select
+                id="assinatura_id"
+                name="assinatura_id"
+                required
+            >
+
+                <option value="">
+                    Selecione uma assinatura
+                </option>
+
+                {% for assinatura in assinaturas %}
+
+                    {% set aluno =
+                        alunos_por_id.get(
+                            assinatura.aluno_id
+                        )
+                    %}
+
+                    {% set plano =
+                        planos_por_id.get(
+                            assinatura.plano_id
+                        )
+                    %}
+
+                    <option value="{{ assinatura.id }}">
+
+                        #{{ assinatura.id }}
+
+                        -
+
+                        {% if aluno %}
+                            {{ aluno.nome }}
+                        {% else %}
+                            Aluno não encontrado
+                        {% endif %}
+
+                        -
+
+                        {% if plano %}
+                            {{ plano.nome }}
+                        {% else %}
+                            Plano não encontrado
+                        {% endif %}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="data_vencimento">
+                Data de vencimento
+            </label>
+
+            <input
+                type="date"
+                id="data_vencimento"
+                name="data_vencimento"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Gerar cobrança
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Registrar pagamento
+        </h2>
+
+        <p>
+            Registre o recebimento de uma cobrança pendente ou atrasada
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('pagamentos') }}"
+        class="form-grid"
+    >
+
+        <input
+            type="hidden"
+            name="acao"
+            value="registrar_pagamento"
+        >
+
+
+        <div class="form-group form-span-2">
+
+            <label for="pagamento_id">
+                Cobrança
+            </label>
+
+            <select
+                id="pagamento_id"
+                name="pagamento_id"
+                required
+            >
+
+                <option value="">
+                    Selecione uma cobrança
+                </option>
+
+                {% for pagamento in pagamentos_em_aberto %}
+
+                    {% set assinatura =
+                        assinaturas_por_id.get(
+                            pagamento.assinatura_id
+                        )
+                    %}
+
+                    {% if assinatura %}
+
+                        {% set aluno =
+                            alunos_por_id.get(
+                                assinatura.aluno_id
+                            )
+                        %}
+
+                    {% else %}
+
+                        {% set aluno = None %}
+
+                    {% endif %}
+
+                    <option value="{{ pagamento.id }}">
+
+                        #{{ pagamento.id }}
+
+                        -
+
+                        {% if aluno %}
+                            {{ aluno.nome }}
+                        {% else %}
+                            Aluno não encontrado
+                        {% endif %}
+
+                        -
+
+                        R$ {{ "%.2f"|format(pagamento.valor) }}
+
+                        -
+
+                        {{ pagamento.status }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="forma_pagamento">
+                Forma de pagamento
+            </label>
+
+            <select
+                id="forma_pagamento"
+                name="forma_pagamento"
+                required
+            >
+
+                <option value="">
+                    Selecione
+                </option>
+
+                <option value="Pix">
+                    Pix
+                </option>
+
+                <option value="Cartão de crédito">
+                    Cartão de crédito
+                </option>
+
+                <option value="Cartão de débito">
+                    Cartão de débito
+                </option>
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="data_pagamento">
+                Data do pagamento
+            </label>
+
+            <input
+                type="date"
+                id="data_pagamento"
+                name="data_pagamento"
+                value="{{ hoje }}"
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Registrar pagamento
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Histórico financeiro
+        </h2>
+
+        <p>
+            Total de registros: {{ pagamentos|length }}
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Aluno
+                    </th>
+
+                    <th>
+                        Plano
+                    </th>
+
+                    <th>
+                        Valor
+                    </th>
+
+                    <th>
+                        Vencimento
+                    </th>
+
+                    <th>
+                        Pagamento
+                    </th>
+
+                    <th>
+                        Forma
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for pagamento in pagamentos %}
+
+                    {% set assinatura =
+                        assinaturas_por_id.get(
+                            pagamento.assinatura_id
+                        )
+                    %}
+
+                    {% if assinatura %}
+
+                        {% set aluno =
+                            alunos_por_id.get(
+                                assinatura.aluno_id
+                            )
+                        %}
+
+                        {% set plano =
+                            planos_por_id.get(
+                                assinatura.plano_id
+                            )
+                        %}
+
+                    {% else %}
+
+                        {% set aluno = None %}
+                        {% set plano = None %}
+
+                    {% endif %}
+
+
+                    <tr>
+
+                        <td>
+                            {{ pagamento.id }}
+                        </td>
+
+                        <td>
+
+                            {% if aluno %}
+                                {{ aluno.nome }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if plano %}
+                                {{ plano.nome }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+                            R$ {{ "%.2f"|format(pagamento.valor) }}
+                        </td>
+
+                        <td>
+                            {{ pagamento.data_vencimento.strftime("%d/%m/%Y") }}
+                        </td>
+
+                        <td>
+
+                            {% if pagamento.data_pagamento %}
+
+                                {{ pagamento.data_pagamento.strftime("%d/%m/%Y") }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if pagamento.forma_pagamento %}
+
+                                {{ pagamento.forma_pagamento }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if pagamento.status == "pago" %}
+
+                                <span class="status status-ativo">
+                                    Pago
+                                </span>
+
+                            {% elif pagamento.status == "atrasado" %}
+
+                                <span class="status status-inativo">
+                                    Atrasado
+                                </span>
+
+                            {% else %}
+
+                                <span class="status">
+                                    Pendente
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="8"
+                            class="empty-table"
+                        >
+                            Nenhum pagamento registrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

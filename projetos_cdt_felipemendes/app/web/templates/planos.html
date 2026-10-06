@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Planos | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Planos
+        </h1>
+
+        <p>
+            Cadastro e consulta dos planos da academia
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Cadastrar novo plano
+        </h2>
+
+        <p>
+            Informe os dados comerciais do plano
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('planos') }}"
+        class="form-grid"
+    >
+
+        <div class="form-group">
+
+            <label for="nome">
+                Nome do plano
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Ex.: Plano Black"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="valor">
+                Valor mensal
+            </label>
+
+            <input
+                type="text"
+                id="valor"
+                name="valor"
+                placeholder="149,90"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="descricao">
+                Descrição
+            </label>
+
+            <input
+                type="text"
+                id="descricao"
+                name="descricao"
+                placeholder="Descrição do plano"
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Cadastrar plano
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Planos cadastrados
+        </h2>
+
+        <p>
+            Total: {{ planos|length }}
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Plano
+                    </th>
+
+                    <th>
+                        Valor mensal
+                    </th>
+
+                    <th>
+                        Descrição
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for plano in planos %}
+
+                    <tr>
+
+                        <td>
+                            {{ plano.id }}
+                        </td>
+
+                        <td>
+                            {{ plano.nome }}
+                        </td>
+
+                        <td>
+                            R$ {{ "%.2f"|format(plano.valor) }}
+                        </td>
+
+                        <td>
+                            {% if plano.descricao %}
+                                {{ plano.descricao }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+
+                            {% if plano.ativo %}
+
+                                <span class="status status-ativo">
+                                    Ativo
+                                </span>
+
+                            {% else %}
+
+                                <span class="status status-inativo">
+                                    Inativo
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="empty-table"
+                        >
+                            Nenhum plano cadastrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}
