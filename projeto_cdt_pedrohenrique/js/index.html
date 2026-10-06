@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Burger House - Hambúrgueres artesanais com pão brioche."
+    >
+
+    <title>🍔 Burger House</title>
+
+    <!-- O CSS está uma pasta acima -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         ACESSIBILIDADE
+         ===================================================== -->
+
+    <a class="skip-link" href="#conteudo">
+        Pular para o conteúdo
+    </a>
+
+
+    <!-- =====================================================
+         CABEÇALHO
+         ===================================================== -->
+
+    <header class="site-header" role="banner">
+
+        <div class="container header-inner">
+
+            <a
+                href="#"
+                class="logo"
+                aria-label="Burger House - página inicial"
+            >
+                🍔 Burger House
+            </a>
+
+            <nav aria-label="Menu principal">
+
+                <ul class="nav-list">
+
+                    <li>
+                        <a href="#sobre">Sobre</a>
+                    </li>
+
+                    <li>
+                        <a href="#cardapio">Cardápio</a>
+                    </li>
+
+                    <li>
+                        <a href="#contato">Contato</a>
+                    </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO PRINCIPAL
+         ===================================================== -->
+
+    <main id="conteudo">
+
+
+        <!-- =================================================
+             HERO + CARROSSEL
+             ================================================= -->
+
+        <section
+            class="hero"
+            aria-label="Promoções da Burger House"
+        >
+
+            <div class="carousel-container">
+
+
+                <!-- Slide 1 -->
+
+                <div class="slide fade">
+
+                    <img
+                        src="../img/banner1.jpeg"
+                        alt="Promoção Burger House"
+                    >
+
+                    <div class="caption">
+                        🍔 Combo Especial Burger House
+                    </div>
+
+                </div>
+
+
+                <!-- Slide 2 -->
+
+                <div class="slide fade">
+
+                    <img
+                        src="../img/banner2.jpeg"
+                        alt="Hambúrguer, batata e refrigerante"
+                    >
+
+                    <div class="caption">
+                        🍟 Hambúrguer + Batata + Refrigerante
+                    </div>
+
+                </div>
+
+
+                <!-- Slide 3 -->
+
+                <div class="slide fade">
+
+                    <img
+                        src="../img/banner3.jpeg"
+                        alt="Promoção especial Burger House"
+                    >
+
+                    <div class="caption">
+                        🔥 Oferta especial para matar sua fome
+                    </div>
+
+                </div>
+
+
+                <!-- Botão anterior -->
+
+                <a
+                    class="prev"
+                    onclick="plusSlides(-1)"
+                    aria-label="Promoção anterior"
+                >
+                    &#10094;
+                </a>
+
+
+                <!-- Botão próximo -->
+
+                <a
+                    class="next"
+                    onclick="plusSlides(1)"
+                    aria-label="Próxima promoção"
+                >
+                    &#10095;
+                </a>
+
+            </div>
+
+
+            <!-- Pontinhos -->
+
+            <div class="dots-container">
+
+                <span
+                    class="dot"
+                    onclick="currentSlide(1)"
+                ></span>
+
+                <span
+                    class="dot"
+                    onclick="currentSlide(2)"
+                ></span>
+
+                <span
+                    class="dot"
+                    onclick="currentSlide(3)"
+                ></span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SOBRE
+             ================================================= -->
+
+        <section
+            id="sobre"
+            class="section"
+            aria-labelledby="sobre-title"
+        >
+
+            <div class="container">
+
+                <h2 id="sobre-title">
+                    Sobre nós
+                </h2>
+
+                <p>
+                    Somos a Burger House 🍔.
+                    Criamos hambúrgueres artesanais com
+                    ingredientes selecionados, transformando
+                    cada pedido em uma experiência deliciosa.
+                </p>
+
+                <p>
+                    Nossa missão é oferecer sabor,
+                    qualidade e um atendimento especial
+                    para nossos clientes.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CARDÁPIO
+             ================================================= -->
+
+        <section
+            id="cardapio"
+            class="section section--alt"
+            aria-labelledby="cardapio-title"
+        >
+
+            <div class="container">
+
+                <h2 id="cardapio-title">
+                    🍔 Nosso Cardápio
+                </h2>
+
+                <p class="muted">
+                    Confira nossas opções deliciosas:
+                </p>
+
+                <!--
+                    Os produtos serão colocados automaticamente
+                    pelo arquivo dados.js + app.js
+                -->
+
+                <ul
+                    class="cards"
+                    id="lista-itens"
+                    aria-live="polite"
+                >
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTATO
+             ================================================= -->
+
+        <section
+            id="contato"
+            class="section"
+            aria-labelledby="contato-title"
+        >
+
+            <div class="container">
+
+                <h2 id="contato-title">
+                    📩 Fale com a gente
+                </h2>
+
+                <form
+                    class="form"
+                    novalidate
+                    aria-describedby="form-help"
+                >
+
+                    <p
+                        id="form-help"
+                        class="muted"
+                    >
+                        Os campos marcados com *
+                        são obrigatórios.
+                    </p>
+
+
+                    <div class="field">
+
+                        <label for="nome">
+                            Nome *
+                        </label>
+
+                        <input
+                            id="nome"
+                            name="nome"
+                            type="text"
+                            required
+                            autocomplete="name"
+                            aria-required="true"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="email">
+                            E-mail *
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            required
+                            autocomplete="email"
+                            aria-required="true"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="mensagem">
+                            Mensagem
+                        </label>
+
+                        <textarea
+                            id="mensagem"
+                            name="mensagem"
+                            rows="4"
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Enviar
+                    </button>
+
+
+                    <p
+                        id="form-status"
+                        role="status"
+                        class="form-status"
+                    ></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         RODAPÉ
+         ===================================================== -->
+
+    <footer
+        class="site-footer"
+        role="contentinfo"
+    >
+
+        <div class="container">
+
+            <p>
+                ©
+                <span id="ano"></span>
+                Burger House 🍔.
+                Projeto acadêmico — Curso de Web Design
+                da Vocação.
+                Feito por Pedro Henrique,
+                Gabi Santos e Geovanna Santos.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         🤖 ASSISTENTE ROBÔ
+         ===================================================== -->
+
+    <div class="assistente">
+
+        <div class="chat">
+
+            <div id="mensagens">
+
+                🤖 Olá!
+                Sou o atendente virtual da Burger House 🍔
+
+                <br><br>
+
+                Vou ajudar você a escolher os produtos
+                e montar seu pedido!
+
+            </div>
+
+
+            <input
+                id="entradaUsuario"
+                type="text"
+                placeholder="Digite seu pedido..."
+                autocomplete="off"
+            >
+
+
+            <button
+                type="button"
+                onclick="enviarMensagem()"
+            >
+                Enviar
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+
+         Como o index.html está dentro da pasta JS,
+         os arquivos abaixo estão na mesma pasta.
+         ===================================================== -->
+
+    <script src="dados.js"></script>
+
+    <script src="app.js"></script>
+
+    <script src="carosel.js"></script>
+
+    <script src="robo.js"></script>
+
+</body>
+
+</html>

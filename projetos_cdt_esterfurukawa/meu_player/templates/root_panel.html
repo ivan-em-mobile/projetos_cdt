@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sintonia — Master</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            background: #f7dce8;
+            color: #351d29;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 50px 25px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            opacity: 0.7;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: #fff7fa;
+            padding: 30px;
+            border-radius: 18px;
+
+            box-shadow: 0 10px 30px rgba(80, 20, 50, 0.12);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 20px;
+
+            border-radius: 8px;
+
+            background: #b93668;
+            color: white;
+
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #982b56;
+        }
+
+        .logout {
+            display: inline-block;
+            margin-top: 25px;
+
+            color: #8b3153;
+            text-decoration: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #24151d;
+                color: #f8e9ef;
+            }
+
+            .card {
+                background: #321d28;
+            }
+
+            .logout {
+                color: #f0a9c4;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Sintonia</h1>
+
+        <div class="subtitle">
+            Painel Master
+        </div>
+
+        <div class="card">
+
+            <h2>Banco de dados</h2>
+
+            <p>
+                Exporte uma cópia dos dados armazenados
+                no banco de dados do Sintonia.
+            </p>
+
+            <a
+                href="{{ url_for('root_exportar') }}"
+                class="button"
+            >
+                Exportar banco de dados
+            </a>
+
+        </div>
+
+        <a
+            href="{{ url_for('root_logout') }}"
+            class="logout"
+        >
+            Sair
+        </a>
+
+    </div>
+
+</body>
+</html>

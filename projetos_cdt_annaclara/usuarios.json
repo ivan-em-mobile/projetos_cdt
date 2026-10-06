@@ -1,0 +1,7 @@
+{
+    "rootmaster@mail.com": {
+        "nome": "rootmaster",
+        "senha": "root",
+        "tipo": "administrador"
+    }
+}
