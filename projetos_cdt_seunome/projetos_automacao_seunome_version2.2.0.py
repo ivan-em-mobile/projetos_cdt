@@ -106,6 +106,6 @@ def aprovar_todas_pendencias_aluno(nome_aluno):
 # =============================================================================
 if __name__ == "__main__":
     # Nome do jovem cujas pendências serão zeradas
-    jovem_para_aprovar = "Felipe Mendes do Prado"
+    jovem_para_aprovar = "Carlos Eduardo Pereira Melo"
     
     aprovar_todas_pendencias_aluno(jovem_para_aprovar)

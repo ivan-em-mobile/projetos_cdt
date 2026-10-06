@@ -1,3 +1,10 @@
+'''
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\selenium\Perfil1"
+
+Executar a plataforma de automação com o comando acima no terminal antes de rodar este script.
+
+'''
+
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -106,6 +113,6 @@ def aprovar_todas_pendencias_aluno(nome_aluno):
 # =============================================================================
 if __name__ == "__main__":
     # Nome do jovem cujas pendências serão zeradas
-    jovem_para_aprovar = "Carlos Eduardo Pereira Melo"
+    jovem_para_aprovar = "Jamily Do Carmo Santos"
     
     aprovar_todas_pendencias_aluno(jovem_para_aprovar)
