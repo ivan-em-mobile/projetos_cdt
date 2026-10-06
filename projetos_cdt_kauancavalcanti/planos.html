@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>GymFit - Nossos Planos</title>
+    <style>
+         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0800a2; color: #ffffff; line-height: 1.6; }
+        header { background-color: #0003b3; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #003cff; }
+        .logo { font-size: 28px; font-weight: bold; color: #1e52ed; text-transform: uppercase; }
+        nav a { color: #ffffff; text-decoration: none; margin-left: 20px; font-weight: 500; }
+        nav a:hover, nav a.active { color: #00bbff; }
+        .container { max-width: 800px; margin: 40px auto; padding: 20px; background: #1e1e1e; border-radius: 8px; }
+        h1 { color: #040081; text-align: center; margin-bottom: 20px; }
+        .grid-aulas { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .aula-box { background: #121212; padding: 20px; border-radius: 8px; border: 1px solid #000b82; text-align: center; }
+        .aula-box h3 { color: #090d7f; margin-bottom: 10px; }
+        .btn-reservar { background: #00e5ff; color: #fff; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+        .btn-reservar:hover { background: #0047c1; }
+        #reserva-confirmada { display: none; background: #110094; color: #fff; padding: 15px; text-align: center; margin-top: 20px; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">fitflow</div>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="planos.html" class="active">Planos</a>
+            <a href="aulas.html">Agendar Aulas</a>
+            <a href="login.html">Área do Aluno</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Escolha o Plano Ideal para Você</h1>
+        <div class="cards">
+            <div class="card" id="card-mensal">
+                <h3>Plano Mensal</h3>
+                <div class="preco">R$ 99/mês</div>
+                <ul>
+                    <li>✓ Acesso à musculação</li>
+                    <li>✓ Horário livre</li>
+                    <li>✓ Sem fidelidade</li>
+                </ul>
+                <button class="btn-assinar" id="btn-assinar-mensal" onclick="assinar('Mensal')">Assinar Mensal</button>
+            </div>
+            <div class="card" id="card-vip">
+                <h3>Plano VIP</h3>
+                <div class="preco">R$ 149/mês</div>
+                <ul>
+                    <li>✓ Musculação + Aulas Especiais</li>
+                    <li>✓ Acesso VIP em qualquer unidade</li>
+                    <li>✓ Leve 1 acompanhante por mês</li>
+                </ul>
+                <button class="btn-assinar" id="btn-assinar-vip" onclick="assinar('VIP')">Assinar VIP</button>
+            </div>
+        </div>
+        <div id="status-assinatura" class="mensagem-sucesso"></div>
+    </div>
+
+    <script>
+        function assinar(plano) {
+            const divStatus = document.getElementById('status-assinatura');
+            divStatus.style.display = 'block';
+            divStatus.innerText = '✅ Plano ' + plano + ' selecionado com sucesso!';
+        }
+    </script>
+</body>
+</html>
