@@ -1,7 +1,9 @@
 from flask import Flask, render_template_string, request, redirect, url_for, Response
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timezone
+import urllib.parse
 
+# 1. Configuração Inicial da Aplicação
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///impulsework.db'
 app.config['SECRET_KEY'] = 'impulsework_chave_secreta'
@@ -21,12 +23,25 @@ class Usuario(db.Model):
     formacoes = db.relationship('Formacao', backref='usuario', lazy=True)
     candidaturas = db.relationship('Candidatura', backref='usuario', lazy=True)
 
+    def __init__(self, nome, email, telefone=None, cargo=None, resumo=None):
+        self.nome = nome
+        self.email = email
+        self.telefone = telefone
+        self.cargo = cargo
+        self.resumo = resumo
+
 class Formacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     instituicao = db.Column(db.String(100), nullable=False)
     curso = db.Column(db.String(100), nullable=False)
     ano_conclusao = db.Column(db.String(10))
+
+    def __init__(self, usuario_id, instituicao, curso, ano_conclusao=None):
+        self.usuario_id = usuario_id
+        self.instituicao = instituicao
+        self.curso = curso
+        self.ano_conclusao = ano_conclusao
 
 class Empresa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,15 +50,25 @@ class Empresa(db.Model):
     site = db.Column(db.String(100))
     candidaturas = db.relationship('Candidatura', backref='empresa', lazy=True)
 
+    def __init__(self, nome, area, site=None):
+        self.nome = nome
+        self.area = area
+        self.site = site
+
 class Candidatura(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresa.id'), nullable=False)
-    data_envio = db.Column(db.DateTime, default=datetime.utcnow)
+    data_envio = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     status = db.Column(db.String(50), default="Enviado")
 
+    def __init__(self, usuario_id, empresa_id, status="Enviado"):
+        self.usuario_id = usuario_id
+        self.empresa_id = empresa_id
+        self.status = status
+
 # ==========================================
-# TEMPLATE HTML ÚNICO (MODO ESCURO/CLARO + SOBRE COMPLETO)
+# TEMPLATE HTML
 # ==========================================
 
 HTML_TEMPLATE = """
@@ -55,7 +80,6 @@ HTML_TEMPLATE = """
     <title>ImpulseWork - Aceleração de Carreiras</title>
     <style>
         :root {
-            /* Modo Escuro (Padrão Azulado) */
             --bg-base: #0F172A;
             --bg-card: #1E293B;
             --accent: #38BDF8;
@@ -68,7 +92,6 @@ HTML_TEMPLATE = """
         }
 
         body.light-theme {
-            /* Modo Claro (Azuis Suaves e Limpos) */
             --bg-base: #F0F9FF;
             --bg-card: #FFFFFF;
             --accent: #0284C7;
@@ -88,9 +111,7 @@ HTML_TEMPLATE = """
         nav a:hover { color: var(--accent); }
         
         .theme-toggle { background: var(--card-sub); border: 1px solid var(--border); color: var(--text-primary); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: bold; }
-        
         .container { max-width: 950px; margin: 0 auto; background: var(--bg-card); padding: 30px; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        
         .btn { background: var(--accent); color: #FFF; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-block; }
         .btn:hover { background: var(--accent-hover); }
         
@@ -102,7 +123,6 @@ HTML_TEMPLATE = """
         th { color: var(--accent); }
         .badge { background: #0284C7; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
 
-        /* Grid de Informações para o "Sobre" */
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin: 20px 0; }
         .info-card { background: var(--card-sub); padding: 18px; border-radius: 8px; border: 1px solid var(--border); }
         .info-card h4 { margin: 0 0 8px 0; color: var(--accent); }
@@ -172,6 +192,7 @@ HTML_TEMPLATE = """
                 <table>
                     <thead>
                         <tr>
+                            <th>Candidato</th>
                             <th>Empresa</th>
                             <th>Área de Atuação</th>
                             <th>Data do Envio</th>
@@ -181,6 +202,7 @@ HTML_TEMPLATE = """
                     <tbody>
                         {% for c in candidaturas %}
                         <tr>
+                            <td>{{ c.usuario.nome }}</td>
                             <td><strong>{{ c.empresa.nome }}</strong></td>
                             <td>{{ c.empresa.area }}</td>
                             <td>{{ c.data_envio.strftime('%d/%m/%Y %H:%M') }}</td>
@@ -190,7 +212,7 @@ HTML_TEMPLATE = """
                     </tbody>
                 </table>
             {% else %}
-                <p>Ainda não submeteu candidaturas para as empresas parceiras.</p>
+                <p>Ainda não foram submetidas candidaturas para as empresas parceiras.</p>
             {% endif %}
 
         {% elif pagina == 'empresa' %}
@@ -248,7 +270,13 @@ HTML_TEMPLATE = """
                         <tr>
                             <td><strong>{{ emp.nome }}</strong></td>
                             <td>{{ emp.area }}</td>
-                            <td><a href="{{ emp.site }}" target="_blank" style="color: var(--accent);">Aceder ao site</a></td>
+                            <td>
+                                {% if emp.site %}
+                                    <a href="{{ emp.site }}" target="_blank" style="color: var(--accent);">Aceder ao site</a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -260,14 +288,12 @@ HTML_TEMPLATE = """
     </div>
 
     <script>
-        // Função para alternar entre Modo Claro e Modo Escuro
         function toggleTheme() {
             document.body.classList.toggle('light-theme');
             const isLight = document.body.classList.contains('light-theme');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         }
 
-        // Manter a preferência do utilizador salva ao navegar entre páginas
         if (localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-theme');
         }
@@ -302,7 +328,13 @@ def salvar_curriculo():
     if not usuario:
         usuario = Usuario(nome=nome, email=email, telefone=telefone, cargo=cargo, resumo=resumo)
         db.session.add(usuario)
-        db.session.commit()
+    else:
+        usuario.nome = nome
+        usuario.telefone = telefone
+        usuario.cargo = cargo
+        usuario.resumo = resumo
+        
+    db.session.commit()
 
     formacao = Formacao(usuario_id=usuario.id, instituicao=instituicao, curso=curso, ano_conclusao=ano_conclusao)
     db.session.add(formacao)
@@ -331,16 +363,17 @@ FORMAÇÃO ACADÉMICA:
 RESUMO PROFISSIONAL:
 {resumo}
 =================================================="""
+        
+        nome_ficheiro_limpo = urllib.parse.quote(f"curriculo_{nome.replace(' ', '_')}.txt")
         return Response(
             conteudo,
-            mimetype="text/plain",
-            headers={"Content-disposition": f"attachment; filename=curriculo_{nome.replace(' ', '_')}.txt"}
+            mimetype="text/plain; charset=utf-8",
+            headers={"Content-disposition": f"attachment; filename*=UTF-8''{nome_ficheiro_limpo}"}
         )
 
 @app.route('/minhas-candidaturas')
 def minhas_candidaturas():
-    ultimo_usuario = Usuario.query.order_by(Usuario.id.desc()).first()
-    candidaturas = ultimo_usuario.candidaturas if ultimo_usuario else []
+    candidaturas = Candidatura.query.order_by(Candidatura.data_envio.desc()).all()
     return render_template_string(HTML_TEMPLATE, pagina='candidaturas', candidaturas=candidaturas)
 
 @app.route('/cadastrar-empresa')
@@ -364,7 +397,12 @@ def sobre():
     empresas = Empresa.query.all()
     return render_template_string(HTML_TEMPLATE, pagina='sobre', empresas=empresas)
 
+# ==========================================
+# EXECUÇÃO E CRIAÇÃO AUTOMÁTICA DA BASE DE DADOS
+# ==========================================
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        print("Base de dados 'impulsework.db' criada/verificada na pasta 'instance/' com sucesso!")
     app.run(debug=True)
