@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Paleta de Cores do Post-it</title>
+    <style>
+        /* Estilo para organizar as caixas de cores lado a lado */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilo base para cada cartão de cor */
+        .color-card {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Definição de cada cor usando o código Hexadecimal da imagem */
+        .cor-ae { background-color: #004d6e; }
+        .cor-am { background-color: #0081ab; }
+        .cor-ac { background-color: #00b1cd; }
+        .cor-v  { background-color: #a6c844; }
+        .cor-r  { background-color: #b83764; }
+        /* A cor amarela fica melhor com texto escuro para dar leitura */
+        .cor-a  { background-color: #edce01; color: #333; text-shadow: none; } 
+        .cor-b  { background-color: #4a3336; }
+    </style>
+</head>
+<body>
+
+    <div class="color-card cor-ae">AE<br>#004d6e</div>
+    <div class="color-card cor-am">AM<br>#0081ab</div>
+    <div class="color-card cor-ac">AC<br>#00b1cd</div>
+    <div class="color-card cor-v">V<br>#a6c844</div>
+    <div class="color-card cor-r">R<br>#b83764</div>
+    <div class="color-card cor-a">A<br>#edce01</div>
+    <div class="color-card cor-b">B<br>#4a3336</div>
+
+</body>
+</html>
