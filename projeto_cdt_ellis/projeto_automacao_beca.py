@@ -1,19 +1,31 @@
 import streamlit as st
 import re
-import json
 
+# ==========================================================
+# ⚙️ CONFIGURAÇÃO DA PÁGINA STREAMLIT
+# Define o título do separador no navegador, o ícone e a largura do layout
+# ==========================================================
 st.set_page_config(page_title="Sorveteria Glacê", page_icon="🍦", layout="wide")
 
 # ==========================================================
-# 💰 ESTADO DA APLICAÇÃO (Memória do Servidor)
+# 💰 ESTADO DA APLICAÇÃO (Memória do Servidor / Session State)
+# O Streamlit recarrega a página a cada interação. 
+# O session_state garante que os dados não se perdem durante a navegação.
 # ==========================================================
 
+# Registo do valor atual em dinheiro no caixa
 if "caixa" not in st.session_state:
     st.session_state.caixa = 500.00
+
+# Contador do número total de vendas efetuadas
 if "vendas_dia" not in st.session_state:
     st.session_state.vendas_dia = 0
+
+# Contador da quantidade total de bolas/sorvetes vendidos
 if "itens_vendidos" not in st.session_state:
     st.session_state.itens_vendidos = 0
+
+# Dicionário de Sabores: "Sabor": [Preço (R$), Quantidade em Estoque]
 if "sabores" not in st.session_state:
     st.session_state.sabores = {
         "Chocolate": [8.00, 140],
@@ -32,31 +44,36 @@ if "sabores" not in st.session_state:
         "Paçoca": [10.00, 140],
         "Pistache": [13.00, 140]
     }
+
+# Histórico de movimentações para a aba de Extrato
 if "historico" not in st.session_state:
     st.session_state.historico = [
         {"operacao": "Abertura", "detalhes": "Caixa inicial", "valor": "R$ 500,00"}
     ]
+
+# Histórico de mensagens da aba de Chat
 if "chat_mensagens" not in st.session_state:
     st.session_state.chat_mensagens = [
         {"remetente": "🍦 Sorveteria Glacê", "texto": "Olá! Seja bem-vindo(a)! 💙\nEu sou o atendimento automático da Glacê. Como posso ajudar?"}
     ]
 
 # ==========================================================
-# 💵 FUNÇÃO AUXILIAR
+# 💵 FUNÇÃO AUXILIAR DE FORMATAÇÃO
+# Converte valores numéricos em texto formatado como moeda (ex: R$ 8,00)
 # ==========================================================
-
 def dinheiro(valor):
     return f"R$ {valor:.2f}".replace(".", ",")
 
 # ==========================================================
-# 🍦 CABEÇALHO & CARDS
+# 🍦 CABEÇALHO & CARDS DE MÉTRICAS
 # ==========================================================
-
 st.title("🍦 Sorveteria Glacê 🎀")
 st.caption("Gestão da sorveteria 💙")
 
+# Calcula quantos sabores têm estoque baixo (maior que 0 e menor ou igual a 5)
 baixos = sum(1 for dados in st.session_state.sabores.values() if 0 < dados[1] <= 5)
 
+# Divisão do topo em 4 colunas para apresentar os indicadores (Cards)
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("💰 CAIXA", dinheiro(st.session_state.caixa))
 col2.metric("🛒 VENDAS", st.session_state.vendas_dia)
@@ -67,16 +84,17 @@ st.divider()
 
 # ==========================================================
 # 📑 ABAS DA APLICAÇÃO
+# Divide a interface em 4 secções principais
 # ==========================================================
-
 aba_vendas, aba_estoque, aba_extrato, aba_chat = st.tabs([
     "💰 Vendas", "📦 Estoque", "📋 Extrato", "💬 Chat"
 ])
 
-# ---------------- ABAS: VENDAS ----------------
+# ---------------- 1. ABA: VENDAS ----------------
 with aba_vendas:
     st.subheader("🛒 Nova Venda")
     
+    # Formulário para agrupar as entradas de dados do utilizador
     with st.form("form_venda"):
         sabor = st.selectbox("🍨 Sabor:", list(st.session_state.sabores.keys()))
         qtd = st.number_input("🔢 Quantidade:", min_value=1, value=1, step=1)
@@ -90,22 +108,27 @@ with aba_vendas:
             estoque = st.session_state.sabores[sabor][1]
             total = preco * qtd
             
+            # Validação 1: Estoque insuficiente
             if qtd > estoque:
                 st.error(f"📦 Estoque insuficiente. Temos apenas {estoque} unidade(s).")
+            # Validação 2: Pagamento em dinheiro menor que o total
             elif pagamento == "Dinheiro" and pago < total:
                 st.error("💵 Valor entregue é menor que o total da compra.")
             else:
+                # Registo da venda: atualiza estoque, caixa e métricas
                 st.session_state.sabores[sabor][1] -= qtd
                 st.session_state.caixa += total
                 st.session_state.vendas_dia += 1
                 st.session_state.itens_vendidos += qtd
                 
+                # Adiciona ao extrato
                 st.session_state.historico.append({
                     "operacao": "🛒 Venda",
                     "detalhes": f"{qtd}x {sabor} - {pagamento}",
                     "valor": dinheiro(total)
                 })
                 
+                # Mensagem de sucesso e cálculo de troco
                 troco = pago - total if pagamento == "Dinheiro" else 0
                 msg = f"✨ Venda realizada com sucesso! Total: {dinheiro(total)}"
                 if pagamento == "Dinheiro":
@@ -113,10 +136,11 @@ with aba_vendas:
                 st.success(msg)
                 st.rerun()
 
-# ---------------- ABAS: ESTOQUE ----------------
+# ---------------- 2. ABA: ESTOQUE ----------------
 with aba_estoque:
     st.subheader("📦 Estoque")
     
+    # Monta a lista de dados formatados para exibir na tabela
     tabela = []
     for s, dados in st.session_state.sabores.items():
         status = "❌ Esgotado" if dados[1] == 0 else ("⚠️ Baixo" if dados[1] <= 5 else "✓ Normal")
@@ -144,28 +168,30 @@ with aba_estoque:
             st.success(f"✨ {sabor_repor} recebeu +{qtd_repor} unidades.")
             st.rerun()
 
-# ---------------- ABAS: EXTRATO ----------------
+# ---------------- 3. ABA: EXTRATO ----------------
 with aba_extrato:
     st.subheader("📋 Extrato de Operações")
+    # Exibe o histórico revertido para mostrar as movimentações mais recentes no topo
     st.dataframe(list(reversed(st.session_state.historico)), use_container_width=True)
 
-# ---------------- ABAS: CHAT ----------------
+# ---------------- 4. ABA: CHAT ----------------
 with aba_chat:
     st.subheader("💬 Atendimento")
     st.caption("Converse com a Sorveteria Glacê")
     
-    # Exibir histórico do chat
+    # Renderiza o histórico de mensagens guardado no session_state
     for msg in st.session_state.chat_mensagens:
         with st.chat_message("user" if msg["remetente"] == "👤 Você" else "assistant"):
             st.write(msg["texto"])
             
-    # Entrada do chat
+    # Entrada de texto do utilizador no chat
     if entrada := st.chat_input("Digite sua mensagem..."):
         st.session_state.chat_mensagens.append({"remetente": "👤 Você", "texto": entrada})
         
         texto = entrada.lower().strip()
         resposta = "Não consegui entender. 😅\n\nVocê pode escrever:\n• Cardápio\n• Quero 2 Chocolate\n• Suporte\n• Preços"
         
+        # Lógica de respostas automáticas
         if any(p in texto for p in ["oi", "olá", "ola", "bom dia", "boa tarde", "boa noite"]):
             resposta = "Olá! 💙😊\n\nPosso ajudar com seu pedido ou suporte."
         elif any(p in texto for p in ["cardápio", "cardapio", "sabores", "preços", "precos"]):
@@ -176,10 +202,10 @@ with aba_chat:
         elif any(p in texto for p in ["obrigado", "obrigada", "valeu", "thanks"]):
             resposta = "Por nada! 💙🍦"
         else:
-            # Busca sabor no texto
+            # Procura se o utilizador mencionou algum sabor da lista
             for sabor in st.session_state.sabores:
                 if sabor.lower() in texto:
-                    numeros = re.findall(r"\d+", texto)
+                    numeros = re.findall(r"\d+", texto) # Procura por números no texto
                     qtd = int(numeros[0]) if numeros else 1
                     preco = st.session_state.sabores[sabor][0]
                     total = preco * qtd
