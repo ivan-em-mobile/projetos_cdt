@@ -1,0 +1,10 @@
+{
+    "nome_loja": "AçaíZon",
+    "versao_sistema": "3.8.2",
+    "tamanho_padrao_copo": "500ml",
+    "adicionais_padrao": [
+        "Leite Condensado",
+        "Granola",
+        "Paçoca"
+    ]
+}

@@ -1,0 +1,7 @@
+opencv-python>=4.5.0
+deepface>=0.0.79
+tf-keras>=2.0.0
+
+deepface[tensorflow]
+opencv-python
+pandas

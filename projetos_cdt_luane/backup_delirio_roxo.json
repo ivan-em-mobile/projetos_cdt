@@ -1,0 +1,122 @@
+{
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "larissa souza",
+            "cpf": "42391983807",
+            "data_nascimento": "22052010",
+            "acai_preferido": "Acai",
+            "foto_path": null
+        },
+        {
+            "id": 2,
+            "nome": "Larissa Souza",
+            "cpf": "43291983807",
+            "data_nascimento": "22052010",
+            "acai_preferido": "Acai tropical",
+            "foto_path": null
+        },
+        {
+            "id": 3,
+            "nome": "Ivan Souza Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Guarana",
+            "foto_path": "imagens_clientes/Ivan_Souza_Silva.jpg"
+        },
+        {
+            "id": 4,
+            "nome": "Ivan Souza Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Guarana",
+            "foto_path": "imagens_clientes/Ivan_Souza_Silva.jpg"
+        },
+        {
+            "id": 5,
+            "nome": "Ivan Souza Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Guarana",
+            "foto_path": "imagens_clientes/Ivan_Souza_Silva.jpg"
+        },
+        {
+            "id": 6,
+            "nome": "Ivan Souza Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Guarana",
+            "foto_path": "imagens_clientes/Ivan_Souza_Silva.jpg"
+        },
+        {
+            "id": 7,
+            "nome": "Ivy Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Guarana",
+            "foto_path": "imagens_clientes/Ivy_Silva.jpg"
+        },
+        {
+            "id": 8,
+            "nome": "Ivvy Silva ",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Granola",
+            "foto_path": "imagens_clientes/Ivvy_Silva.jpg"
+        },
+        {
+            "id": 9,
+            "nome": "Ivy Silva Souza",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com nada",
+            "foto_path": "imagens_clientes/Ivy_Silva_Souza.jpg"
+        },
+        {
+            "id": 10,
+            "nome": "Ivy Silva Souzaa",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Granolaa",
+            "foto_path": "imagens_clientes/Ivy_Silva_Souzaa.jpg"
+        },
+        {
+            "id": 11,
+            "nome": "iVVy silVaa Souzaa",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com chocolate",
+            "foto_path": "imagens_clientes/iVVy_silVaa_Souzaa.jpg"
+        },
+        {
+            "id": 12,
+            "nome": "Ivan Silca",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com banana",
+            "foto_path": "imagens_clientes/Ivan_Silca.jpg"
+        },
+        {
+            "id": 13,
+            "nome": "Ivan Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com guuarana",
+            "foto_path": "imagens_clientes/Ivan_Silva.jpg"
+        },
+        {
+            "id": 14,
+            "nome": "Ivan Silva",
+            "cpf": null,
+            "data_nascimento": null,
+            "acai_preferido": "com Granola",
+            "foto_path": "imagens_clientes/Ivan_Silva.jpg"
+        }
+    ],
+    "sqlite_sequence": [
+        {
+            "name": "clientes",
+            "seq": 14
+        }
+    ]
+}
