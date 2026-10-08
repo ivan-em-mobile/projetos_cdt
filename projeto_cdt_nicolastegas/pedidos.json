@@ -1,34 +1,44 @@
 [
     {
-        "numero": "20260922154919",
-        "cliente": "rootmaster",
-        "endereco": "rua root",
+        "numero": "20261008125502",
+        "cliente": "Flavio Silva",
+        "endereco": "rua dez",
         "tipo_residencia": "Casa",
-        "numero_casa": "321",
-        "data": "22/09/2026",
-        "hora": "15:49:19",
+        "numero_casa": "1024",
+        "data": "08/10/2026",
+        "hora": "12:55:02",
         "status": "Recebido",
         "pagamento": "Cartão de Crédito",
-        "usuario_email": "rootmaster@mail.com",
+        "usuario_email": "flaviosilva@mail.com",
         "itens": [
-            {
-                "produto": "X-Salada",
-                "preco": 18.0,
-                "quantidade": 4
-            },
             {
                 "produto": "X-Burger",
                 "preco": 15.0,
-                "quantidade": 2
+                "quantidade": 1
             },
             {
-                "produto": "X-Bacon",
-                "preco": 22.0,
-                "quantidade": 2
+                "produto": "X-Cheddar",
+                "preco": 23.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "X-Duplo",
+                "preco": 30.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "Agua",
+                "preco": 4.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "Suco de Limao",
+                "preco": 8.0,
+                "quantidade": 1
             }
         ],
-        "subtotal": 146.0,
-        "desconto": 14.600000000000001,
-        "total": 131.4
+        "subtotal": 80.0,
+        "desconto": 8.0,
+        "total": 72.0
     }
 ]

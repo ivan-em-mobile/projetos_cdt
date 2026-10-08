@@ -1,0 +1,122 @@
+[
+    {
+        "produto": "X-Burger",
+        "preco": 15.0,
+        "descricao": "Pao, carne, queijo e molho especial",
+        "imagem": "xburger.jpg"
+    },
+    {
+        "produto": "X-Salada",
+        "preco": 18.0,
+        "descricao": "Carne, queijo, alface e tomate",
+        "imagem": "xsalada.jpg"
+    },
+    {
+        "produto": "X-Bacon",
+        "preco": 22.0,
+        "descricao": "Carne, queijo, bacon e molho",
+        "imagem": "xbacon.jpg"
+    },
+    {
+        "produto": "X-Tudo",
+        "preco": 28.0,
+        "descricao": "Carne, queijo, bacon, salada e ovo",
+        "imagem": "xtudo.jpg"
+    },
+    {
+        "produto": "X-Frango",
+        "preco": 20.0,
+        "descricao": "Frango grelhado, queijo e molho especial",
+        "imagem": "xfrango.jpg"
+    },
+    {
+        "produto": "X-Cheddar",
+        "preco": 23.0,
+        "descricao": "Carne, cheddar cremoso e molho especial",
+        "imagem": "xcheddar.jpg"
+    },
+    {
+        "produto": "X-Duplo",
+        "preco": 30.0,
+        "descricao": "Duas carnes, queijo, bacon e molho",
+        "imagem": "xduplo.jpg"
+    },
+    {
+        "produto": "X-Barbecue",
+        "preco": 26.0,
+        "descricao": "Carne, queijo, bacon e molho barbecue",
+        "imagem": "xbarbecue.jpg"
+    },
+    {
+        "produto": "Batata Frita",
+        "preco": 12.0,
+        "descricao": "Batata frita crocante",
+        "imagem": "batata.jpg"
+    },
+    {
+        "produto": "Coca-Cola",
+        "preco": 7.0,
+        "descricao": "Lata 350ml",
+        "imagem": "coca.jpg"
+    },
+    {
+        "produto": "Guarana",
+        "preco": 7.0,
+        "descricao": "Lata 350ml",
+        "imagem": "guarana.jpg"
+    },
+    {
+        "produto": "Fanta Laranja",
+        "preco": 7.0,
+        "descricao": "Lata 350ml",
+        "imagem": "fanta.jpg"
+    },
+    {
+        "produto": "Sprite",
+        "preco": 7.0,
+        "descricao": "Lata 350ml",
+        "imagem": "sprite.jpg"
+    },
+    {
+        "produto": "Pepsi",
+        "preco": 7.0,
+        "descricao": "Lata 350ml",
+        "imagem": "pepsi.jpg"
+    },
+    {
+        "produto": "Suco",
+        "preco": 8.0,
+        "descricao": "Suco natural",
+        "imagem": "suco.jpg"
+    },
+    {
+        "produto": "Suco de Laranja",
+        "preco": 9.0,
+        "descricao": "Suco natural de laranja",
+        "imagem": "suco_laranja.jpg"
+    },
+    {
+        "produto": "Suco de Maracuja",
+        "preco": 9.0,
+        "descricao": "Suco natural de maracuja",
+        "imagem": "suco_maracuja.jpg"
+    },
+    {
+        "produto": "Suco de Morango",
+        "preco": 10.0,
+        "descricao": "Suco natural de morango",
+        "imagem": "suco_morango.jpg"
+    },
+    {
+        "produto": "Suco de Limao",
+        "preco": 8.0,
+        "descricao": "Suco natural de limao",
+        "imagem": "suco_limao.jpg"
+    },
+    {
+        "produto": "Agua",
+        "preco": 4.0,
+        "descricao": "Agua mineral 500ml",
+        "imagem": "agua.jpg"
+    }
+]

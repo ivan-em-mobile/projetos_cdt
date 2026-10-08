@@ -1,7 +1,12 @@
 {
+    "flaviosilva@mail.com": {
+        "nome": "Flavio Silva",
+        "senha": "123456",
+        "tipo": "cliente"
+    },
     "rootmaster@mail.com": {
-        "nome": "rootmaster",
-        "senha": "root",
+        "nome": "root master",
+        "senha": "rootmaster",
         "tipo": "administrador"
     }
 }

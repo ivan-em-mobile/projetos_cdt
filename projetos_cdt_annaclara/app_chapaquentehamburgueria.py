@@ -1,3 +1,7 @@
+'''
+COM ULTIMA ATUALIZAÇÃO: 2024-06-20
+'''
+
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk, ImageDraw, ImageFont
@@ -9,8 +13,18 @@ import io
 
 
 # ============================================================
-# CHAPA QUENTE HAMBURGUERIA
+# CHAPA QUENTE HAMBURGUERIA - CONFIGURAÇÃO DE DIRETÓRIOS
 # ============================================================
+
+# Descobre o caminho absoluto da pasta onde ESTE arquivo .py está guardado
+PASTA_DO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
+
+# Garante que os arquivos JSON e a pasta de imagens sejam SEMPRE salvos na mesma pasta do script
+ARQUIVO_PEDIDOS = os.path.join(PASTA_DO_SCRIPT, "pedidos.json")
+ARQUIVO_USUARIOS = os.path.join(PASTA_DO_SCRIPT, "usuarios.json")
+PASTA_IMAGENS = os.path.join(PASTA_DO_SCRIPT, "imagens")
+
+os.makedirs(PASTA_IMAGENS, exist_ok=True)
 
 LARGURA = 900
 ALTURA = 600
@@ -23,12 +37,6 @@ COR_VERMELHO_ESCURO = "#b92330"
 COR_BRANCO = "#ffffff"
 COR_CINZA = "#aaaaaa"
 COR_VERDE = "#2ecc71"
-
-ARQUIVO_PEDIDOS = "pedidos.json"
-ARQUIVO_USUARIOS = "usuarios.json"
-PASTA_IMAGENS = "imagens"
-
-os.makedirs(PASTA_IMAGENS, exist_ok=True)
 
 
 # ============================================================
@@ -204,10 +212,6 @@ def formatar_real(valor):
 def carregar_usuarios():
 
     if not os.path.exists(ARQUIVO_USUARIOS):
-
-        # Não existe administrador padrão.
-        # O primeiro administrador deverá ser criado pelo próprio usuário
-        # através da opção "CRIAR CONTA DE ADMINISTRADOR".
         return {}
 
     try:
@@ -275,8 +279,6 @@ def cadastrar_admin(nome, email, senha, codigo):
     if email in usuarios:
         return False, "Este e-mail já está cadastrado."
 
-    # Código definido pelo dono do sistema para permitir a criação
-    # da primeira conta administrativa.
     if codigo != "CHAPA-ADMIN":
         return False, "Código de administrador incorreto."
 
@@ -298,7 +300,6 @@ def cadastrar_admin(nome, email, senha, codigo):
     salvar_usuarios(usuarios)
 
     return True, "Administrador criado com sucesso!"
-
 
 
 # ============================================================
@@ -331,7 +332,6 @@ def abrir_cadastro():
         fg=COR_CINZA
     ).pack(pady=(0, 18))
 
-    # Tipo de conta
     tk.Label(
         cadastro,
         text="Tipo de conta",
@@ -355,7 +355,6 @@ def abrir_cadastro():
         ipady=5
     )
 
-    # Nome
     tk.Label(
         cadastro,
         text="Nome completo",
@@ -379,7 +378,6 @@ def abrir_cadastro():
         ipady=7
     )
 
-    # E-mail
     tk.Label(
         cadastro,
         text="E-mail",
@@ -403,7 +401,6 @@ def abrir_cadastro():
         ipady=7
     )
 
-    # Senha
     tk.Label(
         cadastro,
         text="Senha",
@@ -428,7 +425,6 @@ def abrir_cadastro():
         ipady=7
     )
 
-    # Código administrativo, inicialmente oculto.
     label_codigo = tk.Label(
         cadastro,
         text="Código de administrador",
@@ -534,7 +530,6 @@ def abrir_cadastro():
     entrada_nome.focus()
 
 
-
 # ============================================================
 # LOGIN
 # ============================================================
@@ -627,8 +622,6 @@ def cadastrar_funcionario():
         fg=COR_CINZA
     ).pack(pady=(0, 20))
 
-    # Nome
-
     tk.Label(
         cadastro,
         text="Nome",
@@ -652,8 +645,6 @@ def cadastrar_funcionario():
         pady=(5, 12),
         ipady=7
     )
-
-    # Email
 
     tk.Label(
         cadastro,
@@ -679,8 +670,6 @@ def cadastrar_funcionario():
         ipady=7
     )
 
-    # Senha
-
     tk.Label(
         cadastro,
         text="Senha",
@@ -705,8 +694,6 @@ def cadastrar_funcionario():
         pady=(5, 12),
         ipady=7
     )
-
-    # Tipo
 
     tk.Label(
         cadastro,
@@ -817,7 +804,8 @@ def exportar_dados_json():
                 ("Arquivo JSON", "*.json"),
                 ("Todos os arquivos", "*.*")
             ],
-            initialfile="estoque_produtos.json"
+            initialfile="estoque_produtos.json",
+            initialdir=PASTA_DO_SCRIPT
         )
 
         if not nome_arquivo:
@@ -1655,8 +1643,6 @@ def abrir_checkout():
         ipady=5
     )
 
-    # Preenche o nome do usuário logado
-
     if usuario_logado:
 
         entrada_nome.insert(
@@ -1816,10 +1802,6 @@ def abrir_checkout():
         padx=10,
         pady=(0, 4)
     )
-
-    # ========================================================
-    # CONFIRMAR COMPRA
-    # ========================================================
 
     def confirmar_compra():
 
@@ -2342,10 +2324,6 @@ def iniciar_sistema():
         bg=COR_FUNDO
     )
 
-    # ========================================================
-    # CABECALHO
-    # ========================================================
-
     topo = tk.Frame(
         janela,
         bg="#0b0b0b",
@@ -2380,10 +2358,6 @@ def iniciar_sistema():
     ).pack(
         side="left"
     )
-
-    # ========================================================
-    # USUARIO LOGADO
-    # ========================================================
 
     info_usuario = tk.Frame(
         topo,
@@ -2422,10 +2396,6 @@ def iniciar_sistema():
     ).pack(
         side="left"
     )
-
-    # ========================================================
-    # BOTOES DE FUNCIONARIO / ADMIN
-    # ========================================================
 
     if usuario_logado["tipo"] in [
         "funcionario",
@@ -2475,10 +2445,6 @@ def iniciar_sistema():
         padx=10
     )
 
-    # ========================================================
-    # RELOGIO
-    # ========================================================
-
     def atualizar_relogio():
 
         relogio.config(
@@ -2492,10 +2458,6 @@ def iniciar_sistema():
             atualizar_relogio
         )
 
-    # ========================================================
-    # CORPO
-    # ========================================================
-
     principal = tk.Frame(
         janela,
         bg=COR_FUNDO
@@ -2507,10 +2469,6 @@ def iniciar_sistema():
         padx=10,
         pady=10
     )
-
-    # ========================================================
-    # LADO ESQUERDO
-    # ========================================================
 
     esquerda = tk.Frame(
         principal,
@@ -2580,10 +2538,6 @@ def iniciar_sistema():
         side="right",
         fill="y"
     )
-
-    # ========================================================
-    # CARDS
-    # ========================================================
 
     for indice, (produto, dados) in enumerate(
         CARDAPIO.items()
@@ -2668,10 +2622,6 @@ def iniciar_sistema():
         ).pack(
             side="right"
         )
-
-    # ========================================================
-    # LADO DIREITO
-    # ========================================================
 
     direita = tk.Frame(
         principal,
@@ -2902,10 +2852,6 @@ def iniciar_login():
         bg=COR_FUNDO
     )
 
-    # ========================================================
-    # TITULO
-    # ========================================================
-
     tk.Label(
         janela_login,
         text="🍔",
@@ -2934,10 +2880,6 @@ def iniciar_login():
         pady=(0, 25)
     )
 
-    # ========================================================
-    # EMAIL
-    # ========================================================
-
     tk.Label(
         janela_login,
         text="E-mail",
@@ -2964,10 +2906,6 @@ def iniciar_login():
         pady=(5, 15),
         ipady=8
     )
-
-    # ========================================================
-    # SENHA
-    # ========================================================
 
     tk.Label(
         janela_login,
@@ -2997,10 +2935,6 @@ def iniciar_login():
         ipady=8
     )
 
-    # ========================================================
-    # ENTRAR
-    # ========================================================
-
     tk.Button(
         janela_login,
         text="ENTRAR",
@@ -3017,10 +2951,6 @@ def iniciar_login():
         padx=55,
         ipady=9
     )
-
-    # ========================================================
-    # CADASTRO
-    # ========================================================
 
     tk.Button(
         janela_login,
