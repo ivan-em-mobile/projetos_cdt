@@ -1,0 +1,47 @@
+TAMAGOTCHI DA PRODUTIVIDADE
+===========================
+
+1. Extraia todo o conteúdo do ZIP em uma pasta. Mantenha a pasta "assets"
+   ao lado de "tamagotchi_produtividade_completo.py".
+2. No Windows, abra o Terminal ou Prompt de Comando nessa pasta.
+3. Instale as bibliotecas usadas para detectar aplicativos e notificações:
+      py -m pip install psutil pygetwindow plyer pillow
+4. Execute:
+      py tamagotchi_produtividade_completo.py
+
+As 23 imagens PNG da loja e da personalização já vêm no ZIP em alta
+resolução. Pillow faz a redução com antialiasing e também suaviza o pet.
+O módulo tkinter normalmente acompanha a instalação do Python.
+
+Use "Modo claro" ou "Modo escuro" no canto superior direito; a escolha
+fica salva no arquivo tamagotchi_state.json, criado na primeira execução.
+Ao minimizar, o pet fica flutuando. Arraste com o mouse para movê-lo;
+dê dois cliques para voltar ao painel.
+
+Os cartões presente são artes ilustrativas e estão em "Em breve".
+Ainda não existe compra, código de resgate, estoque ou parceria de entrega.
+As ilustrações são originais e não são cartões oficiais das marcas citadas.
+
+O script create_catalog_assets.py recria as PNGs se necessário:
+      py create_catalog_assets.py
+
+
+VERSÃO PARA CELULAR
+===================
+
+A pasta "mobile" contém a nova interface redimensionada para Android e
+iPhone. Ela não substitui nem altera a versão de computador.
+
+Para testar a interface mobile, abra um terminal dentro de "mobile/web":
+      py -m http.server 8080
+Depois acesse http://localhost:8080 no navegador.
+
+Para gerar o aplicativo Android com o pet flutuante, abra a pasta
+"mobile/android-native" no Android Studio. Para o iPhone, use os arquivos
+de "mobile/ios-native" em um Mac com Xcode. O guia completo está em
+"mobile/README_MOBILE.md".
+
+No Android, o pet pode ficar sobre outros apps e reagir ao aplicativo
+aberto após o usuário conceder as permissões oficiais de sobreposição e
+acesso ao uso. No iPhone, a alternativa permitida pelo sistema é uma
+Live Activity na Tela Bloqueada, Dynamic Island e modo StandBy.

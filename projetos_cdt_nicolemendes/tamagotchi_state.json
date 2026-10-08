@@ -1,0 +1,119 @@
+{
+  "happiness": 36.5,
+  "xp": 150,
+  "level": 10,
+  "points": 74,
+  "name": "farmador de AURA 67",
+  "appearance": "gato",
+  "accessory": "nenhum",
+  "owner_name": "kkk",
+  "owner_nickname": "ruindade pura",
+  "owner_age": "67",
+  "unlocked_pets": [
+    "tradicional",
+    "gato",
+    "cachorro",
+    "coelho"
+  ],
+  "unlocked_accessories": [
+    "nenhum"
+  ],
+  "redeemed_rewards": [],
+  "achievements": [
+    "level_2",
+    "first_focus"
+  ],
+  "point_history": [
+    {
+      "date": "2026-09-24T13:13:42.307423",
+      "amount": 30,
+      "reason": "Conquista: Subindo de nível"
+    },
+    {
+      "date": "2026-09-24T13:15:41.232464",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:15:41.232596",
+      "amount": 20,
+      "reason": "Conquista: Primeiro foco"
+    },
+    {
+      "date": "2026-09-24T13:15:44.409505",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:15:47.965872",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:15:51.260373",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:15:54.482727",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:15:57.775732",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:01.248048",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:04.456127",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:07.871442",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:11.131780",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:14.477139",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-24T13:16:17.741650",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    }
+  ],
+  "time_history": {
+    "2026-09-24": {
+      "produtivo": 36.0,
+      "distracao": 0,
+      "neutro": 114.0
+    },
+    "2026-10-08": {
+      "produtivo": 0,
+      "distracao": 0,
+      "neutro": 12.0
+    }
+  },
+  "daily_goal_minutes": 30,
+  "goal_reward_dates": [],
+  "streak": 1,
+  "last_productive_date": "2026-09-24",
+  "total_productive_seconds": 36.0,
+  "floating_x": null,
+  "floating_y": null,
+  "theme": "claro",
+  "updated": "2026-10-08T10:35:55.547541"
+}

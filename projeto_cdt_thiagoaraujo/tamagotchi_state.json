@@ -1,0 +1,514 @@
+{
+  "happiness": 93.5,
+  "xp": 160,
+  "level": 6,
+  "points": 232,
+  "name": "Tama",
+  "appearance": "tradicional",
+  "accessory": "nenhum",
+  "owner_name": "",
+  "owner_nickname": "",
+  "owner_age": "",
+  "unlocked_pets": [
+    "tradicional",
+    "gato",
+    "cachorro",
+    "coelho"
+  ],
+  "unlocked_accessories": [
+    "nenhum"
+  ],
+  "redeemed_rewards": [],
+  "achievements": [
+    "first_focus",
+    "level_2"
+  ],
+  "point_history": [
+    {
+      "date": "2026-09-22T15:42:33.162721",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:33.163101",
+      "amount": 20,
+      "reason": "Conquista: Primeiro foco"
+    },
+    {
+      "date": "2026-09-22T15:42:36.410898",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:39.534865",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:42.738862",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:46.165278",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:49.407406",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:52.542894",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:55.709471",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:42:58.933093",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:02.154915",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:02.156715",
+      "amount": 30,
+      "reason": "Conquista: Subindo de nível"
+    },
+    {
+      "date": "2026-09-22T15:43:05.507044",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:08.707537",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:11.905034",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:15.050367",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:18.202991",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:21.423163",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:24.636768",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:27.835440",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:31.026059",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:34.330671",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:37.526170",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:40.722487",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:43.918393",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:47.269241",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:50.476158",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:53.731483",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:43:56.946206",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:00.137682",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:03.349568",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:06.568963",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:09.759015",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:13.009532",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:16.173806",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:19.393495",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:22.517607",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:25.692868",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:28.959720",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:32.152984",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:35.653039",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:38.857101",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:42.064424",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:45.295665",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:48.500418",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:51.749098",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:54.979609",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:44:58.181552",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:01.414123",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:04.624504",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:07.874690",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:11.129394",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:14.332835",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:17.548440",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:20.765779",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:23.955877",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:27.189285",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:30.600543",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:33.798869",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:37.182777",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:40.392788",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:43.614789",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:46.819348",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:50.064605",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:53.282253",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:56.479974",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:45:59.684129",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:02.911677",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:06.113972",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:09.328431",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:12.526732",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:15.730758",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:18.974599",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:22.220832",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:25.431042",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:28.690666",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:32.002088",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:42.004280",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:45.257486",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:48.639052",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:52.343688",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:55.646313",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:46:58.932813",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:02.551769",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:05.745693",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:19.562761",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:22.962168",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:26.401195",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:29.610458",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:32.863931",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:36.066985",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:39.330898",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    },
+    {
+      "date": "2026-09-22T15:47:42.898664",
+      "amount": 2,
+      "reason": "Atividade produtiva"
+    }
+  ],
+  "time_history": {
+    "2026-09-22": {
+      "produtivo": 273.0,
+      "distracao": 0,
+      "neutro": 966.0
+    },
+    "2026-10-08": {
+      "produtivo": 0,
+      "distracao": 0,
+      "neutro": 39.0
+    }
+  },
+  "daily_goal_minutes": 30,
+  "goal_reward_dates": [],
+  "streak": 1,
+  "last_productive_date": "2026-09-22",
+  "total_productive_seconds": 273.0,
+  "floating_x": 1035,
+  "floating_y": 435,
+  "theme": "claro",
+  "updated": "2026-10-08T10:47:47.236908"
+}
