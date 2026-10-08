@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Alunos | SmartFit Gym Manager
+{% endblock %}
+
+
+{% block content %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Alunos
+        </h1>
+
+        <p>
+            Cadastro e consulta de alunos
+        </p>
+
+    </div>
+
+</header>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Cadastrar novo aluno
+        </h2>
+
+        <p>
+            Preencha os dados abaixo
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('alunos') }}"
+        class="form-grid"
+    >
+
+        <div class="form-group form-span-2">
+
+            <label for="nome">
+                Nome
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Nome completo"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="cpf">
+                CPF
+            </label>
+
+            <input
+                type="text"
+                id="cpf"
+                name="cpf"
+                placeholder="000.000.000-00"
+                maxlength="14"
+                inputmode="numeric"
+                autocomplete="off"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="data_nascimento">
+                Data de nascimento
+            </label>
+
+            <input
+                type="date"
+                id="data_nascimento"
+                name="data_nascimento"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group form-span-2">
+
+            <label for="email">
+                E-mail
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="aluno@email.com"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="telefone">
+                Telefone
+            </label>
+
+            <input
+                type="text"
+                id="telefone"
+                name="telefone"
+                placeholder="11999999999"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="button button-primary"
+            >
+                Cadastrar aluno
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <h2>
+            Alunos cadastrados
+        </h2>
+
+        <p>
+            Total: {{ alunos|length }}
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Nome
+                    </th>
+
+                    <th>
+                        CPF
+                    </th>
+
+                    <th>
+                        E-mail
+                    </th>
+
+                    <th>
+                        Telefone
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for aluno in alunos %}
+
+                    <tr>
+
+                        <td>
+                            {{ aluno.id }}
+                        </td>
+
+                        <td>
+                            {{ aluno.nome }}
+                        </td>
+
+                        <td>
+                            {{ aluno.cpf }}
+                        </td>
+
+                        <td>
+                            {{ aluno.email }}
+                        </td>
+
+                        <td>
+                            {{ aluno.telefone }}
+                        </td>
+
+                        <td>
+
+                            <span
+                                class="status
+                                status-{{ aluno.status }}"
+                            >
+                                {{ aluno.status }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="6"
+                            class="empty-table"
+                        >
+                            Nenhum aluno cadastrado.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<script>
+    const campoCpf = document.getElementById(
+        "cpf"
+    );
+
+    campoCpf.addEventListener(
+        "input",
+        function () {
+            const digitos = (
+                campoCpf
+                    .value
+                    .replace(/\D/g, "")
+                    .slice(0, 11)
+            );
+
+            let cpfFormatado = digitos;
+
+            if (digitos.length > 9) {
+                cpfFormatado = (
+                    digitos.slice(0, 3)
+                    + "."
+                    + digitos.slice(3, 6)
+                    + "."
+                    + digitos.slice(6, 9)
+                    + "-"
+                    + digitos.slice(9, 11)
+                );
+            }
+
+            else if (digitos.length > 6) {
+                cpfFormatado = (
+                    digitos.slice(0, 3)
+                    + "."
+                    + digitos.slice(3, 6)
+                    + "."
+                    + digitos.slice(6)
+                );
+            }
+
+            else if (digitos.length > 3) {
+                cpfFormatado = (
+                    digitos.slice(0, 3)
+                    + "."
+                    + digitos.slice(3)
+                );
+            }
+
+            campoCpf.value = cpfFormatado;
+        }
+    );
+</script>
+
+{% endblock %}
