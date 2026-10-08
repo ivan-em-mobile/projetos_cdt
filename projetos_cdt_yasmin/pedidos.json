@@ -1,0 +1,34 @@
+[
+    {
+        "numero": "20260922154919",
+        "cliente": "rootmaster",
+        "endereco": "rua root",
+        "tipo_residencia": "Casa",
+        "numero_casa": "321",
+        "data": "22/09/2026",
+        "hora": "15:49:19",
+        "status": "Recebido",
+        "pagamento": "Cartão de Crédito",
+        "usuario_email": "rootmaster@mail.com",
+        "itens": [
+            {
+                "produto": "X-Salada",
+                "preco": 18.0,
+                "quantidade": 4
+            },
+            {
+                "produto": "X-Burger",
+                "preco": 15.0,
+                "quantidade": 2
+            },
+            {
+                "produto": "X-Bacon",
+                "preco": 22.0,
+                "quantidade": 2
+            }
+        ],
+        "subtotal": 146.0,
+        "desconto": 14.600000000000001,
+        "total": 131.4
+    }
+]

@@ -30,5 +30,42 @@
         "subtotal": 146.0,
         "desconto": 14.600000000000001,
         "total": 131.4
+    },
+    {
+        "numero": "20261008120155",
+        "cliente": "andresilva",
+        "endereco": "rua nov",
+        "tipo_residencia": "Casa",
+        "numero_casa": "98",
+        "data": "08/10/2026",
+        "hora": "12:01:55",
+        "status": "Recebido",
+        "pagamento": "PIX",
+        "usuario_email": "andre.silva@mail.com",
+        "itens": [
+            {
+                "produto": "X-Burger",
+                "preco": 15.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "X-Tudo",
+                "preco": 28.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "Fanta Laranja",
+                "preco": 7.0,
+                "quantidade": 1
+            },
+            {
+                "produto": "Pepsi",
+                "preco": 7.0,
+                "quantidade": 1
+            }
+        ],
+        "subtotal": 57.0,
+        "desconto": 5.7,
+        "total": 51.3
     }
 ]

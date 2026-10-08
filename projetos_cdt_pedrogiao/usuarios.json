@@ -3,10 +3,5 @@
         "nome": "rootmaster",
         "senha": "root",
         "tipo": "administrador"
-    },
-    "andre.silva@mail.com": {
-        "nome": "andresilva",
-        "senha": "123456",
-        "tipo": "usuario"
     }
 }
