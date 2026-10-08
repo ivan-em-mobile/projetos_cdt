@@ -47,27 +47,31 @@ except ImportError:
     PYAUTOGUI_DISPONIVEL = False
 
 
+# =============================================================================
+# CONFIGURAÇÃO DE DIRETÓRIOS E CAMINHOS ABSOLUTOS
+# =============================================================================
+
+# Descobre o caminho absoluto da pasta onde ESTE arquivo .py está guardado
+PASTA_DO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
+
+# Garante que o banco de dados e a configuração sejam SEMPRE salvos na mesma pasta do script
+NOME_BANCO_DADOS = os.path.join(PASTA_DO_SCRIPT, "historico_sky.db")
+ARQUIVO_CONFIG_JSON = os.path.join(PASTA_DO_SCRIPT, "config.json")
+
 MODELO_AVANCADO_OLLAMA = "llama3.1:8b"
-NOME_BANCO_DADOS = "historico_sky.db"
-ARQUIVO_CONFIG_JSON = "config.json"
 LIMITE_MENSAGENS_RECENTES = 4
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-# Perfil administrativo local: qualquer conta com este nome ganha acesso ao botão
-# de exportação do banco de dados na interface. A senha em si (definida no login
-# normal, como qualquer outra conta) deve ser 'Root'. Isso não é uma trava de
-# segurança real - é só um atalho de conveniência para um app local de um usuário só.
+# Perfil administrativo local
 NOME_USUARIO_ROOT = "Root Master"
 
 # Limite de segurança do loop de ferramentas do modo Assistente
 MAX_TOOL_ITERATIONS = 5
 
-# Callback thread-safe de confirmação, definido pela GUI (AppSky) na inicialização.
-# Assinatura esperada: (titulo: str, mensagem: str) -> bool
+# Callback thread-safe de confirmação
 CONFIRMACAO_CALLBACK = None
 
-# Padrões (case-insensitive) que identificam comandos de terminal potencialmente
-# destrutivos e que, portanto, exigem confirmação explícita do usuário antes de rodar.
+# Padrões para comandos destrutivos
 PADROES_COMANDO_DESTRUTIVO = [
     r"\bdel\b", r"\berase\b", r"\brd\b", r"\brmdir\b", r"\brm\s+-rf\b", r"\brm\s+-r\b",
     r"\bformat\b", r"\bdiskpart\b", r"\bshutdown\b", r"\breboot\b",
@@ -80,7 +84,6 @@ PADROES_COMANDO_DESTRUTIVO = [
 # MÓDULO DE AUTOMAÇÃO LOCAL E NAVEGAÇÃO WEB
 # =============================================================================
 
-# Catálogo configurável de aplicativos locais conhecidos (Windows).
 CATALOGO_APLICATIVOS = {
     "bloco de notas": "notepad.exe",
     "notepad": "notepad.exe",
@@ -97,8 +100,6 @@ CATALOGO_APLICATIVOS = {
     "explorer": "explorer.exe",
 }
 
-# Canais conhecidos do YouTube. NUNCA inventar URLs de canais que não estejam aqui:
-# se o canal não estiver mapeado, cai para a busca normal do YouTube.
 CANAIS_YOUTUBE_CONHECIDOS = {
     "edukof": "https://www.youtube.com/@edukof",
     "amenic": "https://www.youtube.com/@edukof",
@@ -106,22 +107,15 @@ CANAIS_YOUTUBE_CONHECIDOS = {
 
 
 def _texto_parece_url(texto: str) -> bool:
-    """Heurística simples para saber se uma string já parece uma URL/domínio."""
     texto = texto.strip()
     if not texto:
         return False
     if texto.startswith("http://") or texto.startswith("https://"):
         return True
-    # algo do tipo "exemplo.com" ou "exemplo.com/pagina"
     return bool(re.match(r"^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(/\S*)?$", texto))
 
 
 def abrir_site(url: str) -> str:
-    """Abre uma URL/site no navegador padrão, normalizando o esquema (https://) quando necessário.
-
-    Args:
-        url: endereço do site a abrir, com ou sem "https://".
-    """
     if not url or not url.strip():
         return "Nenhuma URL foi fornecida."
 
@@ -140,11 +134,6 @@ def abrir_site(url: str) -> str:
 
 
 def pesquisar_google(termo: str) -> str:
-    """Pesquisa um termo no Google, abrindo o resultado no navegador padrão.
-
-    Args:
-        termo: o que deve ser pesquisado no Google.
-    """
     if not termo or not termo.strip():
         return "Nenhum termo de pesquisa foi fornecido."
     termo_encoded = urllib.parse.quote(termo.strip())
@@ -156,26 +145,17 @@ def pesquisar_google(termo: str) -> str:
 
 
 def abrir_youtube(alvo: str = "") -> str:
-    """Abre o YouTube: sem alvo abre a home, com um canal conhecido abre o canal,
-    e com um termo de busca pesquisa vídeos.
-
-    Args:
-        alvo: pode ser vazio (abrir YouTube), o nome de um canal conhecido
-              (ex: 'edukof') ou um termo de busca (ex: 'músicas de Hollow Knight').
-    """
     alvo_limpo = (alvo or "").lower().strip()
 
     if not alvo_limpo:
         webbrowser.open("https://www.youtube.com")
         return "YouTube aberto com sucesso no navegador!"
 
-    # 1. Canal conhecido (mapeamento explícito, nunca inventado)
     for chave, link in CANAIS_YOUTUBE_CONHECIDOS.items():
         if chave in alvo_limpo:
             webbrowser.open(link)
             return f"Canal '{chave}' aberto com sucesso no YouTube!"
 
-    # 2. Pedido explícito de canal não mapeado -> cai para busca de canais
     termo_limpo = alvo_limpo
     for palavra in ["canal do", "canal de", "canal", "pesquise", "pesquisar", "procure", "procurar",
                      "abra", "abrir", "vídeos de", "videos de", "músicas de", "musicas de", "no youtube", "youtube"]:
@@ -192,19 +172,9 @@ def abrir_youtube(alvo: str = "") -> str:
 
 
 def abrir_aplicativo(nome_app: str) -> str:
-    """Abre aplicativos locais conhecidos, ou cai para pesquisa no navegador se não reconhecer.
-
-    Para sites, Google e YouTube, prefira as ferramentas abrir_site, pesquisar_google
-    e abrir_youtube, que são mais específicas.
-
-    Args:
-        nome_app: nome do aplicativo a abrir (ex: 'bloco de notas', 'spotify', 'vscode').
-    """
     nome_clean = nome_app.lower().strip()
     sistema = sys.platform
 
-    # Redirecionamentos de conveniência para os casos mais comuns de web,
-    # mantendo compatibilidade com quem ainda chamar esta função para isso.
     if "youtube" in nome_clean:
         return abrir_youtube(nome_clean.replace("youtube", "").replace("abrir", "").strip())
 
@@ -221,7 +191,6 @@ def abrir_aplicativo(nome_app: str) -> str:
         webbrowser.open("https://www.google.com")
         return "Navegador Google Chrome aberto com sucesso."
 
-    # Catálogo de aplicativos locais (correspondência exata ou por substring)
     alvo_app = None
     if nome_clean in CATALOGO_APLICATIVOS:
         alvo_app = CATALOGO_APLICATIVOS[nome_clean]
@@ -269,14 +238,6 @@ def _comando_e_destrutivo(comando: str) -> bool:
 
 
 def executar_comando_terminal(comando: str) -> str:
-    """Executa um comando de terminal (CMD/Bash) e retorna o resultado.
-
-    Comandos potencialmente destrutivos (apagar arquivos, formatar, desligar o PC,
-    etc.) exigem confirmação explícita do usuário antes de serem executados.
-
-    Args:
-        comando: o comando de terminal a executar.
-    """
     if not comando or not comando.strip():
         return "Nenhum comando foi fornecido."
 
@@ -304,11 +265,6 @@ def executar_comando_terminal(comando: str) -> str:
 
 
 def digitar_texto_tela(texto: str) -> str:
-    """Digita um texto simulando o teclado usando PyAutoGUI.
-
-    Args:
-        texto: o texto a ser digitado na posição atual do cursor.
-    """
     if not PYAUTOGUI_DISPONIVEL:
         return "PyAutoGUI não está instalado no sistema."
     try:
@@ -319,11 +275,6 @@ def digitar_texto_tela(texto: str) -> str:
 
 
 def pressionar_tecla(tecla: str) -> str:
-    """Pressiona uma única tecla do teclado (ex: 'enter', 'esc', 'tab').
-
-    Args:
-        tecla: nome da tecla, no formato aceito pelo PyAutoGUI.
-    """
     if not PYAUTOGUI_DISPONIVEL:
         return "PyAutoGUI não está instalado no sistema."
     try:
@@ -334,11 +285,6 @@ def pressionar_tecla(tecla: str) -> str:
 
 
 def pressionar_teclas(combinacao: str) -> str:
-    """Pressiona uma combinação de teclas, separadas por '+' (ex: 'ctrl+c', 'alt+tab').
-
-    Args:
-        combinacao: teclas separadas por '+'.
-    """
     if not PYAUTOGUI_DISPONIVEL:
         return "PyAutoGUI não está instalado no sistema."
     try:
@@ -350,12 +296,6 @@ def pressionar_teclas(combinacao: str) -> str:
 
 
 def mover_mouse(x: int, y: int) -> str:
-    """Move o cursor do mouse para uma posição específica da tela.
-
-    Args:
-        x: posição horizontal em pixels.
-        y: posição vertical em pixels.
-    """
     if not PYAUTOGUI_DISPONIVEL:
         return "PyAutoGUI não está instalado no sistema."
     try:
@@ -366,12 +306,6 @@ def mover_mouse(x: int, y: int) -> str:
 
 
 def clicar_tela(x: int = None, y: int = None) -> str:
-    """Clica na posição atual do mouse, ou em uma posição específica se informada.
-
-    Args:
-        x: posição horizontal em pixels (opcional).
-        y: posição vertical em pixels (opcional).
-    """
     if not PYAUTOGUI_DISPONIVEL:
         return "PyAutoGUI não está instalado no sistema."
     try:
@@ -389,11 +323,13 @@ def clicar_tela(x: int = None, y: int = None) -> str:
 # =============================================================================
 
 def obter_servico_google_calendar():
-    """Autentica o usuário via OAuth2 e retorna o serviço da API do Calendar."""
+    caminho_token = os.path.join(PASTA_DO_SCRIPT, 'token.json')
+    caminho_credenciais = os.path.join(PASTA_DO_SCRIPT, 'credentials.json')
+
     creds = None
-    if os.path.exists('token.json'):
+    if os.path.exists(caminho_token):
         try:
-            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+            creds = Credentials.from_authorized_user_file(caminho_token, SCOPES)
         except Exception as e:
             print(f"[AVISO] token.json inválido: {e}")
             creds = None
@@ -407,17 +343,17 @@ def obter_servico_google_calendar():
                 creds = None
 
         if not creds:
-            if not os.path.exists('credentials.json'):
-                return None, "O arquivo 'credentials.json' não foi encontrado na pasta do script."
+            if not os.path.exists(caminho_credenciais):
+                return None, f"O arquivo 'credentials.json' não foi encontrado em: {PASTA_DO_SCRIPT}"
 
             try:
-                flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+                flow = InstalledAppFlow.from_client_secrets_file(caminho_credenciais, SCOPES)
                 creds = flow.run_local_server(port=0, prompt='consent')
             except Exception as err_auth:
                 return None, f"Falha na autenticação OAuth: {str(err_auth)}"
 
         try:
-            with open('token.json', 'w') as token:
+            with open(caminho_token, 'w') as token:
                 token.write(creds.to_json())
         except Exception as err_token:
             print(f"[AVISO] Não foi possível salvar token.json: {err_token}")
@@ -430,13 +366,6 @@ def obter_servico_google_calendar():
 
 
 def agendar_compromisso_google(titulo: str, data_inicio_iso: str, duracao_minutos: int = 60) -> str:
-    """Cria um evento no Google Calendar via API.
-
-    Args:
-        titulo: título do evento.
-        data_inicio_iso: data/hora de início no formato 'YYYY-MM-DDTHH:MM:SS'.
-        duracao_minutos: duração do evento em minutos (padrão 60).
-    """
     try:
         service, msg = obter_servico_google_calendar()
         if not service:
@@ -480,7 +409,7 @@ def agendar_compromisso_google(titulo: str, data_inicio_iso: str, duracao_minuto
 
 
 # =============================================================================
-# DESPACHO DE FERRAMENTAS (usado pelo loop de agente do modo Assistente)
+# DESPACHO DE FERRAMENTAS
 # =============================================================================
 
 MAPA_FERRAMENTAS = {
@@ -512,7 +441,6 @@ FERRAMENTAS_ASSISTENTE = [
 
 
 def executar_ferramenta_por_nome(nome: str, argumentos: dict) -> str:
-    """Executa, de forma segura, a ferramenta 'nome' com os argumentos fornecidos pelo modelo."""
     funcao = MAPA_FERRAMENTAS.get(nome)
     if not funcao:
         return f"Ferramenta '{nome}' desconhecida."
@@ -562,9 +490,7 @@ def encriptar_senha(senha: str) -> str:
     return hashlib.sha256(senha.encode("utf-8")).hexdigest()
 
 def inicializar_banco_dados():
-    """Cria as tabelas se não existirem e migra o schema de forma segura
-    (nunca apaga dados existentes)."""
-    print("[INFO] Verificando e inicializando banco de dados...")
+    print(f"[INFO] Banco de dados configurado para: {NOME_BANCO_DADOS}")
     conexao = obter_conexao_db()
     cursor = conexao.cursor()
 
@@ -597,8 +523,6 @@ def inicializar_banco_dados():
         );
     """)
 
-    # Migração segura: adiciona a coluna 'modo' em bancos já existentes,
-    # sem apagar nenhum dado.
     cursor.execute("PRAGMA table_info(conversas);")
     colunas_existentes = [linha[1] for linha in cursor.fetchall()]
     if "modo" not in colunas_existentes:
@@ -680,7 +604,6 @@ def obter_sessoes_usuario(usuario_id: int) -> list:
     return sessoes
 
 def obter_conversas_da_sessao(usuario_id: int, sessao_id: str) -> list:
-    """Retorna [(usuario_msg, resposta_sky, modo), ...] em ordem cronológica."""
     conexao = obter_conexao_db()
     cursor = conexao.cursor()
     cursor.execute("""
@@ -694,15 +617,8 @@ def obter_conversas_da_sessao(usuario_id: int, sessao_id: str) -> list:
 
 
 def exportar_banco_dados_json(caminho_arquivo: str = None) -> str:
-    """Exporta todas as tabelas do banco de dados (usuarios, conversas e
-    memoria_resumida) para um único arquivo JSON, para backup ou inspeção manual.
-
-    Args:
-        caminho_arquivo: caminho de destino do .json. Se não for informado, um
-            nome com timestamp é gerado automaticamente na pasta atual do script.
-    """
     if not caminho_arquivo or not caminho_arquivo.strip():
-        caminho_arquivo = f"backup_sky_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        caminho_arquivo = os.path.join(PASTA_DO_SCRIPT, f"backup_sky_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json")
 
     try:
         conexao = obter_conexao_db()
@@ -731,7 +647,7 @@ def exportar_banco_dados_json(caminho_arquivo: str = None) -> str:
 
 
 # =============================================================================
-# MÓDULO DA IA "SKY" COM FUNCTION CALLING (FERRAMENTAS) - DOIS MODOS
+# MÓDULO DA IA "SKY" COM FUNCTION CALLING
 # =============================================================================
 
 class AgenteSky:
@@ -766,13 +682,9 @@ class AgenteSky:
                     atualizar_resumo_memoria(usuario_id, f"{resumo_atual}\n{novo_fato}")
 
     def _montar_cabecalho_sistema(self, nome_usuario: str) -> tuple:
-        """Retorna (momento_atual, resumo_fatos) para reuso nos dois modos."""
         momento_atual = self._obter_contexto_temporal()
         return momento_atual
 
-    # -------------------------------------------------------------------
-    # PONTO DE ENTRADA ÚNICO - despacha para o modo correto
-    # -------------------------------------------------------------------
     def responder(
         self,
         usuario_id: int,
@@ -787,9 +699,6 @@ class AgenteSky:
             return self.responder_assistente(usuario_id, nome_usuario, mensagem_usuario, historico_sessao)
         return self.responder_chat(usuario_id, nome_usuario, mensagem_usuario, historico_sessao)
 
-    # -------------------------------------------------------------------
-    # 💬 MODO CHAT BOT - conversa normal, SEM ferramentas de automação
-    # -------------------------------------------------------------------
     def responder_chat(self, usuario_id, nome_usuario, mensagem_usuario, historico_sessao) -> str:
         momento_atual = self._montar_cabecalho_sistema(nome_usuario)
         resumo_fatos = obter_resumo_memoria(usuario_id)
@@ -808,8 +717,7 @@ class AgenteSky:
                 f"- utilizar a memória disponível do usuário quando apropriado.\n\n"
                 f"IMPORTANTE SOBRE OS FATOS CONHECIDOS ACIMA: use-os apenas quando forem "
                 f"realmente relevantes para responder ao que o usuário perguntou. NÃO mencione "
-                f"um fato espontaneamente só para mostrar que se lembra dele (ex: não comente "
-                f"sobre o time de futebol do usuário numa saudação comum). Se a pergunta não tem "
+                f"um fato espontaneamente só para mostrar que se lembra dele. Se a pergunta não tem "
                 f"relação com um fato guardado, ignore-o e responda normalmente.\n\n"
                 f"Neste modo você NÃO deve executar comandos no computador, não deve abrir "
                 f"programas, não deve abrir sites, não deve executar terminal, não deve usar "
@@ -836,9 +744,6 @@ class AgenteSky:
         except Exception as erro:
             return self._formatar_erro_ollama(erro)
 
-    # -------------------------------------------------------------------
-    # 🤖 MODO ASSISTENTE - agente de automação com ciclo real de ferramentas
-    # -------------------------------------------------------------------
     def responder_assistente(self, usuario_id, nome_usuario, mensagem_usuario, historico_sessao) -> str:
         momento_atual = self._montar_cabecalho_sistema(nome_usuario)
         resumo_fatos = obter_resumo_memoria(usuario_id)
@@ -865,9 +770,8 @@ class AgenteSky:
                 f"executada se a ferramenta realmente não tiver sido chamada ou tiver retornado "
                 f"erro. Se uma ação falhar, informe o erro de maneira clara e tente uma "
                 f"alternativa segura quando possível.\n\n"
-                f"Converta datas relativas (ex: 'amanhã às 15h') em formato ISO "
-                f"'YYYY-MM-DDTHH:MM:SS' usando a Data/Hora Atual acima como referência. Nunca "
-                f"invente URLs de canais do YouTube que não sejam conhecidas."
+                f"Converta datas relativas em formato ISO 'YYYY-MM-DDTHH:MM:SS' usando a Data/Hora "
+                f"Atual acima como referência. Nunca invente URLs de canais do YouTube que não sejam conhecidas."
             ),
         }
 
@@ -890,7 +794,6 @@ class AgenteSky:
 
                 tool_calls = mensagem_modelo.get("tool_calls")
                 if not tool_calls:
-                    # O modelo terminou de raciocinar e respondeu normalmente.
                     conteudo_final = mensagem_modelo.get("content", "").strip()
                     if acoes_realizadas and not conteudo_final:
                         conteudo_final = "⚡ " + " | ".join(acoes_realizadas)
@@ -902,11 +805,8 @@ class AgenteSky:
                     resultado_ferramenta = executar_ferramenta_por_nome(nome_funcao, argumentos)
                     acoes_realizadas.append(f"{nome_funcao}: {resultado_ferramenta}")
 
-                    # Devolve o resultado da ferramenta ao Ollama para que ele continue
-                    # raciocinando (ciclo real: usuário -> ollama -> tool -> ollama -> resposta).
                     mensagens.append({"role": "tool", "content": str(resultado_ferramenta)})
 
-            # Limite de iterações atingido: devolve um resumo do que foi feito.
             resumo = "\n".join(f"- {a}" for a in acoes_realizadas) or "Nenhuma ação foi concluída."
             return f"⚡ Ações realizadas:\n{resumo}\n\n(Limite de {MAX_TOOL_ITERATIONS} iterações atingido.)"
 
@@ -960,12 +860,6 @@ DESCRICOES_MODO = {
 
 
 def solicitar_confirmacao_gui(root: tk.Tk, titulo: str, mensagem: str) -> bool:
-    """Pede confirmação (sim/não) ao usuário de forma thread-safe.
-
-    Pode ser chamada a partir de qualquer thread (ex: de dentro de uma
-    ferramenta executada pelo agente em background); a caixa de diálogo em si
-    sempre roda na thread principal do Tkinter.
-    """
     resultado = {"ok": False}
     evento = threading.Event()
 
@@ -999,8 +893,6 @@ class AppSky:
         self.style = ttk.Style()
         self.style.theme_use("clam")
 
-        # Registra o callback de confirmação thread-safe usado pelas ferramentas
-        # (ex: executar_comando_terminal) para pedir autorização de ações destrutivas.
         global CONFIRMACAO_CALLBACK
         CONFIRMACAO_CALLBACK = lambda titulo, msg: solicitar_confirmacao_gui(self.root, titulo, msg)
 
@@ -1041,11 +933,6 @@ class AppSky:
             self.frame_login.destroy()
             self.criar_tela_login()
         elif hasattr(self, "notebook"):
-            # Antes de reconstruir a tela (necessário para repintar as cores),
-            # guardamos quais abas estavam abertas para reabri-las depois.
-            # Sem isso, a troca de tema descartava as conversas que estavam
-            # abertas nas abas (elas continuavam salvas no banco, mas ninguém
-            # as reabria automaticamente).
             sessoes_abertas = []
             indice_selecionado = 0
 
@@ -1071,9 +958,6 @@ class AppSky:
 
             self.criar_tela_chat(sessoes_para_restaurar=sessoes_abertas, indice_selecionado=indice_selecionado)
 
-    # -------------------------------------------------------------------
-    # TELA DE LOGIN
-    # -------------------------------------------------------------------
     def criar_tela_login(self):
         self.frame_login = tk.Frame(self.root, bg=self.COR_FUNDO_JANELA)
         self.frame_login.pack(expand=True)
@@ -1154,11 +1038,9 @@ class AppSky:
             messagebox.showerror("Acesso Negado", msg)
 
     def eh_usuario_root(self) -> bool:
-        """True se o usuário logado for o perfil administrativo (Root Master)."""
         return self.nome_usuario.strip().lower() == NOME_USUARIO_ROOT.lower()
 
     def exportar_banco_dados_gui(self):
-        """Pede um destino ao usuário e exporta o banco de dados inteiro em JSON."""
         caminho = filedialog.asksaveasfilename(
             title="Exportar banco de dados como JSON",
             defaultextension=".json",
@@ -1174,9 +1056,6 @@ class AppSky:
         else:
             messagebox.showinfo("Exportação concluída", resultado)
 
-    # -------------------------------------------------------------------
-    # TELA PRINCIPAL DE CHAT
-    # -------------------------------------------------------------------
     def criar_tela_chat(self, sessoes_para_restaurar: list = None, indice_selecionado: int = 0):
         frame_topo = tk.Frame(self.root, bg=self.COR_FUNDO_TOPO)
         frame_topo.pack(fill="x")
@@ -1233,7 +1112,6 @@ class AppSky:
             )
             btn_exportar.pack(side="right", padx=2)
 
-        # ------------------- Seletor de modo (💬 Chat Bot / 🤖 Assistente) -------------------
         linha_modo = tk.Frame(frame_topo, bg=self.COR_FUNDO_TOPO)
         linha_modo.pack(fill="x", padx=10, pady=(0, 8))
 
@@ -1260,8 +1138,6 @@ class AppSky:
         self.notebook.bind("<<NotebookTabChanged>>", lambda e: self.atualizar_indicador_modo())
 
         if sessoes_para_restaurar:
-            # Reabre exatamente as abas que estavam abertas antes (ex: antes de
-            # trocar o tema), em vez de começar do zero com uma aba em branco.
             for sessao_id, titulo_aba, modo in sessoes_para_restaurar:
                 self.criar_nova_aba_chat(sessao_id=sessao_id, titulo_aba=titulo_aba, modo_inicial=modo)
             try:
@@ -1366,11 +1242,7 @@ class AppSky:
         if not self.notebook.tabs():
             self.criar_nova_aba_chat()
 
-    # -------------------------------------------------------------------
-    # SELETOR DE MODO (Chat Bot / Assistente)
-    # -------------------------------------------------------------------
     def _aba_atual(self):
-        """Retorna o dicionário de dados da aba atualmente selecionada, ou None."""
         if not hasattr(self, "notebook") or not self.notebook.tabs():
             return None
         try:
@@ -1390,7 +1262,6 @@ class AppSky:
         self.atualizar_indicador_modo()
 
     def atualizar_indicador_modo(self):
-        """Atualiza os botões de modo e a descrição para refletir a aba atual."""
         if not hasattr(self, "btn_modo_chat"):
             return
 
@@ -1406,9 +1277,6 @@ class AppSky:
 
         self.lbl_descricao_modo.config(text=DESCRICOES_MODO.get(modo_atual, ""))
 
-    # -------------------------------------------------------------------
-    # ENVIO DE MENSAGENS
-    # -------------------------------------------------------------------
     def enviar_mensagem(self, dados_aba: dict):
         texto = dados_aba["ent_msg"].get().strip()
         if not texto:
