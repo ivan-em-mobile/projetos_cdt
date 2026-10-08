@@ -1,0 +1,120 @@
+{
+  "cardapio": [
+    {
+      "categoria": "🍔 HAMBÚRGUERES",
+      "itens": [
+        {
+          "id": 101,
+          "nome": "Poderoso Chefão",
+          "preco": 34.9,
+          "descricao": "Blend 180g, gorgonzola, cebola caramelizada e bacon."
+        },
+        {
+          "id": 102,
+          "nome": "Clássico Smash",
+          "preco": 22.0,
+          "descricao": "Dois hambúrgueres smash de 80g, cheddar e picles."
+        },
+        {
+          "id": 103,
+          "nome": "Veggie Supreme",
+          "preco": 29.9,
+          "descricao": "Hambúrguer de grão-de-bico, rúcula e maionese de ervas."
+        },
+        {
+          "id": 104,
+          "nome": "Duplo Bacon",
+          "preco": 38.5,
+          "descricao": "Dois blends 180g, triplo bacon e molho barbecue."
+        },
+        {
+          "id": 105,
+          "nome": "Chicken Crispy",
+          "preco": 25.9,
+          "descricao": "Frango crocante, salada coleslaw e maionese."
+        },
+        {
+          "id": 106,
+          "nome": "Monster Burger",
+          "preco": 44.0,
+          "descricao": "Três blends 150g, quádruplo cheddar e anéis de cebola."
+        }
+      ]
+    },
+    {
+      "categoria": "🍕 PIZZAS",
+      "itens": [
+        {
+          "id": 201,
+          "nome": "Calabresa",
+          "preco": 45.0,
+          "descricao": "Molho de tomate pelati, calabresa fatiada e cebola."
+        },
+        {
+          "id": 202,
+          "nome": "Marguerita",
+          "preco": 42.0,
+          "descricao": "Muçarela de búfala, tomate e manjericão fresco."
+        },
+        {
+          "id": 203,
+          "nome": "Quatro Queijos",
+          "preco": 50.0,
+          "descricao": "Muçarela, provolone, gorgonzola e parmesão."
+        },
+        {
+          "id": 204,
+          "nome": "Frango Catupiry",
+          "preco": 48.0,
+          "descricao": "Frango desfiado temperado com legítimo Catupiry."
+        }
+      ]
+    },
+    {
+      "categoria": "🍟 ACOMPANHAMENTOS",
+      "itens": [
+        {
+          "id": 301,
+          "nome": "Batata Rústica",
+          "preco": 18.0,
+          "descricao": "Corte caseiro com alecrim e páprica defumada."
+        },
+        {
+          "id": 302,
+          "nome": "Onion Rings",
+          "preco": 20.0,
+          "descricao": "Anéis de cebola crocantes com molho barbecue."
+        },
+        {
+          "id": 303,
+          "nome": "Batata Cheddar/Bacon",
+          "preco": 28.0,
+          "descricao": "Porção grande com cheddar cremoso e bacon."
+        }
+      ]
+    },
+    {
+      "categoria": "🥤 BEBIDAS",
+      "itens": [
+        {
+          "id": 401,
+          "nome": "Soda Artesanal",
+          "preco": 12.0,
+          "descricao": "Frutas vermelhas, limão siciliano e gás (500ml)."
+        },
+        {
+          "id": 402,
+          "nome": "Milkshake",
+          "preco": 18.0,
+          "descricao": "Morango, Chocolate ou Ovaltine (400ml)."
+        },
+        {
+          "id": 403,
+          "nome": "Refrigerante",
+          "preco": 6.5,
+          "descricao": "Lata 350ml (Coca, Guaraná ou Sprite)."
+        }
+      ]
+    }
+  ]
+}

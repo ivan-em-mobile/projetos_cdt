@@ -1,0 +1,5 @@
+{
+    "tema": "escuro",
+    "modelo": "llama3.1:8b",
+    "limite_historico": 6
+}

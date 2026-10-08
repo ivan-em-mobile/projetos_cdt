@@ -1,0 +1,260 @@
+[
+  {
+    "id_pedido": 1789494101,
+    "data_hora": "2026-09-15 14:41:41",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Poderoso Chefão",
+        "quantidade": 1,
+        "preco_unitario": 34.9,
+        "subtotal": 34.9
+      },
+      {
+        "item": "Clássico Smash",
+        "quantidade": 1,
+        "preco_unitario": 22.0,
+        "subtotal": 22.0
+      },
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 1,
+        "preco_unitario": 29.9,
+        "subtotal": 29.9
+      },
+      {
+        "item": "Monster Burger",
+        "quantidade": 1,
+        "preco_unitario": 44.0,
+        "subtotal": 44.0
+      },
+      {
+        "item": "Calabresa",
+        "quantidade": 1,
+        "preco_unitario": 45.0,
+        "subtotal": 45.0
+      },
+      {
+        "item": "Marguerita",
+        "quantidade": 4,
+        "preco_unitario": 42.0,
+        "subtotal": 168.0
+      },
+      {
+        "item": "Quatro Queijos",
+        "quantidade": 4,
+        "preco_unitario": 50.0,
+        "subtotal": 200.0
+      },
+      {
+        "item": "Frango Catupiry",
+        "quantidade": 1,
+        "preco_unitario": 48.0,
+        "subtotal": 48.0
+      }
+    ],
+    "total": 591.8
+  },
+  {
+    "id_pedido": 1789494227,
+    "data_hora": "2026-09-15 14:43:47",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Poderoso Chefão",
+        "quantidade": 1,
+        "preco_unitario": 34.9,
+        "subtotal": 34.9
+      },
+      {
+        "item": "Clássico Smash",
+        "quantidade": 1,
+        "preco_unitario": 22.0,
+        "subtotal": 22.0
+      },
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 1,
+        "preco_unitario": 29.9,
+        "subtotal": 29.9
+      },
+      {
+        "item": "Duplo Bacon",
+        "quantidade": 1,
+        "preco_unitario": 38.5,
+        "subtotal": 38.5
+      },
+      {
+        "item": "Chicken Crispy",
+        "quantidade": 1,
+        "preco_unitario": 25.9,
+        "subtotal": 25.9
+      },
+      {
+        "item": "Monster Burger",
+        "quantidade": 1,
+        "preco_unitario": 44.0,
+        "subtotal": 44.0
+      },
+      {
+        "item": "Calabresa",
+        "quantidade": 1,
+        "preco_unitario": 45.0,
+        "subtotal": 45.0
+      },
+      {
+        "item": "Marguerita",
+        "quantidade": 1,
+        "preco_unitario": 42.0,
+        "subtotal": 42.0
+      },
+      {
+        "item": "Quatro Queijos",
+        "quantidade": 1,
+        "preco_unitario": 50.0,
+        "subtotal": 50.0
+      },
+      {
+        "item": "Frango Catupiry",
+        "quantidade": 1,
+        "preco_unitario": 48.0,
+        "subtotal": 48.0
+      },
+      {
+        "item": "Batata Rústica",
+        "quantidade": 3,
+        "preco_unitario": 18.0,
+        "subtotal": 54.0
+      },
+      {
+        "item": "Onion Rings",
+        "quantidade": 2,
+        "preco_unitario": 20.0,
+        "subtotal": 40.0
+      },
+      {
+        "item": "Batata Cheddar/Bacon",
+        "quantidade": 2,
+        "preco_unitario": 28.0,
+        "subtotal": 56.0
+      },
+      {
+        "item": "Soda Artesanal",
+        "quantidade": 4,
+        "preco_unitario": 12.0,
+        "subtotal": 48.0
+      },
+      {
+        "item": "Milkshake",
+        "quantidade": 2,
+        "preco_unitario": 18.0,
+        "subtotal": 36.0
+      },
+      {
+        "item": "Refrigerante",
+        "quantidade": 6,
+        "preco_unitario": 6.5,
+        "subtotal": 39.0
+      }
+    ],
+    "total": 653.2
+  },
+  {
+    "id_pedido": 1789494269,
+    "data_hora": "2026-09-15 14:44:29",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 2,
+        "preco_unitario": 29.9,
+        "subtotal": 59.8
+      }
+    ],
+    "total": 59.8
+  },
+  {
+    "id_pedido": 1789494684,
+    "data_hora": "2026-09-15 14:51:24",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 8,
+        "preco_unitario": 29.9,
+        "subtotal": 239.2
+      }
+    ],
+    "total": 239.2
+  },
+  {
+    "id_pedido": 1789494694,
+    "data_hora": "2026-09-15 14:51:34",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "Cartão de Débito"
+    },
+    "itens": [
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 3,
+        "preco_unitario": 29.9,
+        "subtotal": 89.7
+      }
+    ],
+    "total": 89.7
+  },
+  {
+    "id_pedido": 1789496836,
+    "data_hora": "2026-09-15 15:27:16",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Monster Burger",
+        "quantidade": 1,
+        "preco_unitario": 44.0,
+        "subtotal": 44.0
+      }
+    ],
+    "total": 44.0
+  },
+  {
+    "id_pedido": 1789496872,
+    "data_hora": "2026-09-15 15:27:52",
+    "cliente": {
+      "nome": "carlos",
+      "usuario": "allice",
+      "forma_pagamento": "PIX"
+    },
+    "itens": [
+      {
+        "item": "Veggie Supreme",
+        "quantidade": 1,
+        "preco_unitario": 29.9,
+        "subtotal": 29.9
+      }
+    ],
+    "total": 29.9
+  }
+]
