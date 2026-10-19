@@ -151,7 +151,7 @@ def aprovar_todas_pendencias_aluno(nome_aluno: str, porta_debug: int = 9222):
 # =============================================================================
 if __name__ == "__main__":
     # 1. Nome do aluno cujas notas serão lançadas
-    ALUNO = "Jamily Do Carmo Santos"
+    ALUNO = "Gabriel Carvalho da Silva"
     
     # 2. Defina a porta de depuração do Chrome (9222 para Usuário 1, 9223 para Usuário 2)
     PORTA = 9222
