@@ -124,3 +124,294 @@ Projeto desenvolvido para fins educacionais e de automação de tarefas administ
    * Pressiona `Ctrl + S` para guardar.
 4. **Visualizar a Formatação (Opcional):**
    * No VS Code, podes clicar com o botão direito no ficheiro `README.md` e selecionar **"Abrir Pré-visualização"** (ou usar o atalho `Ctrl + Shift + V`) para ver o resultado visual formatado com os ícones e blocos de código estilizados.
+
+
+# 🤖 Automação Integrada: Download e Organização de Holerites (2022 - 2026)
+
+Este repositório contém uma solução completa desenvolvida em **Python** para automatizar o fluxo de obtenção e gestão de recibos de pagamento (holerites). A solução resolve dois problemas principais em sequência:
+
+1. **Download Automático:** Extração e download em lote dos holerites diretamente de uma plataforma de RH via navegação automatizada.
+2. **Leitura e Organização Inteligente:** Análise de texto dos PDFs baixados com leitura por OCR/extração e reestruturação dos nomes de arquivo com base nas datas e períodos encontrados.
+
+---
+
+## 🎯 Panorama Geral da Solução
+
+O projeto funciona como uma pipeline dividida em duas etapas principais:
+
+```
+[ Plataforma Convenia / RH ] 
+             │
+             ▼ (Script 1: Selenium Webdriver)
+[ Download dos PDFs Brutos na Pasta ]
+             │
+             ▼ (Script 2: PyPDF + Regex)
+[ Identificação de Mês/Ano e Renomeação Padronizada ]
+```
+
+### O que o sistema faz:
+* **Persistência de Sessão:** Utiliza o perfil local do Google Chrome no Selenium para salvar a autenticação do usuário. Não é necessário fazer login toda vez que o script roda.
+* **Ação de Hover e Clique Interativo:** Mapeia a tabela da interface web, simula o movimento do mouse para revelar botões ocultos de download e baixa os arquivos.
+* **Varredura Regex Multi-padrão:** Analisa diferentes variações de formato em textos de holerites ao longo dos anos (2022 até 2026).
+* **Prevenção de Sobreposição:** Renomeia os arquivos automaticamente no formato `folha_mes_de_ano.pdf` e impede o apagamento acidental de arquivos com nomes duplicados.
+
+---
+
+## 🛠️ Pré-requisitos e Instalação
+
+Para executar este projeto, você precisará do **Python 3.8+** e das seguintes bibliotecas instaladas no seu ambiente:
+
+```bash
+pip install selenium webdriver-manager pypdf
+```
+
+Além disso, certifique-se de ter o **Google Chrome** instalado na sua máquina.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### Etapa 1: Baixar os Holerites
+Execute o arquivo do primeiro script para iniciar a navegação automatizada:
+
+```bash
+python baixar_holerites.py
+```
+* **Nota de Uso:** Na primeira execução, o navegador abrirá para que você faça o login na plataforma (ex: Convenia). Nas próximas vezes, a sessão continuará aberta.
+* Os arquivos baixados serão salvos na pasta configurada na sua Área de Trabalho.
+
+### Etapa 2: Organizar e Renomear os PDFs
+Após o término do download, execute o segundo script para processar os PDFs baixados:
+
+```bash
+python organizar_holerites.py
+```
+* O script lerá cada página, identificará a competência do documento e renomeará o arquivo para um formato padronizado (ex: `folha_junho_de_2026.pdf`).
+
+---
+
+## 💻 Códigos do Projeto
+
+### 1. Script de Download (`baixar_holerites.py`)
+
+```python
+import os
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
+
+def baixar_holerites_corrigido():
+    # 1. Definir o caminho da Área de Trabalho e a pasta de destino
+    desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+    pasta_destino = os.path.join(desktop_path, "recibos de 2026")
+    
+    # Cria a pasta caso ela não exista
+    if not os.path.exists(pasta_destino):
+        os.makedirs(pasta_destino)
+        print(f"Pasta criada: {pasta_destino}")
+    
+    # 2. Configurar perfil do Chrome para manter a sessão salva (sem pedir e-mail/senha)
+    profile_dir = os.path.join(os.path.expanduser("~"), "chrome_profile_convenia")
+    
+    options = Options()
+    options.add_argument(f"--user-data-dir={profile_dir}")
+    
+    # Configurar preferências para baixar os PDFs diretamente na pasta configurada
+    prefs = {
+        "download.default_directory": pasta_destino,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "plugins.always_open_pdf_externally": True
+    }
+    options.add_experimental_option("prefs", prefs)
+    
+    print("Iniciando o navegador...")
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+    actions = ActionChains(driver)
+    
+    try:
+        # 3. Acessar a página de recibos de pagamento
+        url = "https://colaborador.convenia.com.br/recibos-pagamento"
+        driver.get(url)
+        
+        print("-" * 50)
+        print("Se necessário, faça o login manualmente na sua conta.")
+        print("Nas próximas execuções, o login estará salvo automaticamente.")
+        input("Pressione ENTER no terminal assim que a lista de holerites estiver visível na tela... ")
+        print("-" * 50)
+        
+        # 4. Localizar as linhas/registros da tabela de holerites
+        time.sleep(2)
+        
+        # Busca por cada linha (tr) ou bloco que contém os recibos na tabela
+        linhas_recibos = driver.find_elements(By.XPATH, "//tr[contains(., 'Holerite')] | //div[contains(@class, 'row') and contains(., 'Holerite')]")
+        
+        if not linhas_recibos:
+            linhas_recibos = driver.find_elements(By.XPATH, "//*[contains(text(), 'ANEXO')]/ancestor::tr")
+            
+        print(f"Foram encontrados {len(linhas_recibos)} registros de holerites na página.")
+        
+        for index, linha in enumerate(linhas_recibos, start=1):
+            try:
+                # Rola a tela até a linha do holerite
+                driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", linha)
+                time.sleep(1)
+                
+                # Passo A: Simula movimento do mouse em cima da linha (Hover)
+                actions.move_to_element(linha).perform()
+                time.sleep(1)
+                
+                # Passo B: Localiza e clica no botão de download
+                try:
+                    botao_download = linha.find_element(By.XPATH, ".//a | .//button | .//*[contains(text(), 'ANEXO')]")
+                    driver.execute_script("arguments[0].click();", botao_download)
+                except:
+                    actions.click(linha).perform()
+                    
+                print(f"-> Holerite {index} processado e download acionado.")
+                time.sleep(2.5)
+                
+            except Exception as e:
+                print(f"Não foi possível baixar o item {index}: {e}")
+                
+        print("\nProcesso de cliques finalizado. Verificando os arquivos salvos...")
+        
+        # 5. Relatório de verificação da pasta
+        time.sleep(5)
+        arquivos_baixados = [f for f in os.listdir(pasta_destino) if f.endswith('.pdf')]
+        
+        print("\n" + "=" * 50)
+        print(" RELATÓRIO DA PASTA: 'recibos de 2026'")
+        print("=" * 50)
+        if arquivos_baixados:
+            print("Arquivos PDF salvos com sucesso:")
+            for arquivo in arquivos_baixados:
+                print(f" 📄 {arquivo}")
+        else:
+            print("Nenhum arquivo PDF novo foi encontrado na pasta.")
+        print("=" * 50)
+        
+    except Exception as erro:
+        print(f"Ocorreu um erro durante a execução: {erro}")
+        
+    finally:
+        time.sleep(5)
+        driver.quit()
+
+if __name__ == "__main__":
+    baixar_holerites_corrigido()
+```
+
+---
+
+### 2. Script de Organização de PDFs (`organizar_holerites.py`)
+
+```python
+import os
+import re
+from pypdf import PdfReader
+
+# Caminho da pasta contendo os recibos para análise e renomeação
+PASTA_DESTINO = r"C:\Users\NotePCoder\Desktop\holerites de 2022 - 2026"
+
+def extrair_mes_ano(texto_completo):
+    """
+    Função auxiliar com padrões Regex para identificar o mês e o ano
+    em modelos de holerites de 2022 a 2026.
+    """
+    padroes = [
+        # Padrão 1: Formato "Folha Mensal Junho de 2026"
+        r"Folha[\s\n]+Mensal.*?([A-Za-zÇçãõéêíóú]+\s+de\s+(202[2-6]))",
+        
+        # Padrão 2: Formato "Mês: Janeiro/2023"
+        r"Mês:\s*([A-Za-zÇçãõéêíóú]+)/(202[2-6])",
+        
+        # Padrão 3: Formato "OUTUBRO/2022"
+        r"\b(JANEIRO|FEVEREIRO|MARÇO|ABRIL|MAIO|JUNHO|JULHO|AGOSTO|SETEMBRO|OUTUBRO|NOVEMBRO|DEZEMBRO)/(202[2-6])\b"
+    ]
+    
+    for i, padrao in enumerate(padroes):
+        resultado = re.search(padrao, texto_completo, re.IGNORECASE | re.DOTALL)
+        if resultado:
+            if i == 0:
+                return resultado.group(1).lower()
+            elif i == 1 or i == 2:
+                mes = resultado.group(1).lower()
+                ano = resultado.group(2)
+                return f"{mes} de {ano}"
+                
+    return None
+
+def processar_holerites_periodo(caminho_pasta):
+    """
+    Função principal para percorrer a pasta, ler os PDFs e aplicar a renomeação.
+    """
+    if not os.path.exists(caminho_pasta):
+        print(f"Erro: A pasta '{caminho_pasta}' não foi encontrada.")
+        return
+
+    print(f"Inspecionando a pasta: {caminho_pasta}\n" + "-"*50)
+    
+    arquivos = os.listdir(caminho_pasta)
+    sucessos = 0
+    divergencias = 0
+
+    for arquivo in arquivos:
+        if arquivo.lower().endswith(".pdf"):
+            caminho_antigo = os.path.join(caminho_pasta, arquivo)
+            print(f"Analisando arquivo: {arquivo}")
+            
+            try:
+                # Leitura do texto das páginas
+                leitor = PdfReader(caminho_antigo)
+                texto_completo = ""
+                for pagina in leitor.pages:
+                    texto_extraido = pagina.extract_text()
+                    if texto_extraido:
+                        texto_completo += texto_extraido + "\n"
+                
+                # Identificação de Mês e Ano
+                mes_ano_encontrado = extrair_mes_ano(texto_completo)
+                
+                if mes_ano_encontrado:
+                    nome_formatado = mes_ano_encontrado.replace(" ", "_")
+                    novo_nome = f"folha_{nome_formatado}.pdf"
+                    caminho_novo = os.path.join(caminho_pasta, novo_nome)
+                    
+                    if caminho_antigo != caminho_novo:
+                        if os.path.exists(caminho_novo):
+                            print(f"  [Aviso] O arquivo '{novo_nome}' já existe. Pulando para evitar sobrescrever.\n")
+                            continue
+                        
+                        os.rename(caminho_antigo, caminho_novo)
+                        print(f"  [Sucesso] Renomeado para: {novo_nome}\n")
+                        sucessos += 1
+                    else:
+                        print(f"  [Info] O arquivo já está com o nome correto.\n")
+                else:
+                    print(f"  [Atenção] Não foi possível identificar o mês e o ano neste arquivo PDF.\n")
+                    divergencias += 1
+                    
+            except Exception as e:
+                print(f"  [Erro] Falha ao processar o arquivo '{arquivo}'. Detalhe: {e}\n")
+                divergencias += 1
+
+    print("-" * 50)
+    print(f"Processo finalizado!")
+    print(f"Total de arquivos renomeados com sucesso: {sucessos}")
+    print(f"Total de arquivos com divergências/erros de leitura: {divergencias}")
+
+if __name__ == "__main__":
+    processar_holerites_periodo(PASTA_DESTINO)
+```
+
+---
+
+## 📝 Licença e Uso
+
+Este projeto tem fins educacionais e de automação pessoal/administrativa. Sinta-se à vontade para clonar o repositório, propor alterações ou ajustar as expressões regulares para adequar aos modelos de PDF da sua empresa.
